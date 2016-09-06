@@ -8,6 +8,11 @@ class MemberTest < ActiveSupport::TestCase
 	test "tem que rodar" do 
 		assert @member.valid?
 	end
+
+	test "deve conter o nome" do 
+		@member.name = ""
+		assert_not @member.valid?
+	end 
   # test "the truth" do
   #   assert true
   # end
