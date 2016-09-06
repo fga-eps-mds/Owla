@@ -22,8 +22,12 @@ class MemberTest < ActiveSupport::TestCase
 		@member.email = "	"
 		assert_not @member.valid?
 	end
-	test "deve conter a senha" do
-		@member.password = "	"
+	test "deve conter a senha e nao pode ta em branco" do
+		@member.password = @member.password_confirmation = " " * 6
+		assert_not @member.valid?
+	end
+	test "minimo de caracteres pra senha" do 
+		@member.password = @member.password_confirmation = "a" * 5
 		assert_not @member.valid?
 	end
 	test "tamanho do nome" do
