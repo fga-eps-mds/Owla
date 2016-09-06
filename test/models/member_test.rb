@@ -49,5 +49,11 @@ class MemberTest < ActiveSupport::TestCase
 			assert_not @member.valid?, "#{invalid_address.inspect} should be invalid"
 		end
 	end
-	
+	test "unicidade de email" do 
+		duplicate_member = @member.dup
+		duplicate_member.email = @member.email.upcase
+		@member.save
+		assert_not duplicate_member.valid?
+	end
+
 end
