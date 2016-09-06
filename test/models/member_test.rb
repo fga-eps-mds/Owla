@@ -33,6 +33,10 @@ class MemberTest < ActiveSupport::TestCase
 		@member.email = "a" * 256 + "@email.com"
 		assert_not @member.valid?
 	end
+	test "tamanho do alias" do
+		@member.alias = "a" * 41
+		assert_not @member.valid?
+	end
 	test "tamanho da senha" do
 		@member.password = "0" * 16
 		assert_not @member.valid?
@@ -59,5 +63,10 @@ class MemberTest < ActiveSupport::TestCase
 		@member.save
 		assert_not duplicate_member.valid?
 	end
-
+	test "email deve ser salvo em minusculo" do
+		mixed_case_email = "FoO@ExAmPlE.CoM"
+		@member.email = mixed_case_email
+		@member.save
+		assert_equal mixed_case_email.downcase, @member.reload.email
+	end
 end
