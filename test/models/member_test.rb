@@ -33,7 +33,21 @@ class MemberTest < ActiveSupport::TestCase
 		@member.password = "0" * 16
 		assert_not @member.valid?
 	end
-  # test "the truth" do
-  #   assert true
-  # end
+	test "formato valido do email" do
+		valid_addresses = %w[testing@example.com MEMBER@foo.COM A_US-ER@foo.bar.org
+							first.last@foo.jp alice+bob@baz.cn]
+		valid_addresses.each do |valid_address|
+			@member.email = valid_address
+			assert @member.valid?, "#{valid_address.inspect} should be valid"
+		end
+	end
+	test "formato INvalido do email" do 
+		invalid_addresses = %w[testing@example,com member_at_foo.org member.name@example.
+							foo@bar_baz.com foo@bar+baz.com]
+		invalid_addresses.each do |invalid_address|
+			@member.email = invalid_address
+			assert_not @member.valid?, "#{invalid_address.inspect} should be invalid"
+		end
+	end
+	
 end
