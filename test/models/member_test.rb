@@ -6,47 +6,47 @@ class MemberTest < ActiveSupport::TestCase
 				password: "foobar", password_confirmation: "foobar")
 	end
 
-	test "tem que rodar" do 
+	test "should validate member" do 
 		assert @member.valid?
 	end
 
-	test "deve conter o nome" do 
+	test "name should not be blank" do 
 		@member.name = "	"
 		assert_not @member.valid?
 	end
-	test "deve conter o alias" do 
+	test "alias should not be blank" do 
 		@member.alias = "	"
 		assert_not @member.valid?
 	end 
-	test "deve conter o email" do
+	test "email should not be blank" do
 		@member.email = "	"
 		assert_not @member.valid?
 	end
-	test "deve conter a senha e nao pode ta em branco" do
+	test "password should have 6 characters minimum" do
 		@member.password = @member.password_confirmation = " " * 6
 		assert_not @member.valid?
 	end
-	test "minimo de caracteres pra senha" do 
+	test "password should not be smaller than 5 characters" do 
 		@member.password = @member.password_confirmation = "a" * 5
 		assert_not @member.valid?
 	end
-	test "tamanho do nome" do
+	test "name should not be bigger than 60 characters" do
 		@member.name = "a" * 61
 		assert_not @member.valid?
 	end
-	test "tamanho do email" do
+	test "email should not have more than 256 characters" do
 		@member.email = "a" * 256 + "@email.com"
 		assert_not @member.valid?
 	end
-	test "tamanho do alias" do
+	test "alias should not be bigger than 40 characters" do
 		@member.alias = "a" * 41
 		assert_not @member.valid?
 	end
-	test "tamanho da senha" do
+	test "password should not be bigger than 15 ch" do
 		@member.password = "0" * 16
 		assert_not @member.valid?
 	end
-	test "formato valido do email" do
+	test "email should obey validation format" do
 		valid_addresses = %w[testing@example.com MEMBER@foo.COM A_MEM-BER@foo.bar.org
 							first.last@foo.jp alice+bob@baz.cn]
 		valid_addresses.each do |valid_address|
@@ -54,7 +54,7 @@ class MemberTest < ActiveSupport::TestCase
 			assert @member.valid?, "#{valid_address.inspect} should be valid"
 		end
 	end
-	test "formato INvalido do email" do 
+	test "email should not obey invalid format" do 
 		invalid_addresses = %w[testing@example,com member_at_foo.org member.name@example.
 							foo@bar_baz.com foo@bar+baz.com]
 		invalid_addresses.each do |invalid_address|
@@ -62,13 +62,13 @@ class MemberTest < ActiveSupport::TestCase
 			assert_not @member.valid?, "#{invalid_address.inspect} should be invalid"
 		end
 	end
-	test "unicidade de email" do 
+	test "member should not have duplicate emails" do 
 		duplicate_member = @member.dup
 		duplicate_member.email = @member.email.upcase
 		@member.save
 		assert_not duplicate_member.valid?
 	end
-	test "email deve ser salvo em minusculo" do
+	test "every emails should be saved in downcase" do
 		mixed_case_email = "FoO@ExAmPlE.CoM"
 		@member.email = mixed_case_email
 		@member.save
