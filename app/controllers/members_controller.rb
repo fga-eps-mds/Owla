@@ -1,27 +1,27 @@
 class MembersController < ApplicationController
 
   def new
-    @member = member.new
+    @member = Member.new
   end
 
   def edit
-    @user = User.find(params[:id])
+    @member = Member.find(params[:id])
   end
 
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    @member = Member.find(params[:id])
+    @member.destroy
     flash[:sucess] = "O usuário foi deletado"
   end
 
   def show
-  @user = User.find(params[:id])
+  @member = Member.find(params[:id])
   end
 
   def create
-    @user = User.find(params[:id])
+    @member = Member.find(params[:id])
 
-    if @user.save
+    if @member.save
       flash[:sucess] = "O usuário foi criado com sucesso"
 
     else
@@ -29,7 +29,24 @@ class MembersController < ApplicationController
     end
   end
 
+  def update
+    @member = member.find(params[:id])
+
+    if @member.update_atributes(member_params)
+      flash[:sucess] = "As informações do usuário foram atualizadas com sucesso"
+    else
+      flash[:sucess] = "Houve um erro na atualização das informações do usuário"
+    end
+  end
+
   def index
     @members = Member.all
   end
+
+  private
+
+    def member_params
+      params.require(:member).permit(:name, :alias, :password, :email)
+    end
+
 end
