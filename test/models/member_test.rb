@@ -12,6 +12,10 @@ class MemberTest < ActiveSupport::TestCase
 	test "deve conter o nome" do 
 		@member.name = ""
 		assert_not @member.valid?
+	end
+	test "deve conter o alias" do 
+		@member.alias = ""
+		assert_not @member.valid?
 	end 
 	test "deve conter o email" do
 		@member.email = ""
