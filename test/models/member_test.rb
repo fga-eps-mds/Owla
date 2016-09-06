@@ -2,7 +2,8 @@ require 'test_helper'
 
 class MemberTest < ActiveSupport::TestCase
 	def setup 
-		@member = Member.new(name: "Newest member", email: "testing@email.com", password: "0123456", alias: "nickname")
+		@member = Member.new(name: "Newest member",  alias: "nickname", email: "testing@email.com",
+				password: "foobar", password_confirmation: "foobar")
 	end
 
 	test "tem que rodar" do 
@@ -10,19 +11,19 @@ class MemberTest < ActiveSupport::TestCase
 	end
 
 	test "deve conter o nome" do 
-		@member.name = ""
+		@member.name = "	"
 		assert_not @member.valid?
 	end
 	test "deve conter o alias" do 
-		@member.alias = ""
+		@member.alias = "	"
 		assert_not @member.valid?
 	end 
 	test "deve conter o email" do
-		@member.email = ""
+		@member.email = "	"
 		assert_not @member.valid?
 	end
 	test "deve conter a senha" do
-		@member.password = ""
+		@member.password = "	"
 		assert_not @member.valid?
 	end
 	test "tamanho do nome" do
@@ -42,7 +43,7 @@ class MemberTest < ActiveSupport::TestCase
 		assert_not @member.valid?
 	end
 	test "formato valido do email" do
-		valid_addresses = %w[testing@example.com MEMBER@foo.COM A_US-ER@foo.bar.org
+		valid_addresses = %w[testing@example.com MEMBER@foo.COM A_MEM-BER@foo.bar.org
 							first.last@foo.jp alice+bob@baz.cn]
 		valid_addresses.each do |valid_address|
 			@member.email = valid_address
