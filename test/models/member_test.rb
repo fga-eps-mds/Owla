@@ -21,6 +21,18 @@ class MemberTest < ActiveSupport::TestCase
 		@member.password = ""
 		assert_not @member.valid?
 	end
+	test "tamanho do nome" do
+		@member.name = "a" * 61
+		assert_not @member.valid?
+	end
+	test "tamanho do email" do
+		@member.email = "a" * 256 + "@email.com"
+		assert_not @member.valid?
+	end
+	test "tamanho da senha" do
+		@member.password = "0" * 16
+		assert_not @member.valid?
+	end
   # test "the truth" do
   #   assert true
   # end
