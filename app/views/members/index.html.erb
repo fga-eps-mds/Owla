@@ -1,5 +1,15 @@
 <h1>Members</h1>
 
-<%= @members.each do |member| %>
-  <h3>member.name</h3>
-<% end %>
+<table>
+  <thead>
+    <th>Name</th>
+    <th>email</th>
+  </thead>
+  <% @members.each do |member| %>
+    <tr>
+      <td><%= member.name%></td>
+      <td><%= member.email%></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
