@@ -15,17 +15,16 @@ class MembersController < ApplicationController
   end
 
   def show
-  @member = Member.find(params[:id])
+    @member = Member.find(params[:id])
   end
 
   def create
-    @member = Member.find(params[:id])
+    @member = Member.new(member_params)
 
     if @member.save
-      flash[:sucess] = "O usuário foi criado com sucesso"
-
+      redirect_to action: 'show', id: @member.id
     else
-      flash[:sucess] = "Houve um erro na criação do usuário"
+      render 'new'
     end
   end
 
