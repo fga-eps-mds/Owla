@@ -1,11 +1,18 @@
+
+<h1>Edit Member</h1>
+
 <%= form_for @member do |m| %>
 	<%= m.label :name, "Name" %>
 	<%= m.text_field :name %>
+	<br>
 	<%= m.label :email, "Email" %>
 	<%= m.text_field :email %>
+	<br>
   <%= m.label :alias, "Alias" %>
   <%= m.text_field :alias %>
+  <br>
   <%= m.label :password, "Password" %>
   <%= m.password_field :password %>
+  <br>
 	<%= m.submit "Edit Member" %>
 <% end %>

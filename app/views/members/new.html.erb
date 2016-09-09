@@ -1,11 +1,23 @@
 <%= form_for @member do |m| %>
+	<h1>New Member</h1>
+	<br>
+	<br>
 	<%= m.label :name, "Name" %>
+	<br>
 	<%= m.text_field :name %>
+	<br>
 	<%= m.label :email, "Email" %>
+	<br>
 	<%= m.text_field :email %>
+	<br>
   <%= m.label :alias, "Alias" %>
+  <br>
   <%= m.text_field :alias %>
+  <br>
   <%= m.label :password, "Password" %>
+  <br>
   <%= m.password_field :password %>
+  <br>
 	<%= m.submit "New Member" %>
+  <br>
 <% end %>
