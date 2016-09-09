@@ -1,5 +1,9 @@
+
 <%= form_for @member do |m| %>
 	<h1>New Member</h1>
+  <% if flash[:alert] %>
+      <div class="notice"><%= flash[:alert] %></div>
+  <% end %>
 	<br>
 	<br>
 	<%= m.label :name, "Name" %>

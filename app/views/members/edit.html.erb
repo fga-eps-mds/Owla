@@ -1,6 +1,8 @@
 
 <h1>Edit Member</h1>
-
+<% if flash[:alert] %>
+    <div class="notice"><%= flash[:alert] %></div>
+<% end %>
 <%= form_for @member do |m| %>
 	<%= m.label :name, "Name" %>
 	<%= m.text_field :name %>
