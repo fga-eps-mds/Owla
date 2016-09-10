@@ -23,6 +23,28 @@ class RoomController < ApplicationController
 		redirect_to rooms_path		
 	end
 
+	def create
+    @room = Room.new(room_params)
+
+    	if @room.save
+      	redirect_to rooms_path
+    	else
+      	flash[:alert] = "Sala não foi criada"
+      	render 'new'
+   		end
+  	end
+
+  	def update
+    	@room = Room.find(params[:id])
+
+    	if @room.update_attributes(room_params)
+      	redirect_to room_path
+    	else
+      	flash[:alert] = "Erro na atualização da sala"
+      	render 'edit'
+    	end
+  	end
+
 	private
 		def room_params
 			params.require(:room).permit(:name)
