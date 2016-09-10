@@ -1,0 +1,9 @@
+<h1>New Room</h1>
+<% if flash[:alert] %>
+  <div class = "notice"><%= flash[:alert] %></div>
+<% end %>
+
+<%= form_for @room do |room| %>
+  <%= room.label :name, "Name" %>
+  <%= room.text_field :name %>
+<% end %>

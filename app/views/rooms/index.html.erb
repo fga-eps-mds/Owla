@@ -1,0 +1,21 @@
+<h1>Rooms</h1>
+<td><%= link_to 'New Room', new_room_path %>
+  <br>
+  </br>
+  <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+
+      <% @rooms.each do |room| %>
+        <tr>
+
+          <td><%= rooms.name%></td>
+          <td><%= link_to 'Show', room %></td>
+          <td><%= link_to 'Edit', edit_room_path(room) %></td>
+          <td><%= link_to 'Destroy', room, method:delete, data: {confirm: 'Deseja excluir?'} %></td>
+        </tr>
+      <% end %>
+  </table>
