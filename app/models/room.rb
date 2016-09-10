@@ -1,4 +1,5 @@
 class Room < ApplicationRecord
-  validates :name, presence: true, length:{in: 2..255}
   has_many :topics
+  validates :name, presence: true, length: {maximum:255, minimum:2}
+
 end
