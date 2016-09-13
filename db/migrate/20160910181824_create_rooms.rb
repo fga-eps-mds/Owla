@@ -11,5 +11,10 @@ class CreateRooms < ActiveRecord::Migration[5.0]
 
     	t.timestamps
     end 
+    
+		create_table :rooms_members do |t|
+      t.belongs_to :rooms, index: true
+      t.belongs_to :members, index: true
+    end
   end
 end

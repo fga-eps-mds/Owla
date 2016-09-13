@@ -31,4 +31,11 @@ ActiveRecord::Schema.define(version: 20160910181824) do
     t.index ["member_id"], name: "index_rooms_on_member_id"
   end
 
+  create_table "rooms_members", force: :cascade do |t|
+    t.integer "rooms_id"
+    t.integer "members_id"
+    t.index ["members_id"], name: "index_rooms_members_on_members_id"
+    t.index ["rooms_id"], name: "index_rooms_members_on_rooms_id"
+  end
+
 end
