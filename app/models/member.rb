@@ -1,7 +1,8 @@
 class Member < ApplicationRecord
-	has_many :rooms
-	has_many_and_belongs_to_many :rooms
-	before_save { self.email = email.downcase }
+  #has_many :rooms
+  has_many :memberships
+  has_many :rooms, through: :memberships
+  before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true, length: {maximum:60, minimum:4}
   validates :alias, presence: true, length: {maximum:40, minimum:1}
