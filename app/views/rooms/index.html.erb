@@ -12,10 +12,10 @@
       <% @rooms.each do |room| %>
         <tr>
 
-          <td><%= rooms.name%></td>
+          <td><%= room.name%></td>
           <td><%= link_to 'Show', room %></td>
           <td><%= link_to 'Edit', edit_room_path(room) %></td>
-          <td><%= link_to 'Destroy', room, method:delete, data: {confirm: 'Deseja excluir?'} %></td>
+          <td><%= link_to 'Destroy', room, method: :delete, data: {confirm: 'Deseja excluir?'} %></td>
         </tr>
       <% end %>
   </table>

@@ -6,4 +6,5 @@
 <%= form_for @room do |room| %>
   <%= room.label :name, "Name" %>
   <%= room.text_field :name %>
+  <%= room.submit "New room" %>
 <% end %>
