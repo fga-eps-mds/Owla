@@ -7,7 +7,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create session" do
-  	post login_path, params{session:{email:"member@member" , password:"password123"}}
+	post login_path, params: {session: {email: "member@member" , password:"password123"}}
   	assert_redirect_to member_path
   end
 
