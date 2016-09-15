@@ -1,0 +1,24 @@
+
+<h1>Topic</h1>
+<td><%= link_to 'New Topic', new_topic_path %>
+<br>
+</br>
+<table>
+  <thead>
+  <tr>
+  </tr>
+  </thead>
+      <th>Name</th>
+      <th colspan="3"></th>
+  <% @topics.each do |topic| %>
+    <tr>
+
+      <td><%= topic.name%></td>
+      <td><%= link_to 'Show', topic %></td>
+      <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
+      <td><%= link_to 'Delete', topic, method: :delete, data: {confirm: 'Deseja excluir?' } %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+<br>
