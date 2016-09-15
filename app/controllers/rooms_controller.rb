@@ -1,10 +1,25 @@
 class RoomsController < ApplicationController
+  before_action :authenticate_member, only: [:signup]
   def index
     @rooms = Room.all
   end
 
   def new
     @room = Room.new
+  end
+
+  def signup
+    @user = current_member
+    @room = Room.find(params[:id])
+    @membership = Membership.new(member_id: @user.id, room_id: params[:id])
+
+    if @membership.save
+      flash[:sucess] = "Cadastrado com sucesso"
+      redirect_to rooms_path
+    else
+      flash[:alert] = "Deu merda"
+      redirect_to rooms_path
+    end
   end
 
   def show

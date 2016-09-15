@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post '/rooms/signup' => 'rooms#signup'
   resources :members
 
   get 'sessions/new'
@@ -7,5 +8,6 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   resources :rooms
+  #post '/rooms/:id/signup', to: 'rooms#signup'
 
 end

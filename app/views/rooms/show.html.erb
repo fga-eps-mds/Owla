@@ -8,5 +8,6 @@
   <tr>
     <td><%= @room.name%></td>
     <!-- Here we will add the topics, when they are created -->
+    <%= link_to 'Cadastrar em sala', rooms_signup_path(id: @room.id), method: :post%>
   </tr>
 </table>
