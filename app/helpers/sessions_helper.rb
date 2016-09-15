@@ -5,15 +5,19 @@ module SessionsHelper
   end
 
   def current_member
-    @current_member ||= Member.find_by(id: session[:user_id])
+    @current_member ||= Member.find_by(id: session[:member_id]) if session[:member_id] 
   end
 
-  def logged_in?
-    !current_user.nil?
-  end
+  # def logged_in
+  #   current_member
+  # end
 
   def log_out
     session.delete(:member_id)
     @current_member = nil
+  end
+
+  def authenticate_member
+    redirect_to login_path unless current_member
   end
 end

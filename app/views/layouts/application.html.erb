@@ -9,6 +9,19 @@
   </head>
 
   <body>
+  
+    <% if current_member %>
+      <%= "Logged as " + current_member.name %>
+      <%= link_to 'Log out', logout_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Log in', login_path %>
+    <% end %>
+
+    <% flash.each do |message_type, message| %>
+      <%= content_tag :div, message, class: "alert alert-#{message_type}" %>
+    <% end %>
+
+    
     <%= yield %>
   </body>
 </html>
