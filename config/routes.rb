@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   post '/rooms/signup' => 'rooms#signup'
-  resources :members
 
   resources :members
   get 'sessions/new'
@@ -11,4 +10,6 @@ Rails.application.routes.draw do
   #post '/rooms/:id/signup', to: 'rooms#signup'
 
   resources :rooms
+  resources :topics  
+
 end

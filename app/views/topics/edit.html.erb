@@ -1,0 +1,11 @@
+<h1>Edit Topic</h1>
+<% if flash[:alert] %>
+    <div class="notice"><%= flash[:alert] %></div>
+<% end %>
+<%= form_for @topic do |m| %>
+	<%= m.label :name, "Name" %>
+	<%= m.text_field :name %>
+	<br>
+	
+	<%= m.submit "Edit Topic" %>
+<% end %>
