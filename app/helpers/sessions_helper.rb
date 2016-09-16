@@ -8,9 +8,9 @@ module SessionsHelper
     @current_member ||= Member.find_by(id: session[:member_id]) if session[:member_id] 
   end
 
-   def logged_in?
-     !current_member.nil?
-   end
+  def logged_in?
+    !current_member.nil?
+  end
 
   def log_out
     session.delete(:member_id)

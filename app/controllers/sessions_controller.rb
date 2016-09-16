@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if member && member.authenticate(params[:session][:password])
       log_in member
       redirect_to member
-      flash[:sucess] = 'Log in bem-sucedido!'
+      flash[:success] = 'Log in bem-sucedido!'
     else
       flash.now[:danger] = 'Usuário ou senha inválidos!'
       render 'new'
@@ -15,7 +15,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
-    redirect_to rooms_path #ADICIONAR DEPOIS A HOMEPAGE
+    if current_member
+      log_out
+    end
+    redirect_to root_url
   end
 end
