@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 20160914014147) do
   end
 
   create_table "topics", force: :cascade do |t|
-    t.integer  "room_id"
     t.string   "name"
+    t.integer  "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_topics_on_room_id"
