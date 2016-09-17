@@ -5,7 +5,7 @@ module SessionsHelper
   end
 
   def current_member
-    @current_member ||= Member.find_by(id: session[:member_id]) if session[:member_id] 
+    @current_member ||= Member.find_by(id: session[:member_id]) if session[:member_id]
   end
 
   def logged_in?
@@ -18,7 +18,6 @@ module SessionsHelper
   end
 
   def authenticate_member
-    redirect_to login_path unless current_member
-    session[:member_id] = member.id    
+    redirect_to login_path unless logged_in?
   end
 end

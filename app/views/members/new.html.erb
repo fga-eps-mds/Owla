@@ -1,6 +1,9 @@
 
 <%= form_for @member do |m| %>
 	<h1>New Member</h1>
+	<% if !@member.errors.empty? %>
+		<%= @member.errors.full_messages %>
+ <% end %>
   <% if flash[:alert] %>
       <div class="notice"><%= flash[:alert] %></div>
   <% end %>
@@ -21,6 +24,10 @@
   <%= m.label :password, "Password" %>
   <br>
   <%= m.password_field :password %>
+  <br>
+  <%= m.label :password_confirmation, "Confirm your Password" %>
+  <br>
+    <%= m.password_field :password_confirmation %>
   <br>
 	<%= m.submit "New Member" %>
   <br>

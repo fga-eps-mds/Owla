@@ -1,8 +1,11 @@
-<h1>Edit Topic</h1>
+<h1>New Topic</h1>
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
 <%= form_for @topic do |m| %>
+<% if !@topic.errors.empty? %>
+	<%= @topic.errors.full_messages %>
+  	<% end %>
 	<%= m.label :name, "Name" %>
 	<%= m.text_field :name %>
 	<br>

@@ -5,12 +5,5 @@ class CreateAnswers < ActiveRecord::Migration[5.0]
 
        t.timestamps
       end
-
-      # create_table :questions do |t|
-      #  t.belongs_to :answer, index: true
-      #  t.string :content
-       
-      #  t.timestamps
-       #end	
     end
 end
