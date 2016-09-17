@@ -12,6 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20160914014147) do
 
+  create_table "answers", force: :cascade do |t|
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "members", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -30,6 +36,12 @@ ActiveRecord::Schema.define(version: 20160914014147) do
     t.datetime "updated_at", null: false
     t.index ["member_id"], name: "index_memberships_on_member_id"
     t.index ["room_id"], name: "index_memberships_on_room_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rooms", force: :cascade do |t|
