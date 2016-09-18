@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
   root 'sessions#new'
+<<<<<<< HEAD
+=======
+  post '/rooms/signup' => 'rooms#signup'
+>>>>>>> Creating login form based on AdminLTE template
 
   resources :members
 

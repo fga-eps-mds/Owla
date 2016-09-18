@@ -8,7 +8,6 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <% #if logged_in? %>
   <% if logged_in? %>
     <body class="hold-transition skin-black-light sidebar-mini">
   <% else %>
@@ -21,7 +20,6 @@
           <%= render "/layouts/header" %>
         </div>
 
-        <% #if logged_in? %>
         <% if logged_in? %>
           <%= render '/layouts/sidebar' %>
 
