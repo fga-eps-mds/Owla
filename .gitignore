@@ -22,7 +22,12 @@
 
 #Ignore coverage results
 coverage
+
+
 db/schema.rb
+assets/*
+public/assets/*
+
 
 #Ignore vim temporary files
 *.sw*
