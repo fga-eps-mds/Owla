@@ -18,6 +18,6 @@ class SessionsController < ApplicationController
     if current_member
       log_out
     end
-    redirect_to root_url
+    redirect_to rooms_path
   end
 end

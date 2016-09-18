@@ -1,5 +1,8 @@
 class Question < ApplicationRecord
-  validates :content, presence: true, length:{minimum: 5}
-  has_many :answer
+
+  has_many :answers
   belongs_to :topic
+
+  validates :content, presence: true, length: { minimum: 5 }
+
 end
