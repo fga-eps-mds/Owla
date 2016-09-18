@@ -1,0 +1,28 @@
+<header class="main-header">
+  <!-- Logo -->
+  <% if logged_in? %>
+    <%= link_to client_path(current_member), class: "logo" do %>
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>Ow</b>la</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Ow</b>la</span>
+    <% end %>
+
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <span class="sr-only">Toggle navigation</span>
+    </a>
+  <!-- Header Navbar: style can be found in header.less -->
+  <% end %>
+  <nav class="navbar navbar-static-top">
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li class="notifications-menu">
+            <a href="" class="dropdown-toggle">
+              AJUDA
+            </a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+</header>

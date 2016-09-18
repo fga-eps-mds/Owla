@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
 
   resources :members
@@ -10,6 +12,6 @@ Rails.application.routes.draw do
   #post '/rooms/:id/signup', to: 'rooms#signup'
 
   resources :rooms
-  resources :topics  
+  resources :topics
 
 end

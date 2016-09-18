@@ -8,20 +8,23 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-  
-    <% if current_member %>
-      <%= "Logged as " + current_member.name %>
-      <%= link_to 'Log out', logout_path, method: :delete %>
-    <% else %>
-      <%= link_to 'Log in', login_path %>
-    <% end %>
+  <% if logged_in? %>
+    <body class="hold-transition skin-black-light sidebar-mini">
+  <% else %>
+    <body class="layout-top-nav skin-black-light register-page">
+  <% end %>
 
-    <% flash.each do |message_type, message| %>
-      <%= content_tag :div, message, class: "alert alert-#{message_type}" %>
-    <% end %>
-
-    
-    <%= yield %>
+    <div class="wrapper">
+      <% if logged_in? %>
+        <%= yield %>
+      <% else %>
+        <!-- Main Header -->
+        <%= render "/layouts/header" %>
+        <!-- Page content -->
+        <%= yield %>
+        <!-- Main Footer -->
+        <%= render "/layouts/footer" %>
+      <% end %>
+    </div><!-- ./wrapper -->
   </body>
 </html>
