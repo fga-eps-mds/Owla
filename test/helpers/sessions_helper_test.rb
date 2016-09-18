@@ -3,8 +3,8 @@ require 'test_helper'
 class SessionsHelperTest < ActionView::TestCase
 
   def setup
-    @member = Member.create(name: "rgtt", alias: "right", password: "12345678", email: "right@gmail.com")
-    @wrong_member = Member.create(name: "wrgt", alias: "wrong", password: "", email: "")
+    @member = Member.create(name: "rgtt", alias: "right", password: "12345678", password_confirmation: "12345678", email: "right@gmail.com")
+    @wrong_member = Member.create(name: "wrgt", alias: "wrong", password: "", password_confirmation: "", email: "")
   end
 
   test "valid member should log in" do

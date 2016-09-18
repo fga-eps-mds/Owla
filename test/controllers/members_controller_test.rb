@@ -12,6 +12,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
           name: "matheus",
           email: "matheuss@gmail.com",
           password: "123456",
+          password_confirmation: "123456",
           alias: "usertest8"
         }
       }
