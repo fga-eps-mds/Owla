@@ -1,6 +1,11 @@
 .initial-page {
-  background: image-url("blue_owla.png");
-  background-position: right;
-  background-repeat: no-repeat;
+  background: image-url("login_bg.png"), image-url("login-bg-repeat.jpg") !important;
+  background-position: center, left !important;
+  background-repeat: no-repeat, repeat !important;
   height: 100%;
+}
+
+.slide-login {
+  height: 650px !important;
+  width: 100%;
 }
