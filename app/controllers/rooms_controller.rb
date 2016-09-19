@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
-  before_action :authenticate_member, only: [:signup]
+  before_action :authenticate_member
+
   def index
     @rooms = Room.all
   end

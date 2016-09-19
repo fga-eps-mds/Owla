@@ -1,5 +1,7 @@
 class MembersController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => :create
+  before_action :authenticate_member, except: [:new, :create]
+
   def new
     @member = Member.new
   end

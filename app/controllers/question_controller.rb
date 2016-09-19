@@ -1,4 +1,5 @@
 class QuestionController < ApplicationController
+	before_action :authenticate_member
 	
 	def index
 		@questions = Question.all
