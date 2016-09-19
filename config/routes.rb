@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   get '/logout',  to: 'sessions#destroy'
 
   #post '/rooms/:id/signup', to: 'rooms#signup'
-
+  resources :questions
 
 end
