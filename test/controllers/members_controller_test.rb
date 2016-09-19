@@ -52,7 +52,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_response :missing
   end
 
-  test "should fail when is not logged" do
+  test "should fail to get details when is not logged" do
     sign_out_as @member
     get '/members/', params: {id: @member.id}
     assert_redirected_to login_url
