@@ -7,7 +7,7 @@
   </thead>
   <tr>
     <td><%= @room.name%></td>
-    <!-- Here we will add the topics, when they are created -->
+    <td><%= image_tag(@room.avatar.url(:thumb)) %></td>
     <%= link_to 'Cadastrar em sala', rooms_signup_path(id: @room.id), method: :post%>
   </tr>
 </table>

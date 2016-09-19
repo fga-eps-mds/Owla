@@ -17,3 +17,9 @@ email: 'jessica@gmail.com', password: 'testtest', password_confirmation: 'testte
 
 member4 = Member.create!(name: 'Vitor Barbosa', alias: 'vivi',
 email: 'vitor@gmail.com', password: 'testtest', password_confirmation: 'testtest')
+
+room = Room.create!(name: 'Humanidade e Cidadania')
+
+room2 = Room.create!(name: 'Fundamentos de Sistemas Distribuidos')
+
+room3 = Room.create!(name: 'Fundamentos de Sistemas Operacionais')

@@ -6,5 +6,6 @@
 <%= form_for @room do |room| %>
   <%= room.label :name, "Name" %>
   <%= room.text_field :name %>
+  <%= room.file_field :avatar, class: 'form-control' %>
   <%= room.submit "New room" %>
 <% end %>
