@@ -8,23 +8,31 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <% if logged_in? %>
+  <% #if logged_in? %>
+  <% if true %>
     <body class="hold-transition skin-black-light sidebar-mini">
   <% else %>
     <body class="layout-top-nav skin-black-light register-page">
   <% end %>
 
-    <div class="wrapper">
-      <% if logged_in? %>
-        <%= yield %>
-      <% else %>
+    <div id="wrapper">
         <!-- Main Header -->
-        <%= render "/layouts/header" %>
+        <div class="header">
+          <%= render "/layouts/header" %>
+        </div>
+
+        <% #if logged_in? %>
+        <% if true %>
+          <%= render '/layouts/sidebar' %>
+        <% end %>
         <!-- Page content -->
-        <%= yield %>
+        <div class="container">
+          <%= yield %>
+        </div>
         <!-- Main Footer -->
-        <%= render "/layouts/footer" %>
-      <% end %>
+        <div class="footer">
+          <%= render "/layouts/footer" %>
+        </div>
     </div><!-- ./wrapper -->
   </body>
 </html>
