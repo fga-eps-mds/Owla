@@ -1,4 +1,5 @@
-class QuestionController < ApplicationController
+class QuestionsController < ApplicationController
+  	skip_before_action :verify_authenticity_token if Rails.env.test?
 	before_action :authenticate_member
 	
 	def index
@@ -28,9 +29,21 @@ class QuestionController < ApplicationController
 		@question = Question.find(params[:id])
 	end
 
+	def update
+		@question = Question.find(params[:id])
+
+		if @question.update_attributes(question_params)
+			flash[:success] = "Questão atualizada com sucesso"
+			redirect_to @question
+		else
+			render 'edit'
+		end
+	end
+
 	def destroy
 		@question = Question.find(params[:id])
 		@question.destroy
+		redirect_to questions_path
 	end
 
 	private
