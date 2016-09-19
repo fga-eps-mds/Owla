@@ -27,6 +27,7 @@ coverage
 db/schema.rb
 assets/*
 public/assets/*
+public/system/*
 
 
 #Ignore vim temporary files

@@ -10,5 +10,6 @@
     <td><%= @member.name%></td>
     <td><%= @member.email%></td>
     <td><%= @member.alias%></td>
+    <td><%= image_tag(current_member.avatar.url(:thumb)) %></td>
   </tr>
 </table>

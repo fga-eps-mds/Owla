@@ -15,6 +15,9 @@ class Member < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, if: :password_digest_changed?
   validates :password_confirmation, presence: true, length: { minimum: 6 }, if: :password_digest_changed?
 
+	has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100#" }, :default_url => "/images/missing.png"
+	validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   has_secure_password
 
 end

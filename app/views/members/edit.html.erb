@@ -44,6 +44,12 @@
             </div>
             <br />
 
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-file-image-o"></i></span>
+              <%= f.file_field :avatar, class: 'form-control' %>
+            </div>
+            <br />
+
             <!-- PASSWORD -->
             <div class="input-group has-warning">
               <%= f.label :password, class:"control-label" %><br>
@@ -51,7 +57,15 @@
               <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
             </div>
             <br />
+
+            <!-- PASSWORD -->
+            <div class="input-group has-warning">
+              <%= f.label :password_confirmation, class:"control-label" %><br>
+              <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
+            </div>
+            <br />
           </div><!-- /.box-body -->
+
 
           <div class="box-footer">
             <%= f.submit "Save", class: "btn btn-flat btn-primary pull-right" %>
