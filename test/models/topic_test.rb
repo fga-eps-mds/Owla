@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TopicTest < ActiveSupport::TestCase
 
-def setup
+	def setup
 		@room = Room.create(name: "MDS")
 		@topic = @room.topics.create(name: "RUP")
 	end
