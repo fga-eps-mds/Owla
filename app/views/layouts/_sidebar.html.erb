@@ -1,0 +1,71 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+      <div class="pull-left image">
+        <img src="/images/logo_small_eletronjun.png" class="img-circle" alt="User Image" style="max-width: 56px;">
+      </div>
+      <div class="pull-left info">
+        <p><%= current_member.alias %></p>
+        <small><i class="fa fa-circle text-success"></i> Online</small>
+      </div>
+    </div>
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Buscar...">
+            <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+      </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="header">MENU DE NAVEGAÇÃO</li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-pie-chart"></i>
+          <span>Minha Conta</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li>
+            <%= link_to client_path(current_member) do %>
+              <i class="fa fa-circle-o"></i> Informações Gerais</li>
+            <% end %>
+          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Meus produtos</a></li>
+          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Meus Serviços</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-book"></i> <span>Documentos</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Termos</a></li>
+          <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Licença</a></li>
+          <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> FAQ</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="pages/mailbox/mailbox.html">
+          <i class="fa fa-envelope"></i> <span>Mensagens</span>
+          <small class="label pull-right bg-yellow">12</small>
+        </a>
+      </li>
+      <li class="header">MAIS</li>
+      <li>
+        <%= link_to edit_member_path do %>
+          <i class="fa fa-circle-o text-red"></i> <span>Configurações</span></li>
+        <% end %>
+      <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Ajuda</span></a></li>
+      <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Canais de Atendimento</span></a></li>
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>
