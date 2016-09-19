@@ -1,0 +1,24 @@
+
+<h1>Answer</h1>
+<td><%= link_to 'New Answer', new_answer_path %>
+<br>
+</br>
+<table>
+  <thead>
+  <tr>
+  </tr>
+  </thead>
+      <th>Content</th>
+      <th colspan="3"></th>
+  <% @answer.each do |answer| %>
+    <tr>
+
+      <td><%= answer.content%></td>
+      <td><%= link_to 'Show', answer %></td>
+      <td><%= link_to 'Edit', edit_answer_path(answer) %></td>
+      <td><%= link_to 'Delete', answer, method: :delete, data: {confirm: 'Deseja excluir?' } %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+<br>
