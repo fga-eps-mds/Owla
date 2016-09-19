@@ -2,7 +2,7 @@
 <section class="content-header">
   <h1>
     Rooms
-    <small>my rooms</small>
+    <small>My rooms</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -16,12 +16,12 @@
     <% if current_member.rooms.count.zero? %>
       <p> You do not have rooms </p>
     <% else %>
-      <%= current_member.rooms.each_slice(6).first.each do | room | %>
+      <% current_member.rooms.each_slice(6).first.each do | room | %>
         <div class="col-md-4">
           <!-- Widget: user widget style 1 -->
           <div class="box box-widget widget-user">
             <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-black" style="background: url('../dist/img/photo1.png') center center;">
+            <div class="widget-user-header bg-blue">
               <h3 class="widget-user-username"><%= room.name %></h3>
               <h5 class="widget-user-desc">Description</h5>
             </div>

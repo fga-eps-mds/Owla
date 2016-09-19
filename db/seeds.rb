@@ -23,3 +23,7 @@ room = Room.create!(name: 'Humanidade e Cidadania')
 room2 = Room.create!(name: 'Fundamentos de Sistemas Distribuidos')
 
 room3 = Room.create!(name: 'Fundamentos de Sistemas Operacionais')
+
+member2.rooms << room
+member2.rooms << room2
+member2.save

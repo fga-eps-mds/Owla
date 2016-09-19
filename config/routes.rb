@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :topics
 
   post '/rooms/signup' => 'rooms#signup'
-  match '/members/:id/home' => 'members#home', via: :get
+  match '/members/:id/home' => 'members#home', via: :get, as: 'home'
 
   get 'sessions/new'
   get    '/login',   to: 'sessions#new'
