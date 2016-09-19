@@ -1,20 +1,68 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Settings
+    <small>You can edit</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Forms</a></li>
+    <li class="active">Settings</li>
+  </ol>
+</section>
 
-<h1>Edit Member</h1>
-<% if flash[:alert] %>
-    <div class="notice"><%= flash[:alert] %></div>
-<% end %>
-<%= form_for @member do |m| %>
-	<%= m.label :name, "Name" %>
-	<%= m.text_field :name %>
-	<br>
-	<%= m.label :email, "Email" %>
-	<%= m.text_field :email %>
-	<br>
-  <%= m.label :alias, "Alias" %>
-  <%= m.text_field :alias %>
-  <br>
-  <%= m.label :password, "Password" %>
-  <%= m.password_field :password %>
-  <br>
-	<%= m.submit "Edit Member" %>
-<% end %>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-6"><!-- left column -->
+      <%= form_for @member do |f| %>
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Information</h3>
+          </div>
+
+          <div class="box-body">
+
+            <!-- USERNAME -->
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+              <%= f.text_field :alias, autofocus: true, class: "form-control", placeholder: current_member.alias %>
+            </div>
+            <br />
+
+            <!-- NAME -->
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-edit"></i></span>
+              <%= f.text_field :name, class: "form-control", placeholder: current_member.name %>
+            </div>
+            <br />
+
+            <!-- EMAIL -->
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+              <%= f.email_field :email, class: "form-control", placeholder: current_member.email %>
+            </div>
+            <br />
+
+            <!-- PASSWORD -->
+            <div class="input-group has-warning">
+              <%= f.label :password, class:"control-label" %><br>
+              <label class="control-label" for="inputWarning"> <i class="fa fa-bell-o"></i> Necessary to apply modifications</label>
+              <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+            </div>
+            <br />
+          </div><!-- /.box-body -->
+
+          <div class="box-footer">
+            <%= f.submit "Save", class: "btn btn-flat btn-primary pull-right" %>
+          </div>
+        </div>
+      <% end %>
+      <div class="input-group margin">
+        <div class="input-group-btn">
+          <%= button_to "Delete my account", member_path(@member), class: "btn btn-flat btn-danger", data: { confirm: "OH NOO! Are you sure?" }, method: :delete %>
+        </div>
+      </div>
+    </div> <!-- /col-md-6 -->
+  </div> <!-- row -->
+</section>

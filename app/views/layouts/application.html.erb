@@ -24,11 +24,17 @@
         <% #if logged_in? %>
         <% if logged_in? %>
           <%= render '/layouts/sidebar' %>
+
+          <div class="content-wrapper">
+            <%= yield %>
+          </div>
+        <% else %>
+          <!-- Page content -->
+          <div class="container">
+            <%= yield %>
+          </div>
         <% end %>
-        <!-- Page content -->
-        <div class="container">
-          <%= yield %>
-        </div>
+
         <!-- Main Footer -->
         <div class="footer">
           <%= render "/layouts/footer" %>

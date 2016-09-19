@@ -13,6 +13,8 @@
           <span class="sr-only">Toggle navigation</span>
         </a>
   <% else %>
+    <nav class="navbar navbar-static-top">
+
     <!-- Logo -->
     <%= link_to root_path, class: "logo" do %>
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -20,12 +22,17 @@
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Ow</b>la</span>
     <% end %>
-
-    <nav class="navbar navbar-static-top">
   <% end %>
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
+
+        <% if logged_in? %>
+          <li class="notifications-menu">
+            <%= link_to 'LOGOUT', logout_path, class: "dropdown-toggle" %>
+          </li>
+        <% end %>
+
         <li class="notifications-menu">
           <a href="#" class="dropdown-toggle">
             HELP
