@@ -1,6 +1,18 @@
 <header class="main-header">
-  <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top">
+  <% if logged_in? %>
+    <%= link_to member_path(current_member), class: "logo" do %>
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>Ow</b>la</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Ow</b>la</span>
+    <% end %>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+  <% else %>
     <!-- Logo -->
     <%= link_to root_path, class: "logo" do %>
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -8,6 +20,9 @@
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Ow</b>la</span>
     <% end %>
+
+    <nav class="navbar navbar-static-top">
+  <% end %>
 
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
