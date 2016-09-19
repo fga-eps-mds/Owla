@@ -32,7 +32,7 @@ class RoomTest < ActiveSupport::TestCase
     assert_not @invalid.save
   end
 
-  test "should create not nil room" do
+  test "should create not null room" do
     assert_not_nil @room
   end
 
