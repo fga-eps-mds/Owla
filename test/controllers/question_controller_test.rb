@@ -20,9 +20,10 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   test "should edit question" do
     log_in @member
-    question_id = @question.id
+
     question_content = @question.content
-    patch "/questions/#{question_id}", params: {
+
+    patch "/questions/#{@question.id}", params: {
       question: { content: "Derivadas?" }
     } 
 
@@ -55,7 +56,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not delete the question if user is not logged in" do
-    get '/questions'
+    delete "/questions/#{@question.id}"
     assert_redirected_to login_path
   end
 

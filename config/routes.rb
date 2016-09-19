@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   #post '/rooms/:id/signup', to: 'rooms#signup'
-
+  resources :questions
   resources :rooms
   resources :topics  
 
