@@ -46,7 +46,9 @@ class MembersController < ApplicationController
     redirect_to members_path
   end
 
-
+  def home
+    @member = Member.find(params[:id])
+  end
 
   private
 
