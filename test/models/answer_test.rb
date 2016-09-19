@@ -23,18 +23,9 @@ class AnswerTest < ActiveSupport::TestCase
     assert_not @answer.save
   end
 
-  test "created answer should not be nil" do
+  test "should create not null answer" do
     @answer = @question.answers.create(content:"Yes")
     assert_not_nil @answer
-  end
-
-  test "answer should be deleted" do
-    @answer = @question.answers.create(content:"Yes")
-    before = @question.answers.count
-    assert before
-    @question.answers.first.destroy
-    after = @question.answers.count
-    assert_equal before,after+1
   end
 
   test "edited atribute should be different" do
@@ -44,5 +35,14 @@ class AnswerTest < ActiveSupport::TestCase
     @answer.update_attribute :content, "No"
     after = @answer.content
     assert_not_equal before, after
+  end
+
+  test "answer should be deleted" do
+    @answer = @question.answers.create(content:"Yes")
+    before = @question.answers.count
+    assert before
+    @question.answers.first.destroy
+    after = @question.answers.count
+    assert_equal before,after+1
   end
 end
