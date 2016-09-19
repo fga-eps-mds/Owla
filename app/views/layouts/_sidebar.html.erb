@@ -5,7 +5,7 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="/images/blue_owla.png" class="img-circle" alt="User Image" style="max-width: 56px;">
+        <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle", alt: "User Image", style: "max-width: 56px;" %>
       </div>
       <div class="pull-left info">
         <p><%= current_member.alias %></p>
@@ -16,10 +16,10 @@
     <form action="#" method="get" class="sidebar-form">
       <div class="input-group">
         <input type="text" name="q" class="form-control" placeholder="Buscar...">
-            <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
+        <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+          </button>
+        </span>
       </div>
     </form>
     <!-- /.search form -->
