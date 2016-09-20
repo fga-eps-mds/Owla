@@ -24,6 +24,11 @@ class AnswerTest < ActiveSupport::TestCase
     assert_not @answer.save
   end
 
+  test "should not save an answer without an author" do
+    @answer = Answer.new(content: "Owla > *projects ?")
+    assert_not @answer.save
+  end
+
   test "should create not null answer" do
     @answer = @question.answers.create(content:"Yes", member: @member)
     assert_not_nil @answer

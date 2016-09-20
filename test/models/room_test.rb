@@ -22,6 +22,28 @@ class RoomTest < ActiveSupport::TestCase
     assert_not @invalid.save
   end
 
+  test "should not save a room with no description" do
+    @invalid = Room.create(name: "HC FTW", description: nil)
+    assert_not @invalid.save
+  end
+
+  test "should note save a room with description smaller than 2 characters" do
+    @invalid = Room.new(name: "Room", description: "1")
+    assert_not @invalid.save
+  end
+
+  test "should not save a room with description bigger than 240 characters" do
+    @invalid = Room.new(name: "Room", description: "A"*241)
+    assert_not @invalid.save
+  end
+
+  test "should save a room which description has exactly 2 or 240 characters" do
+    @valid1 = Room.new(name: "Room 1", description: "1"*2)
+    assert @valid1.save
+    @valid2 = Room.new(name: "Room 2", description: "1"*240)
+    assert @valid2.save
+  end
+
   test "should not save a room with name smaller than 2 characters" do
     @invalid = Room.create(name: "C", description: "-"*2)
     assert_not @invalid.save
