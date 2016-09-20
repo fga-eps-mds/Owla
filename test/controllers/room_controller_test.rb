@@ -8,7 +8,7 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
                           password: '123456', 
                           password_confirmation: '123456', 
                           alias: 'mateusin')
-    @room = Room.create(name: 'teste')
+    @room = Room.create(name: 'teste', description: 'teste2')
     sign_in_as @member
   end
 
@@ -37,12 +37,12 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_url
   end
 
-  test "should create rooms" do
-    post '/rooms', params: { room: { name: "teste" } }
+  test "should create room" do
+    post '/rooms', params: { room: { name: "teste", description: "testedescription" } }
     assert_redirected_to rooms_path
   end
 
-  test "should not create rooms when missing name" do
+  test "should not create room when missing name" do
     post '/rooms', params: { room: { name: '' } }
     assert_select '.alert'
   end
@@ -54,10 +54,17 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
 
   test "should update room" do
     name_old = @room.name
-    patch "/rooms/#{@room.id}", params: {room: {name: "teste2"} }
+    patch "/rooms/#{@room.id}", params: {room: { name: "teste2" } }
     @room.reload
 
     assert_not_equal name_old, @room.name
     assert_redirected_to "/rooms/#{@room.id}"
+  end
+
+  test "should destroy room" do
+    assert_difference('Room.count', -1) do
+      delete "/rooms/#{@room.id}"
+      assert_redirected_to rooms_path
+    end
   end
 end

@@ -4,19 +4,44 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
-    @room = Room.create(name: "calculo 1")
-    @topic = @room.topics.create(name: "limites")
-    @question = @topic.questions.create(content: "How did I get Here?")
+    @room = Room.create(name: "calculo 1", description: "teste1")
+
+    @topic = @room.topics.new(name: "limites")
+    @topic.member = @member
+    @topic.save
+
+    @question = @topic.questions.new(content: "How did I get here?")
+    @question.member = @member
+    @question.save
+
+    @answer = @question.answers.create(content: "Resposta da pergunta")
+    @answer.member = @member
+    @answer.save
   end
 
-   test "should create question" do
-     log_in @member
-     post '/questions', params: {
-       question: {
-         content: "How did I get here?"
-       }
-     }
-   end
+  test "should get new" do
+    log_in @member
+    get new_question_path
+    assert_response :success
+  end
+
+  test "should get show" do
+    log_in @member
+    get question_path(@question)
+    assert_response :success
+  end
+
+  test "should create question" do
+    log_in @member
+    post '/questions', params: {
+      question: {
+        content: "How did I get here?",
+        topic: @topic,
+        member: @member
+      }
+    }
+    assert_redirected_to questions_path
+  end
 
   test "should edit question" do
     log_in @member

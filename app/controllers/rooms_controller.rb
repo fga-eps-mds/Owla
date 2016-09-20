@@ -41,18 +41,18 @@ class RoomsController < ApplicationController
         flash[:alert] = "Sala não foi criada"
         render 'new'
       end
-    end
+  end
 
-    def update
-      @room = Room.find(params[:id])
+  def update
+    @room = Room.find(params[:id])
 
-      if @room.update_attributes(room_params)
-        redirect_to room_path
-      else
-        flash[:alert] = "Erro na atualização da sala"
-        render 'edit'
-      end
+    if @room.update_attributes(room_params)
+      redirect_to room_path
+    else
+      flash[:alert] = "Erro na atualização da sala"
+      render 'edit'
     end
+  end
 
   def destroy 
     @room = Room.find(params[:id])
@@ -63,7 +63,7 @@ class RoomsController < ApplicationController
 
   private
     def room_params
-      params.require(:room).permit(:name)
+      params.require(:room).permit(:name, :description)
     end
 
 end

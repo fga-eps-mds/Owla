@@ -16,10 +16,12 @@ class QuestionsController < ApplicationController
 
 	def create
 		@question = Question.new(question_params)
-
+		puts "qlqr dentro"
 		if @question.save
+			puts "qlqr if"
 			redirect_to questions_path
 		else 
+			puts @question.errors.full_messages
 			flash[:alert] = "Question not created"
 			render 'new'
 		end

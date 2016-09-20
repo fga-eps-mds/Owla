@@ -4,10 +4,20 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
-    @room = Room.create(name: "calculo 1")
-    @topic = @room.topics.create(name: "limites")
-    @question = @topic.questions.create(content: "How did I get here?")
+    
+    @room = Room.create(name: "calculo 1", description: "calculo1")
+
+    @topic = @room.topics.new(name: "limites")
+    @topic.member = @member
+    @topic.save
+
+    @question = @topic.questions.new(content: "How did I get here?")
+    @question.member = @member
+    @question.save
+
     @answer = @question.answers.create(content: "Resposta da pergunta")
+    @answer.member = @member
+    @answer.save
   end
 
    test "should create answer" do
