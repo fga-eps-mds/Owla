@@ -8,8 +8,11 @@ require 'rails/test_help'
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
-  def sign_in_as(email, password)
-  	post login_path, params: {email: email, password: password}
+  def sign_in_as(member)
+    post '/login/', params: {session: { email: member.email, password: member.password } }
+  end
+  def sign_out_as(member)
+  	delete '/logout', params: {session: { email: member.email, password: member.password } }
   end
   # Add more helper methods to be used by all tests here...
 end
