@@ -37,6 +37,11 @@ class TopicTest < ActiveSupport::TestCase
 		assert_not duplicate_topic.save
 	end
 
+	test "should not save a topic without an author" do
+		@topic = @room.topics.new(name: "Without an author =/")
+		assert_not @topic.save
+	end
+
 	test "should not save two topics with same downcase name" do
 		assert @topic.save
 		@topic2 = @room.topics.create(name: "rup", member: @member)

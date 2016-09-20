@@ -28,6 +28,11 @@ class QuestionTest < ActiveSupport::TestCase
     assert_not @invalid.save
   end
 
+  test "should not save a question without an author" do
+    @invalid = Question.new(content: "Rails > Java?")
+    assert_not @invalid.save
+  end
+
   test "should create a not null question" do
     @question = @topic.questions.new(content: "What is love?", member: @member)
     assert_not_nil @question
