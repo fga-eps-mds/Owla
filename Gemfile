@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.5'
 gem "paperclip", "~> 4.3"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem "codeclimate-test-reporter", group: :test, require: nil
 
 group :cucumber do
   gem 'capybara',               '~> 2.2'
