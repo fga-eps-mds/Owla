@@ -17,7 +17,8 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
 
     if @member.save
-      redirect_to members_path
+      log_in @member
+      redirect_to home_path @member
     else
       flash[:alert] = "Member not created"
       render 'new'
