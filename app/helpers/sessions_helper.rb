@@ -18,6 +18,14 @@ module SessionsHelper
   end
 
   def authenticate_member
-    redirect_to login_path unless logged_in?
+    if !logged_in?
+      redirect_to login_path
+    end
+  end
+
+  def not_allow_to_enter_login
+    if logged_in?
+      redirect_to home_path(current_member)
+    end
   end
 end

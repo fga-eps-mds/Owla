@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
+  before_action :not_allow_to_enter_login, only: [:new]
+
   def new
   end
 
