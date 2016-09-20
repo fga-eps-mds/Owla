@@ -19,46 +19,48 @@
       <% current_member.rooms.each_slice(6).first.each do | room | %>
         <div class="col-md-4">
           <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-blue">
-              <h3 class="widget-user-username"><%= room.name %></h3>
-              <h5 class="widget-user-desc">Description</h5>
-            </div>
-            <div class="widget-user-image">
-              <%= image_tag (room.avatar.url(:thumb)), class:"img-circle", alt: "Room avatar" %>
-            </div>
-            <div class="box-footer">
-              <div class="row">
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header"><%= room.members.count %></h5>
-                    <span class="description-text">MEMBERS</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 border-right">
-                  <div class="description-block">
-                    <h5 class="description-header"><%= room.topics.count %></h5>
-                    <span class="description-text">TOPICS</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4">
-                  <div class="description-block">
-                    <h5 class="description-header">--</h5>
-                    <span class="description-text">FAVORITES</span>
-                  </div>
-                  <!-- /.description-block -->
-                </div>
-                <!-- /.col -->
+          <%= link_to room_path(room) do %>
+            <div class="box box-widget widget-user">
+              <!-- Add the bg color to the header using any of the bg-* classes -->
+              <div class="widget-user-header bg-blue">
+                <h3 class="widget-user-username"><%= room.name %></h3>
+                <h5 class="widget-user-desc">Description</h5>
               </div>
-              <!-- /.row -->
+              <div class="widget-user-image">
+                <%= image_tag (room.avatar.url(:thumb)), class:"img-circle", alt: "Room avatar" %>
+              </div>
+              <div class="box-footer">
+                <div class="row">
+                  <div class="col-sm-4 border-right">
+                    <div class="description-block">
+                      <h5 class="description-header"><%= room.members.count %></h5>
+                      <span class="description-text">MEMBERS</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4 border-right">
+                    <div class="description-block">
+                      <h5 class="description-header"><%= room.topics.count %></h5>
+                      <span class="description-text">TOPICS</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-4">
+                    <div class="description-block">
+                      <h5 class="description-header">--</h5>
+                      <span class="description-text">FAVORITES</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
             </div>
-          </div>
-          <!-- /.widget-user -->
+            <!-- /.widget-user -->
+          <% end %> <!-- room path link -->
         </div>
       <% end %> <!-- room's loop -->
     <% end %> <!-- has_rooms conditional -->

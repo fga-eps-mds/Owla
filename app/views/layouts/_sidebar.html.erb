@@ -25,46 +25,45 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-      <li class="header">MENU DE NAVEGAÇÃO</li>
+      <li class="header">NAVIGATION MENU</li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-pie-chart"></i>
-          <span>Minha Conta</span>
+          <span>Account</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
           <li>
             <%= link_to member_path(current_member) do %>
-              <i class="fa fa-circle-o"></i> Informações Gerais</li>
+              <i class="fa fa-circle-o"></i> Home</li>
             <% end %>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Meus produtos</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Meus Serviços</a></li>
+          <li>
+            <%= link_to edit_member_path(current_member) do %>
+              <i class="fa fa-cog text-red"></i> <span>Settings</span></li>
+            <% end %>
         </ul>
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-book"></i> <span>Documentos</span>
+          <i class="fa fa-book"></i> <span>Documents</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Termos</a></li>
-          <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Licença</a></li>
+          <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> Terms</a></li>
+          <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> License</a></li>
           <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> FAQ</a></li>
         </ul>
       </li>
       <li>
         <a href="pages/mailbox/mailbox.html">
-          <i class="fa fa-envelope"></i> <span>Mensagens</span>
+          <i class="fa fa-envelope"></i> <span>Messages</span>
           <small class="label pull-right bg-yellow">12</small>
         </a>
       </li>
-      <li class="header">MAIS</li>
+      <li class="header">OTHER</li>
       <li>
-        <%= link_to edit_member_path(current_member) do %>
-          <i class="fa fa-circle-o text-red"></i> <span>Configurações</span></li>
-        <% end %>
-      <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Ajuda</span></a></li>
-      <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Canais de Atendimento</span></a></li>
+      <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Contribute</span></a></li>
+      <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Report bug</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->

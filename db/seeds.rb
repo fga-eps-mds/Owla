@@ -18,11 +18,11 @@ email: 'jessica@gmail.com', password: 'testtest', password_confirmation: 'testte
 member4 = Member.create!(name: 'Vitor Barbosa', alias: 'vivi',
 email: 'vitor@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
-room = Room.create!(name: 'Humanidade e Cidadania')
+room = Room.create!(name: 'Humanidade e Cidadania', description: 'Professora Sônia Albuquerque')
 
-room2 = Room.create!(name: 'Fundamentos de Sistemas Distribuidos')
+room2 = Room.create!(name: 'Fundamentos de Sistemas Distribuidos', description: 'Professor Fernando W. Cruz')
 
-room3 = Room.create!(name: 'Fundamentos de Sistemas Operacionais')
+room3 = Room.create!(name: 'Palestra Empreendendo sua Ideia', description: 'Palestrante José Joaquim')
 
 member2.rooms << room
 member2.rooms << room2
