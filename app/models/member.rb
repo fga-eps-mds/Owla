@@ -1,6 +1,9 @@
 class Member < ApplicationRecord
 
   has_and_belongs_to_many :rooms
+  has_many :topics
+  has_many :questions
+  has_many :answers
 
   before_save { self.email = email.downcase }
 

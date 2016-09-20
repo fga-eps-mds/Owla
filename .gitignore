@@ -26,3 +26,5 @@ db/schema.rb
 
 #Ignore vim temporary files
 *.sw*
+
+*~
