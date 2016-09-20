@@ -5,4 +5,5 @@ class Topic < ApplicationRecord
   has_many :questions, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255, minimum: 2 }, uniqueness: { case_sensitive: false } 
+
 end
