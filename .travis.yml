@@ -1,0 +1,17 @@
+language: ruby
+
+script:
+  - bundle exec rake db:migrate
+  - bundle exec rake db:seed
+  - bundle exec rake
+
+rvm:
+  - 2.3.1
+notifications:
+  email:
+    recipients:
+      - livreluan@gmail.com
+
+branches:
+  only:
+    - devel
