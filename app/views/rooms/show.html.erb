@@ -1,27 +1,12 @@
-<h1> Room </h1>
-
-<table>
-  <thead>
-    <th>Name</th>
-    <th>Topic</th>
-  </thead>
-  <tr>
-    <td><%= @room.name%></td>
-    <td><%= image_tag(@room.avatar.url(:thumb)) %></td>
-    <%= link_to 'Cadastrar em sala', rooms_signup_path(id: @room.id), method: :post%>
-  </tr>
-</table>
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Timeline
-    <small>example</small>
+    <%= @room.name %>
+    <%= link_to 'Join', rooms_signup_path(id: @room.id), class: 'btn btn-success btn-xs', method: :post%>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="#">UI</a></li>
-    <li class="active">Timeline</li>
+    <li class="active"><%= @room.name %></li>
   </ol>
 </section>
 
@@ -33,34 +18,40 @@
     <div class="col-md-12">
       <!-- The time line -->
       <ul class="timeline">
-        <!-- timeline time label -->
-        <li class="time-label">
-              <span class="bg-red">
-                10 Feb. 2014
-              </span>
-        </li>
-        <!-- /.timeline-label -->
-        <!-- timeline item -->
-        <li>
-          <i class="fa fa-envelope bg-blue"></i>
+        <% @room.topics.all.group_by { | topic | topic.created_at.to_date }.each do | date, topics | %>
+          <!-- timeline time label -->
+          <li class="time-label">
+                <span class="bg-yellow">
+                  <i class="fa fa-calendar-minus-o bg-white"></i> 
+                  <%= date.strftime('%m/%d/%Y') %>
+                </span>
+          </li>
+          <!-- /.timeline-label -->
 
-          <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+          <% topics.each do | topic |%>
+            <!-- timeline item -->
+            <li>
+              <i class="fa fa-th-list bg-blue"></i>
 
-            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+              <div class="timeline-item">
+                <span class="time"><i class="fa fa-clock-o"></i> Updated at <%= topic.updated_at.strftime('%m/%d/%Y @ %H:%M') %></span>
 
-            <div class="timeline-body">
-              Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-              weebly ning heekya handango imeem plugg dopplr jibjab, movity
-              jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-              quora plaxo ideeli hulu weebly balihoo...
-            </div>
-            <div class="timeline-footer">
-              <a class="btn btn-primary btn-xs">Read more</a>
-              <a class="btn btn-danger btn-xs">Delete</a>
-            </div>
-          </div>
-        <li>
+                <h3 class="timeline-header"><%= topic.name %></h3>
+
+                <div class="timeline-body">
+                  Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                  weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                  jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                  quora plaxo ideeli hulu weebly balihoo...
+                </div>
+                <div class="timeline-footer">
+                  <%= link_to "Enter", topic_path(topic), class:"btn btn-primary btn-xs" %>
+                  <a class="btn btn-danger btn-xs">Delete</a>
+                </div>
+              </div>
+            <li>
+          <% end %>
+        <% end %>
       </ul>
     </div>
     <!-- /.col -->
