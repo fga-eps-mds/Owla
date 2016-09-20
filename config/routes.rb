@@ -3,8 +3,6 @@ Rails.application.routes.draw do
   root 'sessions#new'
 
   resources :members
-  resources :rooms
-  resources :topics
 
   post '/rooms/signup' => 'rooms#signup'
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
@@ -15,6 +13,9 @@ Rails.application.routes.draw do
   get '/logout',  to: 'sessions#destroy'
 
   #post '/rooms/:id/signup', to: 'rooms#signup'
+  resources :rooms
+  resources :topics
   resources :questions
+  resources :answers
 
 end
