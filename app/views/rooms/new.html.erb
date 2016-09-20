@@ -3,7 +3,7 @@
   <div class = "notice"><%= flash[:alert] %></div>
 <% end %>
 
-<%= form_for @room do |room| %>
+<%= form_for @rooms do |room| %>
   <%= room.label :name, "Name" %>
   <%= room.text_field :name %>
   <%= room.submit "New room" %>

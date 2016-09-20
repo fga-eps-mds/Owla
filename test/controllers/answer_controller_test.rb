@@ -8,7 +8,6 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     @room = Room.create(name: "calculo 1", description: "calculo1")
 
     @topic = @room.topics.new(name: "limites")
-    @topic.member = @member
     @topic.save
 
     @question = @topic.questions.new(content: "How did I get here?")

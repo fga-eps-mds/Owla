@@ -15,7 +15,12 @@ class QuestionsController < ApplicationController
 	end
 
 	def create
+		# @topic = Topic.find(params[:topic_id])
+
+		# @question = @topic.questions.create()
+
 		@question = Question.new(question_params)
+		@question.member = current_member
 		puts "qlqr dentro"
 		if @question.save
 			puts "qlqr if"

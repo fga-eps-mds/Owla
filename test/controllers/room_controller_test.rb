@@ -64,7 +64,7 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
   test "should destroy room" do
     assert_difference('Room.count', -1) do
       delete "/rooms/#{@room.id}"
-      assert_redirected_to rooms_path
+      assert_redirected_to  member_rooms_path(@member)
     end
   end
 end

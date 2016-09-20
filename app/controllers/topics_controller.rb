@@ -38,7 +38,8 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(topic_params)
-
+    if current_member == @room.owner
+    @room.topics.create
     if @topic.save
       redirect_to topics_path
     else

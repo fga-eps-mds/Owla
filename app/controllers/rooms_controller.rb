@@ -33,14 +33,16 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new(room_params)
 
-      if @room.save
-        redirect_to rooms_path
-      else
-        flash[:alert] = "Sala não foi criada"
-        render 'new'
-      end
+    @room = Room.new(room_params)
+    @room.owner = current_member
+
+    if @room.save
+      redirect_to rooms_path
+    else
+      flash[:alert] = "Sala não foi criada"
+      render 'new'
+    end
   end
 
   def update
@@ -58,7 +60,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @room.destroy
 
-    redirect_to rooms_path    
+    redirect_to member_rooms_path    
   end
 
   private
