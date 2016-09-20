@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   #post '/rooms/:id/signup', to: 'rooms#signup'
 
   resources :rooms
-  resources :topics  
+  resources :topics 
+  resources :questions
+  resources :answers
 
 end

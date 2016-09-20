@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class QuestionControllerTest < ActionDispatch::IntegrationTest
+class AnswersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
