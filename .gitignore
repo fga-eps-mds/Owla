@@ -23,9 +23,6 @@ Gemfile.lock
 #Ignore coverage results
 coverage
 
-# Ignore Gemfile.lock
-Gemfile.lock
-
 
 db/schema.rb
 assets/*

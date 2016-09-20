@@ -28,20 +28,21 @@
           <%= m.password_field :password_confirmation, class: 'form-control', placeholder: 'Retype password' %>
           <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
         </div>
-				<div class="form-group has-feedback">
-					<%= m.file_field :avatar, class: 'form-control' %>
-				</div>
+        <div class="form-group has-feedback">
+            <%= m.file_field :avatar, class: 'form-control' %>
+        </div>
         <div class="row">
           <div class="col-xs-8">
             <!-- terms of service checkbox -->
-	     		</div>
+          </div>
+          <div class="col-xs-4">
             <%= m.submit 'Register', class:'btn btn-primary btn-block btn-flat' %>
+          </div>
         </div>
           <!-- /.col -->
-       </div>
-		 <% end %>
+       <% end %>
 
-      <%= link_to 'I already have a membership' , root_path, class:"text-center" %>
+       <%= link_to 'I already have a membership' , root_path, class:"text-center" %>
     </div>
     <!-- /.form-box -->
   </div>
