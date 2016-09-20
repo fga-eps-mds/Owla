@@ -3,7 +3,7 @@ require 'test_helper'
 class RoomTest < ActiveSupport::TestCase
 
   def setup
-    @room = Room.create(name: "IAL")
+    @room = Room.create(name: "IAL", description:"Introdução à Álgebra Linear")
   end
 
   test "should save a valid room" do
@@ -11,24 +11,24 @@ class RoomTest < ActiveSupport::TestCase
   end
 
   test "should save room with exactly 2 or 255 characters name" do
-    @valid_1 = Room.create(name: "-"*2)
+    @valid_1 = Room.create(name: "-"*2, description: "-"*2)
     assert @valid_1.save
-    @valid_2 = Room.create(name: "-"*255)
+    @valid_2 = Room.create(name: "-"*255, description: "-"*2)
     assert @valid_2.save
   end
 
   test "should not save an unamed room" do
-    @invalid = Room.create(name: nil)
+    @invalid = Room.create(name: nil, description: "-"*2)
     assert_not @invalid.save
   end
 
   test "should not save a room with name smaller than 2 characters" do
-    @invalid = Room.create(name: "C")
+    @invalid = Room.create(name: "C", description: "-"*2)
     assert_not @invalid.save
   end
 
   test "should not save a room with name bigger than 255 characters" do
-    @invalid = Room.create(name: "-"*256)
+    @invalid = Room.create(name: "-"*256, description: "-"*2)
     assert_not @invalid.save
   end
 
