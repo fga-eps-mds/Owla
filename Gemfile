@@ -28,6 +28,14 @@ gem "paperclip", "~> 4.3"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+group :cucumber do
+  gem 'capybara',               '~> 2.2'
+  gem 'cucumber-rails',         '~> 1.4.2', :require => false
+  gem 'database_cleaner',       '~> 1.3'
+  gem 'selenium-webdriver',     '>= 2.53'
+  gem 'chromedriver-helper' if ENV['SELENIUM_DRIVER'] == 'chrome'
+end
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-rtl'
   gem 'rails-assets-jquery-knob'
