@@ -20,7 +20,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
      }
    end
 
-   test "should edit anwer" do
+   test "should edit answer" do
      log_in @member
      @question
      answer_id = @answer.id
