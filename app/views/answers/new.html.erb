@@ -2,7 +2,7 @@
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
-<%= form_for @answer do |m| %>
+<%= form_for @answer, url: question_answers_path(@question.id) do |m| %>
 <% if !@answer.errors.empty? %>
 	<%= @answer.errors.full_messages %>
   	<% end %>

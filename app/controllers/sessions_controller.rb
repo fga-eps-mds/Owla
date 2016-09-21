@@ -19,6 +19,6 @@ class SessionsController < ApplicationController
     if current_member
       log_out
     end
-    redirect_to rooms_path
+    redirect_to login_url
   end
 end

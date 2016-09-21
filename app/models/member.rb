@@ -1,7 +1,7 @@
 class Member < ApplicationRecord
 
+  has_many :my_rooms, class_name: 'Room', foreign_key: 'owner_id'
   has_and_belongs_to_many :rooms
-  has_many :topics
   has_many :questions
   has_many :answers
 
@@ -16,5 +16,6 @@ class Member < ApplicationRecord
   validates :password_confirmation, presence: true, length: { maximum:15, minimum: 6 }, if: :password_digest_changed?
 
   has_secure_password
-
+  
+ 
 end

@@ -2,13 +2,12 @@
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
-<%= form_for @question do |m| %>
+<%= form_for @question, url: topic_questions_path(@topic.id) do |m| %>
 <% if !@question.errors.empty? %>
 	<%= @question.errors.full_messages %>
   	<% end %>
 	<%= m.label :content, "Content" %>
 	<%= m.text_field :content %>
 	<br>
-  <br>
 	<%= m.submit "New Question" %>
 <% end %>

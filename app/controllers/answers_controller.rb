@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
   end
 
   def new
+    @question = Question.find(params[:question_id])
     @answer = Answer.new
   end
 
@@ -15,9 +16,12 @@ class AnswersController < ApplicationController
   end
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = Answer.new(answer_params)
+    @answer.question = @question
+    @answer.member = current_member
     if @answer.save
-      redirect_to answers_path
+      redirect_to question_answers_path(@question)
     else
       flash[:alert] = "Answer not created"
       render 'new'
@@ -41,12 +45,13 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer = Answer.find(params[:id])
+    @question = @answer.question
     @answer.destroy
-    redirect_to answers_path
+    redirect_to question_answers_path(@question)
   end
 
   private
     def answer_params
-    params.require(:answer).permit(:content)
-  end
+      params.require(:answer).permit(:content, :question_id)
+    end
 end
