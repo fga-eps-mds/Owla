@@ -7,6 +7,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def new
+		@topic = Topic.find(params[:topic_id])
 		@question = Question.new
 	end
 
@@ -15,16 +16,13 @@ class QuestionsController < ApplicationController
 	end
 
 	def create
-		# @topic = Topic.find(params[:topic_id])
-
-		# @question = @topic.questions.create()
+		@topic = Topic.find(params[:topic_id])
 
 		@question = Question.new(question_params)
+		@question.topic = @topic
 		@question.member = current_member
-		puts "qlqr dentro"
 		if @question.save
-			puts "qlqr if"
-			redirect_to questions_path
+			redirect_to topic_questions_path(@topic)
 		else 
 			puts @question.errors.full_messages
 			flash[:alert] = "Question not created"
@@ -49,13 +47,14 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		@question = Question.find(params[:id])
+		@topic = @question.topic
 		@question.destroy
-		redirect_to questions_path
+		redirect_to topic_questions_path(@topic)
 	end
 
 	private
 
 		def question_params
-			params.require(:question).permit(:content)
+			params.require(:question).permit(:content, :topic_id)
 		end
 end

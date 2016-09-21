@@ -8,12 +8,14 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
                           password: '123456', 
                           password_confirmation: '123456', 
                           alias: 'mateusin')
-    @room = Room.create(name: 'teste', description: 'teste2')
+    @room = Room.new(name: 'teste', description: 'teste2')
+    @room.owner = @member
+    @room.save
     sign_in_as @member
   end
 
   test "should get index" do
-    get rooms_path
+    get member_rooms_path(@member)
 
     assert_response :success
   end
@@ -21,34 +23,35 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
   test "should not get index if not logged in" do
     sign_out_as @member
 
-    get rooms_path
+    get member_rooms_path(@member)
     assert_redirected_to login_url
   end
 
   test "should get new" do
-    get '/rooms/new'
+    get new_member_room_path(@member)
+
     assert_response :success
   end
 
   test "should not get new if not logged in" do
     sign_out_as @member
 
-    get '/rooms/new'
+    get new_member_room_path(@member)
     assert_redirected_to login_url
   end
 
   test "should create room" do
-    post '/rooms', params: { room: { name: "teste", description: "testedescription" } }
-    assert_redirected_to rooms_path
+    post  "/members/#{@member.id}/rooms/", params: { room: { name: "teste", description: "testedescription" } }
+    assert_redirected_to member_rooms_path(@member.id)
   end
 
   test "should not create room when missing name" do
-    post '/rooms', params: { room: { name: '' } }
-    assert_select '.alert'
+    post "/members/#{@member.id}/rooms/", params: { room: { name: '' } }
+    assert_redirected_to new_member_room_path(@member)
   end
 
   test "should get edit room" do
-    get "/rooms/#{@room.id}/edit"
+    get edit_room_path(@room)
     assert_response :success
   end
 

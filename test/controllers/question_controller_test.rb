@@ -4,47 +4,42 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
-    @room = Room.create(name: "calculo 1", description: "teste1")
+    
+    @room = Room.new(name: "calculo 1", description: "teste1")
+    @room.owner = @member;
+    @room.save
 
-    @topic = @room.topics.new(name: "limites")
+    @topic = @room.topics.new(name: "limites", description: "description1")
     @topic.save
 
     @question = @topic.questions.new(content: "How did I get here?")
     @question.member = @member
     @question.save
 
-    @answer = @question.answers.create(content: "Resposta da pergunta")
-    @answer.member = @member
-    @answer.save
+    sign_in_as @member
   end
 
   test "should get new" do
-    log_in @member
-    get new_question_path
+    get new_topic_question_path(@topic)
     assert_response :success
   end
 
   test "should get show" do
-    log_in @member
+
     get question_path(@question)
     assert_response :success
   end
 
   test "should create question" do
-    log_in @member
-    post '/questions', params: {
+    post "/topics/#{@topic.id}/questions", params: {
       question: {
         content: "How did I get here?",
-        topic: @topic,
-        member: @member
       }
     }
-    assert_redirected_to questions_path
+    assert_redirected_to topic_questions_path(@topic)
   end
 
   test "should edit question" do
-    log_in @member
-
     question_content = @question.content
 
     patch "/questions/#{@question.id}", params: {
@@ -57,6 +52,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   end
 
    test "should not edit question when member is not logged in" do
+    sign_out_as @member
     question_id = @question.id
     question_content = @question.content
     patch "/questions/#{question_id}", params: {
@@ -69,26 +65,16 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should delete question" do
-    log_in @member
-    get '/questions'
- 
     assert_difference('Question.count', -1) do
       delete "/questions/#{@question.id}"
+      assert_redirected_to topic_questions_path(@topic)
     end
-
-    assert_redirected_to '/questions'
   end
 
   test "should not delete the question if user is not logged in" do
+    sign_out_as @member
     delete "/questions/#{@question.id}"
     assert_redirected_to login_path
   end
-
-  
-  private
-
-    def log_in(member)
-      post '/login/', params: { session: { email: member.email, password: member.password } }
-    end
 
 end
