@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  	skip_before_action :verify_authenticity_token if Rails.env.test?
+  skip_before_action :verify_authenticity_token if Rails.env.test?
 	before_action :authenticate_member
 	
 	def index

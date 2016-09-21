@@ -1,7 +1,7 @@
 class Member < ApplicationRecord
 
+  has_many :my_rooms, class_name: 'Room', foreign_key: 'owner_id'
   has_and_belongs_to_many :rooms
-  has_many :topics
   has_many :questions
   has_many :answers
 
@@ -19,5 +19,4 @@ class Member < ApplicationRecord
 	validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   has_secure_password
-
 end

@@ -4,8 +4,8 @@ class QuestionTest < ActiveSupport::TestCase
 
   def setup
     @member = Member.create(name: "Linus Torvalds", alias: "Lineu", email: "linuxFTW@linux.com", password: "i<3linux", password_confirmation: "i<3linux")
-    @room = Room.create(name: "c1", description: "-"*2)
-    @topic = @room.topics.create(name: "Limite", member: @member)
+    @room = Room.create(name: "c1", description: "-"*2, owner: @member)
+    @topic = @room.topics.create(name: "Limite", description: "example description")
   end
 
   test "should not save a question with a null name" do

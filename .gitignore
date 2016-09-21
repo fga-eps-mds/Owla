@@ -34,3 +34,5 @@ public/system/*
 *.sw*
 
 *~
+
+public/system

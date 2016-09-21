@@ -24,7 +24,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   	assert_redirected_to "/members/#{@member.id}"
 
   	sign_out_as @member
-  	follow_redirect!
   	assert_redirected_to login_url
   end
 end

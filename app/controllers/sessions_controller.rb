@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       redirect_to home_path(member)
       flash[:success] = 'Log in bem-sucedido!'
     else
-      flash.now[:danger] = 'Usuário ou senha inválidos!'
+      flash.now[:danger] = 'Invalid username or password'
       render 'new'
     end
   end
