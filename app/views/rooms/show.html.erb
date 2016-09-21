@@ -2,7 +2,13 @@
 <section class="content-header">
   <h1>
     <%= @room.name %>
-    <%= link_to 'Join', rooms_signup_path(id: @room.id), class: 'btn btn-success btn-xs', method: :post%>
+    <% if current_member == @room.owner %>
+      <%= link_to 'Edit', edit_room_path(@room), class: 'btn btn-sm btn-primary'%>
+    <% elsif @room.presence_in current_member.rooms %>
+      <%= link_to 'Exit', rooms_signout_path(id: @room.id), class: 'btn btn-sm btn-danger', method: :post%>
+    <% else %>
+      <%= link_to 'Join', rooms_signup_path(id: @room.id), class: 'btn btn-sm btn-success', method: :post%>
+    <% end %>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -12,7 +18,6 @@
 
 <!-- Main content -->
 <section class="content">
-
   <!-- row -->
   <div class="row">
     <div class="col-md-12">
@@ -39,10 +44,7 @@
                 <h3 class="timeline-header"><%= topic.name %></h3>
 
                 <div class="timeline-body">
-                  Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                  weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                  jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                  quora plaxo ideeli hulu weebly balihoo...
+                  <%= topic.description %>
                 </div>
                 <div class="timeline-footer">
                   <%= link_to "Enter", topic_path(topic), class:"btn btn-primary btn-xs" %>

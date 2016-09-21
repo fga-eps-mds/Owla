@@ -10,6 +10,11 @@ class RoomsController < ApplicationController
     @member = Member.find(params[:member_id])
     @room = Room.new
     @room.owner = @member
+
+    @box_title = "Create your own room"
+    @subtitle  = "Create"
+    @placeholder_name = "Title"
+    @placeholder_description = "Description"
   end
 
   def signup
@@ -22,7 +27,20 @@ class RoomsController < ApplicationController
       room.members << member
     end
 
-    redirect_to member_rooms_path(room.owner)
+    redirect_to room_path(room)
+  end
+
+  def signout
+    member = current_member
+    room = Room.find(params[:id])
+
+    if room.members.include?(member)
+      room.members.delete(member)
+    else
+      flash[:notice] = "You are not registered in this room"
+    end
+
+    redirect_to room_path(room)
   end
 
   def show
@@ -31,6 +49,10 @@ class RoomsController < ApplicationController
 
   def edit
     @room = Room.find(params[:id])
+    @box_title = "Edit your room"
+    @subtitle  = "Settings"
+    @placeholder_name = @room.name
+    @placeholder_description = @room.description
   end
 
   def create
@@ -39,7 +61,7 @@ class RoomsController < ApplicationController
     @room.owner = current_member
 
     if @room.save
-      redirect_to member_rooms_path(@room.owner)
+      redirect_to room_path(@room)
     else
       flash[:alert] = "Error creating room"
       redirect_to new_member_room_path(current_member.id)
@@ -49,7 +71,7 @@ class RoomsController < ApplicationController
   def update
     @room = Room.find(params[:id])
     if @room.update_attributes(room_params)
-      redirect_to room_path
+      redirect_to room_path(@room)
     else
       flash[:alert] = "Error updating room"
       render 'edit'

@@ -38,7 +38,7 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
 
   test "should create room" do
     post  "/members/#{@member.id}/rooms/", params: { room: { name: "teste", description: "testedescription" } }
-    assert_redirected_to member_rooms_path(@member.id)
+    assert_redirected_to room_path(@member.my_rooms.last)
   end
 
   test "should not create room when missing name" do

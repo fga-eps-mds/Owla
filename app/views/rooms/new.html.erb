@@ -1,11 +1,1 @@
-<h1>New Room</h1>
-<% if flash[:alert] %>
-  <div class = "notice"><%= flash[:alert] %></div>
-<% end %>
-<%= form_for @room, url: member_rooms_path(@member.id) do |room| %>
-	  <%= room.label :name, "Name" %>
-	  <%= room.text_field :name %>
-	  <%= room.label :description, "description" %>
-	  <%= room.text_field :description %>
-	  <%= room.submit "New room" %>
-<% end %>
+<%= render 'form' %>

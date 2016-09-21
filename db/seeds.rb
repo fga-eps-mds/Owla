@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+#CREATING MEMBERS
 puts "Creating Victor Navarro User"
 member = Member.create!(name: 'Victor Navarro', alias: 'vi',
 email: 'victor@gmail.com', password: 'testtest', password_confirmation: 'testtest')
@@ -22,15 +24,54 @@ puts "Creating Vitor Barbosa User"
 member4 = Member.create!(name: 'Vitor Barbosa', alias: 'vivi',
 email: 'vitor@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
-puts "Creating Humanidades e Cidadania room"
-member2.rooms.create!(name: 'Humanidade e Cidadania', description: 'Professora Sônia Albuquerque')
+
+#CREATING ROOMS
+puts "Creating Humanidade e Cidadania room"
+room = member2.my_rooms.create!(name: 'Humanidade e Cidadania', description: 'Professora Sônia Albuquerque')
 
 puts "Creating Fundamentos de Sistemas Distribuidos room"
-member2.rooms.create!(name: 'Fundamentos de Sistemas Distribuidos', description: 'Professor Fernando W. Cruz')
+room2 =member2.my_rooms.create!(name: 'Fundamentos de Sistemas Distribuidos', description: 'Professor Fernando W. Cruz')
 
-puts "Creating Palestra Empreendendo sua Igreja room"
-member2.rooms.create!(name: 'Palestra Empreendendo sua Ideia', description: 'Palestrante José Joaquim')
+puts "Creating Palestra Empreendendo sua ideia room"
+room3 = member.my_rooms.create!(name: 'Palestra Empreendendo sua Ideia', description: 'Palestrante José Joaquim')
 
-top = member2.topics.create(name: 'Salvando o Planeta')
-member2.rooms.first.topics << top
-top.save
+
+#APPENDING ROOMS TO MEMBERS
+puts "#{room.name} to #{member4.name}, #{member.name}, and #{member4.name}"
+member4.rooms << room
+member3.rooms << room
+member.rooms << room
+
+puts "#{room2.name} to #{member.name}"
+member.rooms << room2
+
+puts "#{room3.name} to #{member2.name}"
+member2.rooms << room3
+
+
+#CREATING TOPICS
+puts "Creating topics for topic: #{room.name}"
+top = room.topics.create(name: "O futuro do Planeta Terra", description: "Discuta aqui sobre medidadas para ajudar o mundo!")
+top1 = room.topics.create(name: "Reciclando e Empreendendo", description: "Palestra do professor Jão Carlos")
+top2 = room.topics.create(name: "Soluções Energéticas", description: "Soluções para o problema de energia do futuro!")
+
+
+#CREATING QUESTIONS
+puts "Creating questions for topic: #{top.name}"
+ask = top.questions.new(content: "Eu não entendi o sentido do filme Avatar")
+ask2 = top.questions.new(content: "Tenho uma ideia para isso e preciso de pessoas interessadas!")
+
+member4.questions << ask
+member.questions << ask2
+
+ask.save
+ask2.save
+
+ans = ask.answers.new(content: "E alguém sabe?")
+ans2 = ask.answers.new(content: "A professora já ira falar sobre o filme.")
+
+member2.answers << ans
+member3.answers << ans2
+
+ans.save
+ans2.save

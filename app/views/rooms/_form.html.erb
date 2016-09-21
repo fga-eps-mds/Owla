@@ -1,0 +1,51 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Room
+    <small><%= @subtitle %></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Room</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-7">
+      <!-- general form elements disabled -->
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= @box_title %></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <%= form_for @room, url: member_rooms_path(@room.owner.id) do |room| %>
+            <!-- text input -->
+            <div class="form-group">
+              <%= room.text_field :name, class:"form-control", placeholder: @placeholder_name %>
+            </div>
+            <!-- textarea -->
+            <div class="form-group">
+              <%= room.text_area :description, class:"form-control", placeholder: @placeholder_description %>
+            </div>
+            <%= button_tag(type: "submit", class: "btn btn-app pull-right") do %>
+                <i class="fa fa-save"></i>
+            <% end %>
+          <% end %>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+      <div class="input-group margin">
+        <div class="input-group-btn">
+          <% if @room.valid? %>
+            <%= button_to "Delete Room", room_path(@room), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!--/.col (right) -->
+  </div>
+</section>
