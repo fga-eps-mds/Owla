@@ -4,6 +4,7 @@
     <%= @room.name %>
     <% if current_member == @room.owner %>
       <%= link_to 'Edit', edit_room_path(@room), class: 'btn btn-sm btn-primary'%>
+      <%= link_to 'New Topic', new_room_topic_path(@room), class: 'btn btn-sm btn-default'%>
     <% elsif @room.presence_in current_member.rooms %>
       <%= link_to 'Exit', rooms_signout_path(id: @room.id), class: 'btn btn-sm btn-danger', method: :post%>
     <% else %>
@@ -47,8 +48,17 @@
                   <%= topic.description %>
                 </div>
                 <div class="timeline-footer">
-                  <%= link_to "Enter", topic_path(topic), class:"btn btn-primary btn-xs" %>
-                  <a class="btn btn-danger btn-xs">Delete</a>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <% if current_member == @room.owner %>
+                        <%= button_to "Delete", topic_path(topic), class: "btn btn-danger btn-xs pull-right",
+                            data: { confirm: "Hmmm! Are you sure?" }, method: :delete, style: "margin-right: 6px;" %>
+                        <%= button_to "Manage", edit_topic_path(topic), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
+                            method: :get%>
+                      <% end %>
+                      <%= link_to "Enter", topic_path(topic), class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+                    </div>
+                  </div>
                 </div>
               </div>
             <li>

@@ -15,6 +15,7 @@ class RoomsController < ApplicationController
     @subtitle  = "Create"
     @placeholder_name = "Title"
     @placeholder_description = "Description"
+    @url = member_rooms_path(@member)
   end
 
   def signup
@@ -53,6 +54,7 @@ class RoomsController < ApplicationController
     @subtitle  = "Settings"
     @placeholder_name = @room.name
     @placeholder_description = @room.description
+    @url = room_path(@room)
   end
 
   def create

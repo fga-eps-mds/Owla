@@ -1,12 +1,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
-    Room
+    Question
     <small><%= @subtitle %></small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Room</li>
+    <li class="active">Question</li>
   </ol>
 </section>
 
@@ -21,14 +21,10 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <%= form_for @room, url: @url do |room| %>
-            <!-- text input -->
-            <div class="form-group">
-              <%= room.text_field :name, class:"form-control", placeholder: @placeholder_name %>
-            </div>
+          <%= form_for @question, url: @url do |question| %>
             <!-- textarea -->
             <div class="form-group">
-              <%= room.text_area :description, class:"form-control", placeholder: @placeholder_description %>
+              <%= question.text_area :content, class:"form-control", placeholder: @placeholder_content %>
             </div>
             <%= button_tag(type: "submit", class: "btn btn-app pull-right") do %>
                 <i class="fa fa-save"></i>
@@ -40,8 +36,8 @@
       <!-- /.box -->
       <div class="input-group margin">
         <div class="input-group-btn">
-          <% if @room.valid? %>
-            <%= button_to "Delete Room", room_path(@room), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
+          <% if @question.valid? %>
+            <%= button_to "Delete Room", question_path(@question), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
           <% end %>
         </div>
       </div>

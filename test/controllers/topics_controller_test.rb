@@ -15,12 +15,11 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
 
   end
 
-	test "should get new" do
-  
+  test "should get new" do
     get new_room_topic_path(@room)
     assert_response :success
   end
-  
+
   test "should show topic" do
     @topic = Topic.new(name: 'SomeTopic', description: 'somedescription')
     @topic.room = @room
@@ -30,19 +29,17 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not show topic"  do
-    
     get '/topics/show', params: {id: 12}
     assert_response :missing
   end
 
-	test "should create topic" do
-    
+  test "should create topic" do
     post "/rooms/#{@room.id}/topics", params: {
        topic: {
          name: "SomeTopic",
          description: "somedescription"
         }
       }
-    assert_redirected_to room_topics_path(@room)
+    assert_redirected_to topic_path(@room.topics.last)
   end
 end

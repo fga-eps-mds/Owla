@@ -1,16 +1,1 @@
-<h1>New Topic</h1>
-<% if flash[:alert] %>
-    <div class="notice"><%= flash[:alert] %></div>
-<% end %>
-<%= form_for @topic, url: room_topics_path(@room.id) do |m| %>
-	<% if !@topic.errors.empty? %>
-		<%= @topic.errors.full_messages %>
-  	<% end %>
-	<%= m.label :name, "Name" %>
-	<%= m.text_field :name %>
-	<br>
-	<%= m.label :description, "Description" %>
-	<%= m.text_field :description %>
-  	<br>
-	<%= m.submit "New Topic" %>
-<% end %>
+<%= render 'form' %>

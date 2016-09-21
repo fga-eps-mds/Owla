@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
     @answer.question = @question
     @answer.member = current_member
     if @answer.save
-      redirect_to question_answers_path(@question)
+      redirect_to topic_path(@question.topic)
     else
       flash[:alert] = "Answer not created"
       render 'new'
@@ -37,7 +37,7 @@ class AnswersController < ApplicationController
 
     if @answer.update_attributes(answer_params)
       flash[:success] = "Answer updated"
-      redirect_to answers_path
+      redirect_to topic_path(@question.topic)
     else
       render 'edit'
     end

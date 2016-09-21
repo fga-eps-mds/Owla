@@ -3,35 +3,46 @@ class TopicsController < ApplicationController
     before_action :authenticate_member
 
     def index
-        @topics = Topic.all
+      @topics = Topic.all
     end
 
     def new
-        @room = Room.find(params[:room_id])
-        @topic = Topic.new
+      @room = Room.find(params[:room_id])
+      @topic = Topic.new
+      @box_title = "Create a topic"
+      @subtitle  = "Create"
+      @placeholder_name = "Title"
+      @placeholder_description = "Description"
+      @url = room_topics_path(@room)
     end
 
     def show
-        @topic = Topic.find(params[:id])
+      @topic = Topic.find(params[:id])
+      @answer = Answer.new
     end
 
     def edit
-        @topic = Topic.find(params[:id])
+      @topic = Topic.find(params[:id])
+      @box_title = "Edit your topic"
+      @subtitle  = "Settings"
+      @placeholder_name = @topic.name
+      @placeholder_description = @topic.description
+      @url = topic_path(@topic)
     end
 
     def destroy
-        @topic = Topic.find(params[:id])
-        @room = @topic.room
-        @topic.destroy
+      @topic = Topic.find(params[:id])
+      @room = @topic.room
+      @topic.destroy
 
-        redirect_to room_topics_path @room
+      redirect_to room_path @room
     end
 
   def update
     @topic = Topic.find(params[:id])
 
     if @topic.update_attributes(topic_params)
-      redirect_to topics_path
+      redirect_to topic_path @topic
     else
       flash[:alert] = "O tópico não foi criado"
       render 'edit'
@@ -43,7 +54,7 @@ class TopicsController < ApplicationController
     @room = Room.find(params[:room_id])
     @topic.room = @room
     if @topic.save
-      redirect_to room_topics_path(@room)
+      redirect_to topic_path(@topic)
     else
       flash[:alert] = "Não foi possível criar o seu tópico"
       render 'new'

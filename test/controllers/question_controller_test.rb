@@ -36,7 +36,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
         content: "How did I get here?",
       }
     }
-    assert_redirected_to topic_questions_path(@topic)
+    assert_redirected_to topic_path(@topic)
   end
 
   test "should edit question" do
@@ -67,7 +67,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
     test "should delete question" do
       assert_difference('Question.count', -1) do
       delete "/questions/#{@question.id}"
-      assert_redirected_to topic_questions_path(@topic)
+      assert_redirected_to topic_path(@topic)
     end
   end
 

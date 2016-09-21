@@ -7,8 +7,13 @@ class QuestionsController < ApplicationController
 	end
 
 	def new
-        @topic = Topic.find(params[:topic_id])
-		@question = Question.new
+      @topic = Topic.find(params[:topic_id])
+      @question = Question.new
+      @box_title = "Create a question"
+      @subtitle  = "Create"
+      @placeholder_name = "Title"
+      @placeholder_description = "Description"
+      @url = topic_questions_path(@topic)
 	end
 
 	def show
@@ -23,7 +28,7 @@ class QuestionsController < ApplicationController
         @question.member = current_member
 
 		if @question.save
-            redirect_to topic_questions_path(@topic)
+			redirect_to topic_path(@question.topic)
 		else
 			flash[:alert] = "Question not created"
             redirect_to new_topic_questions_path(@topic)
@@ -31,7 +36,12 @@ class QuestionsController < ApplicationController
 	end
 
 	def edit
-		@question = Question.find(params[:id])
+      @question = Question.find(params[:id])
+      @topic = @question.topic
+      @box_title = "Edit your question"
+      @subtitle  = "Settings"
+      @placeholder_description = @question.content
+      @url = question_path(@question)
 	end
 
 	def update
@@ -39,7 +49,7 @@ class QuestionsController < ApplicationController
 
 		if @question.update_attributes(question_params)
 			flash[:success] = "Questão atualizada com sucesso"
-			redirect_to @question
+			redirect_to topic_path(@question.topic_id)
 		else
 			render 'edit'
 		end
@@ -49,7 +59,7 @@ class QuestionsController < ApplicationController
       @question = Question.find(params[:id])
       @topic = @question.topic
       @question.destroy
-      redirect_to topic_questions_path(@topic)
+      redirect_to topic_path(@topic)
 	end
 
 	private
