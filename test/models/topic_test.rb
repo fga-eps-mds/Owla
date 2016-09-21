@@ -4,8 +4,8 @@ class TopicTest < ActiveSupport::TestCase
 
 	def setup
 		@member = Member.create(name: "Linus Torvalds", alias: "Lineu", email: "linuxFTW@linux.com", password: "i<3linux", password_confirmation: "i<3linux")
-		@room = Room.create(name: "MDS", description: "-"*2)
-		@topic = @room.topics.create(name: "RUP", member: @member)
+		@room = Room.create(name: "MDS", description: "-"*2, owner: @member)
+		@topic = @room.topics.create(name: "RUP", description: "example description")
 	end
 
 	test "should not save a Topic with blank name" do
@@ -24,9 +24,9 @@ class TopicTest < ActiveSupport::TestCase
 	end
 
 	test "should save topic with exactly 2 or 255 characters name" do
-		@valid_1 = @room.topics.create(name: "-"*2, member: @member)
+		@valid_1 = @room.topics.create(name: "-"*2, description: "example description")
 		assert @valid_1.save
-		@valid_2 = @room.topics.create(name: "-"*255, member: @member)
+		@valid_2 = @room.topics.create(name: "-"*255, description: "example description")
 		assert @valid_2.save
 	end
 
@@ -37,19 +37,14 @@ class TopicTest < ActiveSupport::TestCase
 		assert_not duplicate_topic.save
 	end
 
-	test "should not save a topic without an author" do
-		@topic = @room.topics.new(name: "Without an author =/")
-		assert_not @topic.save
-	end
-
 	test "should not save two topics with same downcase name" do
 		assert @topic.save
-		@topic2 = @room.topics.create(name: "rup", member: @member)
+		@topic2 = @room.topics.create(name: "rup", description: "example description")
 		assert_not @topic2.save
 	end
 
 	test "should not save a topic without a room" do
-		@invalid = Topic.create(name: "Invalid", member: @member)
+		@invalid = Topic.create(name: "Invalid", description: "example description")
 		assert_not @invalid.save
 	end
 
@@ -65,12 +60,12 @@ class TopicTest < ActiveSupport::TestCase
 	end
 
 	test "should delete topic" do
-			topic_id = @topic.id
-			count_before = Topic.all.count
-			@topic.destroy
-			recovered_topic = Topic.where(:id => topic_id)
-			count_after = Topic.all.count
-			assert_equal recovered_topic.count, 0
-			assert_equal count_before,count_after+1
+		topic_id = @topic.id
+		count_before = Topic.all.count
+		@topic.destroy
+		recovered_topic = Topic.where(:id => topic_id)
+		count_after = Topic.all.count
+		assert_equal recovered_topic.count, 0
+		assert_equal count_before,count_after+1
 	end
 end

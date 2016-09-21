@@ -4,8 +4,8 @@ class AnswerTest < ActiveSupport::TestCase
 
   def setup
     @member = Member.create(name: "Linus Torvalds", alias: "Lineu", email: "linuxFTW@linux.com", password: "i<3linux", password_confirmation: "i<3linux")
-    @room = Room.create(name: "c1", description: "-"*2)
-    @topic = @room.topics.create(name: "limit", member: @member)
+    @room = Room.create(name: "c1", description: "-"*2, owner: @member)
+    @topic = @room.topics.create(name: "limit", description: "example description")
     @question = @topic.questions.create(content: "Is there a limit?", member: @member)
   end
 
