@@ -16,15 +16,13 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get member_rooms_path(@member)
-
     assert_response :success
   end
 
   test "should not get index if not logged in" do
     sign_out_as @member
-
     get member_rooms_path(@member)
-    assert_redirected_to login_url
+    assert_redirected_to root_path
   end
 
   test "should get new" do
@@ -34,9 +32,8 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
 
   test "should not get new if not logged in" do
     sign_out_as @member
-
     get new_member_room_path(@member)
-    assert_redirected_to login_url
+    assert_redirected_to root_path
   end
 
   test "should create room" do

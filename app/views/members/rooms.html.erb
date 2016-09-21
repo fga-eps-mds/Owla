@@ -17,7 +17,7 @@
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <%= button_to "New Room", new_room_path, class: "btn btn-default" %>
+          <%= button_to "New Room", new_member_room_path(current_member), class: "btn btn-default", method: :get %>
           <div class="box-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
               <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">

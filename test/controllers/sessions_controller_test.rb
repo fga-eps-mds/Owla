@@ -16,14 +16,14 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create session" do
   	sign_in_as @member
-  	assert_redirected_to "/members/#{@member.id}"
+  	assert_redirected_to home_path(@member)
   end
 
   test "should logout" do
   	sign_in_as @member
-  	assert_redirected_to "/members/#{@member.id}"
+  	assert_redirected_to home_path(@member)
 
   	sign_out_as @member
-  	assert_redirected_to login_url
+  	assert_redirected_to root_path
   end
 end

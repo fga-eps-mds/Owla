@@ -19,7 +19,7 @@ module SessionsHelper
 
   def authenticate_member
     if !logged_in?
-      redirect_to login_path
+      redirect_to root_path
     end
   end
 

@@ -36,7 +36,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
 
     if @answer.update_attributes(answer_params)
-      flash[:success] = "Resposta atualizada com sucesso"
+      flash[:success] = "Answer updated"
       redirect_to answers_path
     else
       render 'edit'

@@ -20,10 +20,9 @@ class RoomsController < ApplicationController
       flash[:notice] = "You are already registered in this room"
     else
       room.members << member
-      member.rooms << room
     end
 
-    redirect_to rooms_path
+    redirect_to member_rooms_path(room.owner)
   end
 
   def show

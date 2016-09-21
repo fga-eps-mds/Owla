@@ -74,7 +74,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   test "should not delete the question if user is not logged in" do
     sign_out_as @member
     delete "/questions/#{@question.id}"
-    assert_redirected_to login_path
+    assert_redirected_to root_path
   end
 
 end

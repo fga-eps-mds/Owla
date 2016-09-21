@@ -37,7 +37,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
      answer_content = @answer.content
      patch "/answers/#{answer_id}", params: {
        answer: { content: "verdadeira resposta da pergunta" }
-     } 
+     }
 
      @answer.reload
 
@@ -50,7 +50,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     answer_content = @answer.content
     patch "/answers/#{answer_id}", params: {
       answer: { content: "verdadeira resposta da pergunta?" }
-    } 
+    }
 
     @answer.reload
 
@@ -61,12 +61,12 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Answer.count', -1) do
       delete "/answers/#{@answer.id}"
       assert_redirected_to question_answers_path(@question)
-    end    
+    end
   end
 
   test "should not delete the answer if user is not logged in" do
     sign_out_as @member
     delete "/answers/#{@answer.id}"
-    assert_redirected_to login_path
+    assert_redirected_to root_path
   end
 end

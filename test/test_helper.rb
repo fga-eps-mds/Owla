@@ -14,8 +14,9 @@ class ActiveSupport::TestCase
   def sign_in_as(member)
     post '/login/', params: {session: { email: member.email, password: member.password } }
   end
+
   def sign_out_as(member)
-  	delete '/logout', params: {session: { email: member.email, password: member.password } }
+  	get '/logout/', params: {session: { email: member.email, password: member.password } }
   end
   # Add more helper methods to be used by all tests here...
 end
