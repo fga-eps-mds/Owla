@@ -51,6 +51,18 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
   end
 
+  def joined_rooms
+    @rooms = current_member.rooms.all
+    @subtitle = 'Joined rooms'
+    render 'rooms'
+  end
+
+  def my_rooms
+    @rooms = current_member.my_rooms.all
+    @subtitle = 'My own rooms'
+    render 'rooms'
+  end
+
   private
 
     def member_params

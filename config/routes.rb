@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :members
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
+  match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
+  match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
 
   get 'sessions/new'
   get    '/login',   to: 'sessions#new'

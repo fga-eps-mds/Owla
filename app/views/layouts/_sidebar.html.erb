@@ -50,15 +50,19 @@
         <ul class="treeview-menu">
           <li>
             <%= link_to rooms_path do %>
-              <i class="fa fa-circle-o"></i><span>All rooms</span>
+              <i class="fa fa-circle-o"></i>All rooms
             <% end %>
           </li>
 
           <li>
-            <a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> My rooms</a>
+            <%= link_to joined_rooms_path(current_member) do %>
+              <i class="fa fa-circle-o"></i> Joined rooms
+            <% end %>
           </li>
           <li>
-           <a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Joined rooms</a>
+            <%= link_to my_rooms_path(current_member) do %>
+              <i class="fa fa-circle-o"></i> My rooms
+            <% end %>
           </li>
         </ul>
       </li>

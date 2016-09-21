@@ -38,7 +38,7 @@ class RoomsController < ApplicationController
       if @room.save
         redirect_to rooms_path
       else
-        flash[:alert] = "Sala não foi criada"
+        flash[:alert] = "Error creating room"
         render 'new'
       end
     end
@@ -49,7 +49,7 @@ class RoomsController < ApplicationController
       if @room.update_attributes(room_params)
         redirect_to room_path
       else
-        flash[:alert] = "Erro na atualização da sala"
+        flash[:alert] = "Error updating room"
         render 'edit'
       end
     end
