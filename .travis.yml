@@ -14,7 +14,7 @@ notifications:
 
 branches:
   only:
-    - devel
+    - master
 
 addons:
     code_climate:
