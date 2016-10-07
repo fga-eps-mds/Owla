@@ -35,11 +35,26 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create topic" do
     post "/rooms/#{@room.id}/topics", params: {
-       topic: {
-         name: "SomeTopic",
-         description: "somedescription"
-        }
+      topic: {
+        name: "SomeTopic",
+        description: "somedescription"
       }
-    assert_redirected_to topic_path(@room.topics.last)
+    }
+    assert_redirected_to room_topics_path(@room)
+  end
+
+  test "should delete topic" do
+    @topic = Topic.new(name: 'SomeTopic', description: 'somedescription')
+    @topic.room = @room
+    @topic.save
+    assert_difference('Topic.count', -1) do
+      delete "/topics/#{@topic.id}"
+      assert_redirected_to room_topics_path @room
+    end
+  end
+
+  test "should not delete topic" do
+    delete "/topics/48"
+    assert_response :missing
   end
 end
