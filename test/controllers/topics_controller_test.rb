@@ -40,7 +40,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
         description: "somedescription"
       }
     }
-    assert_redirected_to room_topics_path(@room)
+    assert_redirected_to topic_path(Topic.last)
   end
 
   test "should delete topic" do
@@ -49,7 +49,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
     @topic.save
     assert_difference('Topic.count', -1) do
       delete "/topics/#{@topic.id}"
-      assert_redirected_to room_topics_path @room
+      assert_redirected_to room_path(@room)
     end
   end
 
