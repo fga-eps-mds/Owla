@@ -64,8 +64,8 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
     assert_equal question_content, @question.content
   end
 
-    test "should delete question" do
-      assert_difference('Question.count', -1) do
+  test "should delete question" do
+    assert_difference('Question.count', -1) do
       delete "/questions/#{@question.id}"
       assert_redirected_to topic_path(@topic)
     end
