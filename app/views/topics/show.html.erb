@@ -76,8 +76,14 @@
             <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id} do |ans| %>
               <div class="input-group">
                 <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
+                <section title="Responder em anônimo">
+                  <div class"checkbox">
+                    <input type="checkbox" value="None" id="squaredFour" name="Responder em anônimo" checked />
+                    <label for="squaredFour">Responder em anônimo</label>
+                  </div>
+                </section>
                 <div class="input-group-btn">
-                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
                       <i class="fa fa-send-o"></i>
                   <% end %>
                 </div>
