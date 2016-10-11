@@ -20,3 +20,6 @@ branches:
 addons:
     code_climate:
             repo_token: 5891b1f77d783db65a29ab9ded1afd855b25cb15c9b4716f3b8f14757b7ed8a4
+
+notifications:
+  slack: crabsolutions:7v5QgcE6EeDv2gtP4C9r15si
