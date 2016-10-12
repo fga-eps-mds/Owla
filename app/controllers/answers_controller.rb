@@ -20,6 +20,13 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.question = @question
     @answer.member = current_member
+    puts '*'*80
+    puts params[:responderAnonimo]
+    if params[:responderAnonimo] == '1'
+      @answer.is_anonymous = true
+    else
+      @answer.is_anonymous = false
+    end
     if @answer.save
       redirect_to topic_path(@question.topic)
     else

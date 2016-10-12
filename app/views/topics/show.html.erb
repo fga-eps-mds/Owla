@@ -54,8 +54,7 @@
             <div class="box-comment">
               <!-- User image -->
               <%= if answer.is_anonymous == true
-                    image_tag ("profilePic")
-                    # => <img alt="Icon" src="app/assets/images/icon.png"
+                    image_tag ("icon.png"), class: "img-circle img-sm"
                   else
                     image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm", alt: "User Image"
                   end %>
@@ -85,14 +84,9 @@
               <div class="input-group">
                 <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
                 <!-- Button to use anonymous answer -->
-                <%= check_box_tag :responderAnonimo, value = '1'%>
+                <%= check_box_tag :responderAnonimo, 1, false %>
                 <%= label_tag(:responderAnonimo, "Responder em anônimo") %>
-                <!-- If statement to check if the user is using anonymous answer -->
-                <%= puts "* "*80 %>
-                <%= puts params[:responderAnonimo].inspect %>
-                <%= if params[:responderAnonimo] == '1'
-                      @answer.is_anonymous = true
-                    end %>
+                <!-- Button to send answer -->
                 <div class="input-group-btn">
                   <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
                       <i class="fa fa-send-o"></i>
