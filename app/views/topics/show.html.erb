@@ -53,11 +53,19 @@
           <% question.answers.each do |answer| %>
             <div class="box-comment">
               <!-- User image -->
-              <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                  alt: "User Image" %>
+              <%= if answer.is_anonymous == true
+                    image_tag ("profilePic")
+                    # => <img alt="Icon" src="app/assets/images/icon.png"
+                  else
+                    image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm", alt: "User Image"
+                  end %>
               <div class="comment-text">
                 <span class="username">
-                  <%= answer.member.name %>
+                  <%= if answer.is_anonymous == true
+                        "Usuario Anônimo"
+                      else
+                        answer.member.name
+                      end %>
                   <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                 </span><!-- /.username -->
                 <%= answer.content %>
@@ -76,12 +84,15 @@
             <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id} do |ans| %>
               <div class="input-group">
                 <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
-                <section title="Responder em anônimo">
-                  <div class"checkbox">
-                    <input type="checkbox" value="None" id="squaredFour" name="Responder em anônimo" checked />
-                    <label for="squaredFour">Responder em anônimo</label>
-                  </div>
-                </section>
+                <!-- Button to use anonymous answer -->
+                <%= check_box_tag :responderAnonimo, value = '1'%>
+                <%= label_tag(:responderAnonimo, "Responder em anônimo") %>
+                <!-- If statement to check if the user is using anonymous answer -->
+                <%= puts "* "*80 %>
+                <%= puts params[:responderAnonimo].inspect %>
+                <%= if params[:responderAnonimo] == '1'
+                      @answer.is_anonymous = true
+                    end %>
                 <div class="input-group-btn">
                   <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
                       <i class="fa fa-send-o"></i>
