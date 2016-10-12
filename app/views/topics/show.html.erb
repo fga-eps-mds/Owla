@@ -53,14 +53,14 @@
           <% question.answers.each do |answer| %>
             <div class="box-comment">
               <!-- User image -->
-              <%= if answer.is_anonymous == true
+              <%=  if answer.is_anonymous == true && current_member.id != @room.owner_id && current_member.id != answer.member_id
                     image_tag ("icon.png"), class: "img-circle img-sm"
                   else
                     image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm", alt: "User Image"
                   end %>
               <div class="comment-text">
                 <span class="username">
-                  <%= if answer.is_anonymous == true
+                  <%=  if answer.is_anonymous == true && current_member.id != @room.owner_id && current_member.id != answer.member_id
                         "Usuario Anônimo"
                       else
                         answer.member.name
