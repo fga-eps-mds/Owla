@@ -19,12 +19,32 @@
       <!-- Box Comment -->
       <div class="box box-widget">
         <div class="box-header with-border">
+
           <div class="user-block">
-            <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
+            <% if question.anonymous %>
+              <% if(current_member == question.member || current_member == @room.owner)  %>
+                <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
+                  alt: "User Image", style: "max-width: 56px;" %>
+                <span class="username">
+                  <a href="#"><%= question.member.alias %></a>    <span class="fa fa-eye-slash"></span>
+                </span>
+              <% else %>
+                <%= image_tag "/images/missing.png", class: "img-circle img-sm",
+                  alt: "User Image", style: "max-width: 56px;" %>
+                <span class="username">
+                  <%= "Anônimo" %>
+                </span>
+              <% end %>
+            <% else %>
+              <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
                 alt: "User Image", style: "max-width: 56px;" %>
-            <span class="username"><a href="#"><%= question.member.alias %></a></span>
+              <span class="username">
+                <a href="#"><%= question.member.alias %></a>
+              </span>
+            <% end %>
             <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
           </div>
+
           <!-- /.user-block -->
           <div class="box-tools">
             <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
