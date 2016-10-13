@@ -66,7 +66,7 @@
                 <%= answer.content %>
               </div> 
               <% if @topic.room.owner == current_member && !answer.moderated? %>
-                <%= link_to 'Moderar', moderate_answer_url(answer.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
+                <%= link_to 'Moderar', moderate_answer_url(answer.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;", id: 'moderate_answer' %>
               <% end %>
               <!-- /.comment-text -->
             </div>
