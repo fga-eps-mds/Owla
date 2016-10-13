@@ -50,6 +50,13 @@ class AnswersController < ApplicationController
     redirect_to question_answers_path(@question)
   end
 
+  def moderate_answer
+    answer = Answer.find(params[:id])
+    @topic = answer.question.topic
+    answer.update_attributes(content: "This answer has been moderated because it's content was considered inappropriate", moderated: true)
+    redirect_to topic_path(@topic)
+  end
+
   private
     def answer_params
       params.require(:answer).permit(:content, :question_id)

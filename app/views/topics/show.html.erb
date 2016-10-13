@@ -64,7 +64,10 @@
                   <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                 </span><!-- /.username -->
                 <%= answer.content %>
-              </div>
+              </div> 
+              <% if @topic.room.owner == current_member && !answer.moderated? %>
+                <%= link_to 'Moderar', moderate_answer_url(answer.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
+              <% end %>
               <!-- /.comment-text -->
             </div>
             <!-- /.box-comment -->
