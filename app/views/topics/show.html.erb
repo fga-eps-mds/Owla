@@ -65,6 +65,9 @@
                 <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm", alt: "User Image" %>
                   <span class="username">
                     <%= answer.member.name %>
+                    <% if (answer.is_anonymous && (current_member == @room.owner_id || current_member.id = answer.member.id)) %>
+                        <i class="fa fa-eye-slash" aria-hidden="true" title="Resposta em modo anônimo"></i>
+                    <% end %>
                     <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                   </span><!-- /.username -->
                 <%= answer.content %>
