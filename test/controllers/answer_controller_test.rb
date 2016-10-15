@@ -79,13 +79,34 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  test 'should see the moderate button' do
-    get "/topics/#{@topic.id}"
-    assert_select '#moderate_answer'
+  test 'only room owner should change moderated attribute of an answer' do
+    @not_owner_member = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "123456789", password_confirmation: "123456789")
+    sign_out_as @member
+    sign_in_as @not_owner_member
+    post "/moderate_answer/#{@answer.id}"
+    @answer.reload
+    assert_not_equal true, @answer.moderated
   end
 
-  test 'should not see the moderate button' do
-    get "/topics/#{@topic_wrong.id}"
-    assert_select '#moderate_answer', 0
+  test 'only room owner should change content of a moderated answer' do
+    @not_owner_member = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "123456789", password_confirmation: "123456789")
+    sign_out_as @member
+    sign_in_as @not_owner_member
+    post "/moderate_answer/#{@answer.id}"
+    @answer.reload
+    assert_not_equal "This answer has been moderated because it's content was considered inappropriate", @answer.content 
   end
+
+  test 'should change the message after moderating' do
+    post "/moderate_answer/#{@answer.id}"
+    @answer.reload
+    assert_equal "This answer has been moderated because it's content was considered inappropriate", @answer.content 
+  end
+
+  test 'boolean attribute moderated should change after moderated' do
+    post "/moderate_answer/#{@answer.id}"
+    @answer.reload
+    assert_equal true, @answer.moderated
+  end
+
 end
