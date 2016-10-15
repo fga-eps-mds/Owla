@@ -1,0 +1,14 @@
+<div class="box-comment">
+  <!-- User image -->
+  <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
+      alt: "User Image" %>
+  <div class="comment-text">
+    <span class="username">
+      <%= answer.member.name %>
+      <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+    </span><!-- /.username -->
+    <%= answer.content %>
+  </div>
+  <!-- /.comment-text -->
+</div>
+<!-- /.box-comment -->

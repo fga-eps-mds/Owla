@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  include AnswerHelper
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
 
@@ -21,12 +22,7 @@ class AnswersController < ApplicationController
     @answer.question = @question
     @answer.member = current_member
     if @answer.save
-      ActionCable.server.broadcast 'answers',
-        content: @answer.content,
-        member: current_member.name,
-        member_avatar_url: current_member.avatar.url(:thumb),
-        date: @answer.created_at.strftime("%m/%d/%Y @ %H:%M")
-      head :ok
+      send_cable @answer
     end
   end
 

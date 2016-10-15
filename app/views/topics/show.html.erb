@@ -49,22 +49,9 @@
           </div>
         </div>
         <!-- /.box-body -->
-        <div class="box-footer box-comments">
+        <div class="box-footer box-comments" id="box-question-<%= question.id %>">
           <% question.answers.each do |answer| %>
-            <div class="box-comment">
-              <!-- User image -->
-              <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                  alt: "User Image" %>
-              <div class="comment-text">
-                <span class="username">
-                  <%= answer.member.name %>
-                  <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                </span><!-- /.username -->
-                <%= answer.content %>
-              </div>
-              <!-- /.comment-text -->
-            </div>
-            <!-- /.box-comment -->
+            <%= render partial: 'answers/answer', locals: { answer: answer } %>
           <% end %> <!-- answer loop -->
         </div>
         <!-- /.box-footer -->
