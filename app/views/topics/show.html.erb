@@ -73,11 +73,11 @@
               alt: "User Image", style: "max-width: 56px;" %>
           <!-- .img-push is used to add margin to elements next to floating images -->
           <div class="img-push">
-            <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id} do |ans| %>
+            <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id}, remote: true do |ans| %>
               <div class="input-group">
                 <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
                 <div class="input-group-btn">
-                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", ) do %>
                       <i class="fa fa-send-o"></i>
                   <% end %>
                 </div>
