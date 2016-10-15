@@ -3,6 +3,8 @@ require 'test_helper'
 class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   def setup
+    @false_option_anonymous = 0
+    @true_option_anonymous = 1
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
 
     @room = Room.new(name: "calculo 1", description: "teste1")
@@ -75,6 +77,46 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
     sign_out_as @member
     delete "/questions/#{@question.id}"
     assert_redirected_to root_path
+  end
+
+  test "should question be anonymous if member marks option" do
+    post "/topics/#{@topic.id}/questions", params: {
+      question: {
+        content: "question content",
+        anonymous: @true_option_anonymous
+      }
+    }
+
+    question = Question.last
+
+    assert_equal question.anonymous, true
+  end
+
+  test "should question not be anonymous if member does not mark option" do
+    post "/topics/#{@topic.id}/questions", params: {
+      question: {
+        content: "question content"
+      }
+    }
+
+    question = Question.last
+
+    assert_equal question.anonymous, false
+  end
+
+  # ACCEPTANCE TEST
+  test "should not show member name and avatar to other users if question is anonymous" do
+
+  end
+
+  # ACCEPTANCE TEST
+  test "should show member name and avatar if the question is anonymous and current member is the author of the question" do
+
+  end
+
+  # ACCEPTANCE TEST
+  test "should show member name and avatar if the question is anonymous and current member is the owner of the room" do
+
   end
 
 end
