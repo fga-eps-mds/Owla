@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
   post '/rooms/signout' => 'rooms#signout'

@@ -21,10 +21,12 @@ class AnswersController < ApplicationController
     @answer.question = @question
     @answer.member = current_member
     if @answer.save
-      redirect_to topic_path(@question.topic)
-    else
-      flash[:alert] = "Answer not created"
-      render 'new'
+      ActionCable.server.broadcast 'answers',
+        content: @answer.content,
+        member: current_member.name,
+        member_avatar_url: current_member.avatar.url(:thumb),
+        date: @answer.created_at.strftime("%m/%d/%Y @ %H:%M")
+      head :ok
     end
   end
 
