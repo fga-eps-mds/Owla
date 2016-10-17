@@ -27,6 +27,7 @@
           </div>
           <!-- /.user-block -->
           <div class="box-tools">
+            <i class="fa fa-flag" aria-hidden="true" title="Denunciar pergunta"></i>
             <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
               <i class="fa fa-circle-o"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -51,20 +52,32 @@
         <!-- /.box-body -->
         <div class="box-footer box-comments">
           <% question.answers.each do |answer| %>
-            <div class="box-comment">
-              <!-- User image -->
-              <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                  alt: "User Image" %>
-              <div class="comment-text">
+            <% if (answer.is_anonymous && current_member.id != @room.owner_id && current_member.id != answer.member_id) %>
+              <div class="box-comment">
+                <%= image_tag ("icon.png"), class: "img-circle img-sm" %>
                 <span class="username">
-                  <%= answer.member.name %>
-                  <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                  <%= "Usuário anônimo" %>
+                <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                <!-- flag to report user -->
+                <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
                 </span><!-- /.username -->
                 <%= answer.content %>
               </div>
-              <!-- /.comment-text -->
-            </div>
-            <!-- /.box-comment -->
+            <% else %>
+              <div class="box-comment">
+                <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm", alt: "User Image" %>
+                  <span class="username">
+                    <%= answer.member.name %>
+                    <% if (answer.is_anonymous && (current_member == @room.owner_id || current_member.id = answer.member.id)) %>
+                        <i class="fa fa-eye-slash" aria-hidden="true" title="Resposta em modo anônimo"></i>
+                    <% end %>
+                    <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                    <!-- flag to report user -->
+                    <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px", title="Denunciar resposta"></i>
+                  </span><!-- /.username -->
+                <%= answer.content %>
+              </div>
+            <% end %>
           <% end %> <!-- answer loop -->
         </div>
         <!-- /.box-footer -->
@@ -76,8 +89,12 @@
             <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id} do |ans| %>
               <div class="input-group">
                 <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
+                <!-- Button to use anonymous answer -->
+                <%= check_box_tag :responderAnonimo, 1, false %>
+                <%= label_tag(:responderAnonimo, "Responder em anônimo") %>
+                <!-- Button to send answer -->
                 <div class="input-group-btn">
-                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
                       <i class="fa fa-send-o"></i>
                   <% end %>
                 </div>
