@@ -1,5 +1,7 @@
 class Member < ApplicationRecord
 
+  acts_as_voter
+  
   has_many :my_rooms, class_name: 'Room', foreign_key: 'owner_id'
   has_and_belongs_to_many :rooms
   has_many :questions

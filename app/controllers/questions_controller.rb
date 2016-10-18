@@ -1,19 +1,20 @@
 class QuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
-	before_action :authenticate_member
+	before_action :authenticate_member 
+	before_action :show, :only => [:upvote]
 	
 	def index
 		@questions = Question.all
 	end
 
 	def new
-      @topic = Topic.find(params[:topic_id])
-      @question = Question.new
-      @box_title = "Create a question"
-      @subtitle  = "Create"
-      @placeholder_name = "Title"
-      @placeholder_description = "Description"
-      @url = topic_questions_path(@topic)
+    @topic = Topic.find(params[:topic_id])
+    @question = Question.new
+    @box_title = "Create a question"
+    @subtitle  = "Create"
+    @placeholder_name = "Title"
+    @placeholder_description = "Description"
+    @url = topic_questions_path(@topic)
 	end
 
 	def show
@@ -62,9 +63,14 @@ class QuestionsController < ApplicationController
     redirect_to topic_path(@topic)
 	end
 
-	private
+	def upvote
+    @question.member = current_member
+    @question.upvote_by(current_member)
+	  redirect_to :back
+	end
 
+	private
 		def question_params
-			params.require(:question).permit(:content, :topic_id, :anonymous)
-		end
+		params.require(:question).permit(:content, :topic_id, :anonymous)
+	end
 end

@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     resources :rooms do
         resources :topics do
           resources :questions do
+            member do
+              put "like", to: "questions#upvote"
+            end
             resources :answers
           end
         end
