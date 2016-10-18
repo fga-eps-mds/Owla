@@ -8,5 +8,10 @@
     <td><%= @question.content%></td>
   </tr>
 </table>
-
+<section title="Responder em anônimo">
+  <div class"checkbox">
+    <input type="checkbox" value="None" id="squaredFour" name="Responder em anônimo" checked />
+    <label for="squaredFour">Responder em anônimo</label>
+  </div>
+</section>
 <%= link_to 'New Answer', new_question_answer_path(@question.id), class: 'btn btn-sm btn-success' %>

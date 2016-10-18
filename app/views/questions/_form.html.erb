@@ -26,6 +26,10 @@
             <div class="form-group">
               <%= question.text_area :content, class:"form-control", placeholder: @placeholder_content %>
             </div>
+
+            <%= question.check_box :anonymous %>
+            <%= question.label :anonymous %>
+
             <%= button_tag(type: "submit", class: "btn btn-app pull-right") do %>
                 <i class="fa fa-save"></i>
             <% end %>
