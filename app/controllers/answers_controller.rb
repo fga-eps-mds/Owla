@@ -20,9 +20,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.question = @question
     @answer.member = current_member
-    if params[:responderAnonimo] == '1'
-      @answer.is_anonymous = true
-    end
+
     if @answer.save
       redirect_to topic_path(@question.topic)
     else
@@ -55,6 +53,6 @@ class AnswersController < ApplicationController
 
   private
     def answer_params
-      params.require(:answer).permit(:content, :question_id)
+      params.require(:answer).permit(:content, :question_id, :anonymous)
     end
 end

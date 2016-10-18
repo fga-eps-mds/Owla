@@ -18,7 +18,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     @answer = Answer.new(content: "CONTENT TEST")
     @answer.member = @member
     @answer.question = @question
-    @answer.is_anonymous = false
+    @answer.anonymous = false
     @answer.save
 
     sign_in_as @member
@@ -72,31 +72,31 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Should appear as anonymous user if the member isn't the room owner" do
-    @answer.is_anonymous = true
+    @answer.anonymous = true
     answer_name = @answer.member.name
     member_id = 2
 
-    if (@answer.is_anonymous && @room.owner != member_id)
+    if (@answer.anonymous && @room.owner != member_id)
       @answer.member.name = "Usuário anônimo"
     end
   end
 
   test "Should appear as anonymous user if the member isn't the answer owner" do
-    @answer.is_anonymous = true
+    @answer.anonymous = true
     answer_name = @answer.member.name
     member_id = 2
 
-    if (@answer.is_anonymous && @answer.member.id != member_id)
+    if (@answer.anonymous && @answer.member.id != member_id)
       @answer.member.name = "Usuário anônimo"
     end
   end
 
   test "should appear as anonymous user when answer if the member isn't the room owner and the question owner" do
-    @answer.is_anonymous = true
+    @answer.anonymous = true
     member_id = 2
     answer_name = @answer.member.name
 
-    if (@answer.is_anonymous && @room.owner.id != member_id && member_id != @answer.member.id)
+    if (@answer.anonymous && @room.owner.id != member_id && member_id != @answer.member.id)
       @answer.member.name = "Usuário Anônimo"
     end
 
@@ -106,7 +106,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "should not appear as anonymous user when answer if the member is the room owner" do
     answer_name = @answer.member.name
 
-    if (@answer.is_anonymous && @room.owner.id != @member.id)
+    if (@answer.anonymous && @room.owner.id != @member.id)
       @answer.member.name = "Usuário anônimo"
     end
 
@@ -116,7 +116,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "should not appear as anonymous user when answer if the member is the question owner" do
     answer_name = @answer.member.name
 
-    if (@answer.is_anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
+    if (@answer.anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
       @answer.member.name = "Usuário anônimo"
     end
 
@@ -126,7 +126,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "should not appear as anonymous user when answer if the member is the room owner and the question owner" do
     answer_name = @answer.member.name
 
-    if (@answer.is_anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
+    if (@answer.anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
       @answer.member.name = "Usuário anônimo"
     end
 
