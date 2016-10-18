@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         resources :topics do
           resources :questions do
             member do
-              put "like", to: "questions#upvote"
+              put "like", to: "questions#like"
             end
             resources :answers
           end
