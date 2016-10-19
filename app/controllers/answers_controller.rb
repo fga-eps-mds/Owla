@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
+  before_action :show, :only => [:like]
 
   def index
     @answers = Answer.all
@@ -49,6 +50,12 @@ class AnswersController < ApplicationController
     @question = @answer.question
     @answer.destroy
     redirect_to question_answers_path(@question)
+  end
+
+  def like
+    @answer.member = current_member
+    @answer.like_by(current_member)
+    redirect_to :back
   end
 
   private

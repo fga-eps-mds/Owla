@@ -15,7 +15,11 @@ Rails.application.routes.draw do
             member do
               post "like", to: "questions#like"
             end
-            resources :answers
+            resources :answers do 
+              member do
+                post "like", to: "answers#like"
+              end  
+            end
           end
         end
     end

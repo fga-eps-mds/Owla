@@ -133,4 +133,15 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_equal answer_name, @answer.member.name
   end
 
+  test "answer should have one like after button click" do
+    post "/answers/#{@answer.id}/like"
+    assert_equal 1, @answer.votes_for.size
+  end
+
+  test "boolean attribute for answer should change" do 
+    post "/answers/#{@answer.id}/like"
+    assert @answer.liked_by(@member), true
+  end
+
+
 end
