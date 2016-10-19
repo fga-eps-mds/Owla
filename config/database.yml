@@ -5,6 +5,7 @@ default: &default
   timeout: 5000
   username: owla
   password: owla1234
+  host: localhost
 
 development:
   <<: *default

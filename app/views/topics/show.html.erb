@@ -63,7 +63,7 @@
         <!-- /.box-body -->
           <div class="box-footer box-comments" id="box-question-<%= question.id %>">
             <% question.answers.each do |answer| %>
-              <%= render partial: 'answers/answer', locals: { answer: answer, room: @room } %>
+              <%= render partial: 'answers/answer', locals: { answer: answer, room: @topic.room } %>
             <% end %> <!-- answer loop -->
           </div>
 
@@ -73,7 +73,7 @@
             <div class="img-push">
               <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id}, remote: true do |ans| %>
                 <div class="input-group">
-                  <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
+                  <%= ans.text_field :content, class:"form-control content-text", placeholder: "Answer here" %>
                   <%= ans.check_box :anonymous %>
                   <%= ans.label :anonymous %>
 

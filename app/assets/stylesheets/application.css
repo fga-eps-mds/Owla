@@ -14,3 +14,8 @@
  *= require_tree .
  *= require_self
  */
+
+/* dropdown overflow correction */
+.dropdown-menu {
+    left: -11em;
+}

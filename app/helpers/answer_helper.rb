@@ -11,7 +11,7 @@ module AnswerHelper
   def render_answer answer
     ApplicationController.render({
       partial: 'answers/answer',
-      locals: { answer: answer }
+      locals: { answer: answer, room: answer.question.topic.room }
     })
   end
 end
