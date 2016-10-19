@@ -62,6 +62,13 @@ class QuestionsController < ApplicationController
     redirect_to topic_path(@topic)
 	end
 
+	def moderate_question
+			question = Question.find(params[:id])
+			@topic = question.topic
+			question.update_attributes(content: "This question has been moderated because it's content was considered inappropriate", moderated: true)
+			redirect_to topic_path(@topic)
+	end
+
 	private
 
 		def question_params
