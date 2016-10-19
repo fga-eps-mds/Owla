@@ -1,24 +1,20 @@
 class QuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
-	before_action :authenticate_member
-	
-	def index
-		@questions = Question.all
-	end
+  before_action :authenticate_member
 
-	def new
-      @topic = Topic.find(params[:topic_id])
-      @question = Question.new
-      @box_title = "Create a question"
-      @subtitle  = "Create"
-      @placeholder_name = "Title"
-      @placeholder_description = "Description"
-      @url = topic_questions_path(@topic)
-	end
+  def index
+    @questions = Question.all
+  end
 
-	def show
-		@question = Question.find(params[:id])
-	end
+  def new
+    @topic = Topic.find(params[:topic_id])
+    @question = Question.new
+    @box_title = "Create a question"
+    @subtitle  = "Create"
+    @placeholder_name = "Title"
+    @placeholder_description = "Description"
+    @url = topic_questions_path(@topic)
+  end
 
 	def create
     @topic = Topic.find(params[:topic_id])
@@ -44,34 +40,43 @@ class QuestionsController < ApplicationController
     @url = question_path(@question)
 	end
 
-	def update
-		@question = Question.find(params[:id])
+  def show
+    @question = Question.find(params[:id])
+  end
 
-		if @question.update_attributes(question_params)
-			flash[:success] = "Questão atualizada com sucesso"
-			redirect_to topic_path(@question.topic_id)
-		else
-			render 'edit'
-		end
-	end
+  def update
+    @question = Question.find(params[:id])
 
-	def destroy
+    if @question.update_attributes(question_params)
+      flash[:success] = "Questão atualizada com sucesso"
+      redirect_to topic_path(@question.topic_id)
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
     @question = Question.find(params[:id])
     @topic = @question.topic
     @question.destroy
     redirect_to topic_path(@topic)
 	end
 
-	def moderate_question
-			question = Question.find(params[:id])
-			@topic = question.topic
-			question.update_attributes(content: "This question has been moderated because it's content was considered inappropriate", moderated: true)
-			redirect_to topic_path(@topic)
-	end
+  def moderate_question
+    question = Question.find(params[:id])
+    @topic = question.topic
+    if current_member == @topic.room.owner
+      question.update_attributes(content: "This question has been moderated because it's content was considered inappropriate", moderated: true)
+      redirect_to topic_path(@topic)
+    else
+      flash[:notice] = "You do not have permission!"
+    end
+  end
 
-	private
+  private
 
 		def question_params
 			params.require(:question).permit(:content, :topic_id, :anonymous)
 		end
+
 end
