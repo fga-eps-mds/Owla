@@ -21,6 +21,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.question = @question
     @answer.member = current_member
+
     if @answer.save
       send_cable @answer
     end
@@ -50,6 +51,6 @@ class AnswersController < ApplicationController
 
   private
     def answer_params
-      params.require(:answer).permit(:content, :question_id)
+      params.require(:answer).permit(:content, :question_id, :anonymous)
     end
 end
