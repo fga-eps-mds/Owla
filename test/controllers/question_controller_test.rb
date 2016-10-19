@@ -119,4 +119,14 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "question should have one like after button click" do
+    post "/topics/#{@topic.id}/questions/#{@question.id}/like"
+    assert_equal @question.votes_for.size, 1
+  end
+
+  test 'boolean attribute should change ' do 
+    post "/topics/#{@topic.id}/questions/#{@question.id}/like"
+    assert @question.upvote_by(@member), true
+  end
+
 end

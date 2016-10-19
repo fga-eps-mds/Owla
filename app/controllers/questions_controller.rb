@@ -63,14 +63,14 @@ class QuestionsController < ApplicationController
     redirect_to topic_path(@topic)
 	end
 
-	def upvote
+	def like
     @question.member = current_member
-    @question.upvote_by(current_member)
+    @question.like_by(current_member)
 	  redirect_to :back
 	end
 
 	private
 		def question_params
-		params.require(:question).permit(:content, :topic_id, :anonymous)
-	end
+			params.require(:question).permit(:content, :topic_id, :anonymous)
+		end
 end

@@ -50,7 +50,6 @@
             </div>
           </div>
           <!-- /.box-tools -->
-        </div>
         <!-- /.box-header -->
         <div class="box-body">
           <!-- post text -->
@@ -59,23 +58,29 @@
           <div class="row col-xs-12">
             <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
 
-
               <% if current_member == question.member %>
               <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
                   style: "margin-right: 5px;"%>
             <% end %>
               <div id="like_button">
                <%= form_tag like_question_path(question.id), remote: true do %>
-                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right") do %>
                     <i class="fa fa-heart"></i>
                   <% end %>
                 <% end %>
               </div>
           </div>
 
+        </div>
           <div class="box-footer box-comments">
             <% question.answers.each do |answer| %>
               <div class="box-comment">
+                <div id="like_button">
+                  <%= form_tag like_question_path(question.id), remote: true do %>
+                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right") do %>
+                    <i class="fa fa-heart"></i>
+                  <% end %>
+                <% end %>
                 <% if answer.anonymous %>
 
                     <% if(current_member == answer.member || current_member == @room.owner) %>
