@@ -18,7 +18,9 @@ class TopicsController < ApplicationController
 
     def show
       @topic = Topic.find(params[:id])
+      @room = @topic.room
       @answer = Answer.new
+      @room = Room.find(@topic.room_id)
     end
 
     def edit
