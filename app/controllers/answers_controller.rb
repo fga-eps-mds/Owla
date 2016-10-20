@@ -46,8 +46,10 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
     @question = @answer.question
-    @answer.destroy
-    redirect_to question_answers_path(@question)
+
+    if @answer.destroy
+      send_cable @answer, 'delete'
+    end
   end
 
   private

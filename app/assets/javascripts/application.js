@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require_tree .
-//= require_tree ./channels
+//= stub cable
+//= require admin_lte/admin_lte
+//= require turbolinks
