@@ -1,14 +1,41 @@
 <div class="box-comment">
-  <!-- User image -->
-  <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-      alt: "User Image" %>
-  <div class="comment-text">
-    <span class="username">
-      <%= answer.member.name %>
-      <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-    </span><!-- /.username -->
-    <%= answer.content %>
-  </div>
-  <!-- /.comment-text -->
+  <% if answer.anonymous %>
+      <% if(current_member == answer.member || current_member == room.owner) %>
+
+        <%= image_tag answer.member.avatar.url(:thumb), class: "img-circle img-sm",
+          alt: "User Image", style: "max-width: 56px;" %>
+        <div class="comment-text">
+          <span class="username">
+            <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
+            <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
+          </span>
+          <%= answer.content %>
+        </div>
+
+      <% else %>
+        <%= image_tag "/images/missing.png", class: "img-circle img-sm",
+          alt: "User Image", style: "max-width: 56px;" %>
+        <div class="comment-text">
+          <span class="username">
+            <%= "Anonymous" %>
+            <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
+          </span>
+          <%= answer.content %>
+        </div>
+
+      <% end %>
+  <% else %>
+
+    <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
+          alt: "User Image", style: "max-width: 56px;" %>
+    <div class="comment-text">
+      <span class="username">
+        <a href="#"><%= answer.member.alias %></a>
+          <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
+      </span>
+      <span class="answer-content-<%= answer.id %>">
+        <%= answer.content %>
+      </span>
+    </div>
+  <% end %>
 </div>
-<!-- /.box-comment -->

@@ -21,27 +21,27 @@ class QuestionsController < ApplicationController
 	end
 
 	def create
-        @topic = Topic.find(params[:topic_id])
+    @topic = Topic.find(params[:topic_id])
 
 		@question = Question.new(question_params)
-        @question.topic = @topic
-        @question.member = current_member
+    @question.topic = @topic
+    @question.member = current_member
 
 		if @question.save
 			redirect_to topic_path(@question.topic)
 		else
 			flash[:alert] = "Question not created"
-            redirect_to new_topic_questions_path(@topic)
+      redirect_to new_topic_questions_path(@topic)
 		end
 	end
 
 	def edit
-      @question = Question.find(params[:id])
-      @topic = @question.topic
-      @box_title = "Edit your question"
-      @subtitle  = "Settings"
-      @placeholder_description = @question.content
-      @url = question_path(@question)
+    @question = Question.find(params[:id])
+    @topic = @question.topic
+    @box_title = "Edit your question"
+    @subtitle  = "Settings"
+    @placeholder_description = @question.content
+    @url = question_path(@question)
 	end
 
 	def update
@@ -56,15 +56,15 @@ class QuestionsController < ApplicationController
 	end
 
 	def destroy
-      @question = Question.find(params[:id])
-      @topic = @question.topic
-      @question.destroy
-      redirect_to topic_path(@topic)
+    @question = Question.find(params[:id])
+    @topic = @question.topic
+    @question.destroy
+    redirect_to topic_path(@topic)
 	end
 
 	private
 
 		def question_params
-			params.require(:question).permit(:content, :topic_id)
+			params.require(:question).permit(:content, :topic_id, :anonymous)
 		end
 end

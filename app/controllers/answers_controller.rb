@@ -21,6 +21,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     @answer.question = @question
     @answer.member = current_member
+
     if @answer.save
       send_cable @answer
     end
@@ -28,14 +29,18 @@ class AnswersController < ApplicationController
 
   def edit
     @answer = Answer.find(params[:id])
+
+    respond_to do |format|
+      format.js {}
+    end
   end
 
   def update
     @answer = Answer.find(params[:id])
 
     if @answer.update_attributes(answer_params)
-      flash[:success] = "Answer updated"
-      redirect_to topic_path(@question.topic)
+      # flash[:success] = "Answer updated"
+      # redirect_to topic_path(@question.topic)
     else
       render 'edit'
     end
@@ -50,6 +55,6 @@ class AnswersController < ApplicationController
 
   private
     def answer_params
-      params.require(:answer).permit(:content, :question_id)
+      params.require(:answer).permit(:content, :question_id, :anonymous)
     end
 end
