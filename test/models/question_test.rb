@@ -57,4 +57,9 @@ class QuestionTest < ActiveSupport::TestCase
     assert_equal recovered_question.count, 0
     assert_equal count_before,count_after+1
   end
+
+  test "should anonymous option be unchecked by default" do
+    q = Question.new
+    assert_equal false, q.anonymous
+  end
 end
