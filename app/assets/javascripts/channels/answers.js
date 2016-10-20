@@ -13,18 +13,17 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
   createMessage: function(data) {
     $("#box-question-" + data.question_id).removeClass('hidden');
     $('.content-text').val('');
+    this.updateQuestionCounter(data);
     return $("#box-question-" + data.question_id).append(data.html);
   },
   updateMessage: function(data) {
     return $("#answer-content-" + data.answer_id).html(data.content);
   },
   deleteMessage: function(data) {
+    this.updateQuestionCounter(data);
     return $("#box-answer-" + data.answer_id).hide();
   },
-  incrementQuestionCounter(data) {
-    
-  },
-  decrementQuestionCounter(data) {
-    
-  },
+  updateQuestionCounter: function(data) {
+    return $("#question-answers-counter-" + data.question_id).html(data.question_answers_counter);
+  }
 });

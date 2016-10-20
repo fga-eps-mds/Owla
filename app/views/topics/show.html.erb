@@ -53,7 +53,11 @@
           <div class="box-body">
             <%= question.content %>
             <div class="row col-xs-12">
-              <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
+              <span class="text-muted pull-right">
+                <span id="question-answers-counter-<%= question.id %>">
+                  <%= question.answers.count %>
+                </span> answers
+              </span>
               <% if current_member == question.member %>
                 <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
                     style: "margin-right: 5px;"%>

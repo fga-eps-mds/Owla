@@ -7,7 +7,8 @@ module AnswerHelper
       html: html,
       question_id: answer.question.id,
       answer_id: answer.id,
-      content: answer.content
+      content: answer.content,
+      question_answers_counter: answer.question.answers.count
     head :ok
   end
 
