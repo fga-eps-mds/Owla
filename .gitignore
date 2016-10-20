@@ -37,3 +37,5 @@ public/system/*
 
 public/system
 vendor/bundle
+
+config/environments/development.rb

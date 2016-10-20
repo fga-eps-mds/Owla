@@ -15,5 +15,3 @@
 //= require jquery_ujs
 //= require_tree .
 //= require_tree ./channels
-//= require admin_lte/admin_lte
-//= require turbolinks
