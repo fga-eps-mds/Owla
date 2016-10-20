@@ -9,7 +9,9 @@
             <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
             <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
           </span>
-          <%= answer.content %>
+          <span id="answer-content-<%= answer.id %>">
+            <%= answer.content %>
+          </span>
         </div>
 
       <% else %>
@@ -20,7 +22,9 @@
             <%= "Anonymous" %>
             <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
           </span>
-          <%= answer.content %>
+          <span id="answer-content-<%= answer.id %>">
+            <%= answer.content %>
+          </span>
         </div>
 
       <% end %>
@@ -33,7 +37,7 @@
         <a href="#"><%= answer.member.alias %></a>
           <%= render partial: 'answers/answer_control', locals: { answer: answer } %>
       </span>
-      <span class="answer-content-<%= answer.id %>">
+      <span id="answer-content-<%= answer.id %>">
         <%= answer.content %>
       </span>
     </div>

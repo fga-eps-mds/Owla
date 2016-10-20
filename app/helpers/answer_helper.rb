@@ -1,10 +1,13 @@
 module AnswerHelper
-  def send_cable answer
+  def send_cable answer, action
     html =  render_answer(answer)
 
     ActionCable.server.broadcast 'answers',
+      action: action,
       html: html,
-      question_id: answer.question.id
+      question_id: answer.question.id,
+      answer_id: answer.id,
+      content: answer.content
     head :ok
   end
 

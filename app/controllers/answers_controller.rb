@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
     @answer.member = current_member
 
     if @answer.save
-      send_cable @answer
+      send_cable @answer, 'create'
     end
   end
 
@@ -39,10 +39,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
 
     if @answer.update_attributes(answer_params)
-      # flash[:success] = "Answer updated"
-      # redirect_to topic_path(@question.topic)
-    else
-      render 'edit'
+      send_cable @answer, 'update'
     end
   end
 
