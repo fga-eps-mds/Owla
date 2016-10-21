@@ -27,6 +27,10 @@ gem 'redis', '~> 3.0'
 gem "paperclip", "~> 4.3"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# Text editor
+gem 'bootstrap-wysihtml5-rails'
+
 gem "codeclimate-test-reporter", group: :test, require: nil
 
 group :cucumber do
