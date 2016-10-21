@@ -96,6 +96,8 @@ class RoomsController < ApplicationController
       room = topic.room
       room.update_attribute(:black_list, room.black_list << member.id)
       room.members.delete(member)
+      flash[:notice] = "The member was banned from your room"
+      redirect_to topic_path topic
   end
 
   def banned_members
@@ -107,7 +109,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @room.black_list.delete(params[:member_id].to_i)
     @room.save
-    flash[:alert] = "Member has been removed from black list and can now join the room"
+    flash[:notice] = "Member has been removed from black list and can now join the room"
     redirect_to banned_members_url
   end
 

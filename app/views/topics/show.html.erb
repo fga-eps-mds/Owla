@@ -31,7 +31,7 @@
                 <i class="fa fa-cog"></i>
               </a>
               <ul id="notification-list" class="dropdown-menu">
-                <% if current_member == question.topic.room.owner %>
+                <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
                   <li>
                     <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
                   </li>
