@@ -4,26 +4,20 @@ App.questionChannel = App.cable.subscriptions.create('QuestionsChannel', {
       return this.createQuestion(data);
     }
     else if (data.action === 'update'){
-      return this.updateMessage(data);
+      return this.updateQuestion(data);
     }
     else if (data.action === 'delete'){
-      return this.deleteMessage(data);
+      return this.deleteQuestion(data);
     }
   },
-  createMessage: function(data) {
-   // $("#box-question-" + data.question_id).removeClass('hidden');
-   // $('.content-text').val('');
-   // this.updateQuestionCounter(data);
-   // return $("#box-question-" + data.question_id).append(data.html);
+  createQuestion: function(data) {
+   return $("#topic-question-box-" + data.topic_id).append(data.html);
   },
-  updateMessage: function(data) {
+  updateQuestion: function(data) {
    // return $("#answer-content-" + data.answer_id).html(data.content);
   },
-  deleteMessage: function(data) {
+  deleteQuestion: function(data) {
    // this.updateQuestionCounter(data);
    // return $("#box-answer-" + data.answer_id).hide();
   },
-  updateQuestionCounter: function(data) {
-   // return $("#question-answers-counter-" + data.question_id).html(data.question_answers_counter);
-  }
 });

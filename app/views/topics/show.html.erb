@@ -13,7 +13,7 @@
 </section>
 
 <section class="content">
-  <div class="row">
+  <div class="row" id="topic-question-box-<%= @topic.id %>">
     <% @topic.questions.each do |question| %>
       <%= render partial: 'questions/question', locals: { question: question,
                                                           room: @topic.room,
