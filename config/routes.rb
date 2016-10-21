@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
   post '/rooms/signout' => 'rooms#signout'
+  post '/topics/:id/ban_member' => 'rooms#ban_member', as: 'ban_member'
+  get 'rooms/:id/banned_members' => 'rooms#banned_members', as: 'banned_members'
+  post 'rooms/:id/reintegrate_member' => 'rooms#reintegrate_member', as: 'reintegrate_member'
 
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
