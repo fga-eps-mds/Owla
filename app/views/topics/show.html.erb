@@ -12,8 +12,8 @@
 <section class="content">
   <div class="row">
     <% @topic.questions.each do |question| %>
-      <div class="col-md-6 pull-right">
-        <div class="box box-widget">
+      <div class="box box-widget">
+        <div class="col-md-6 pull-right">
           <div class="box-header with-border">
 
             <div class="user-block">
@@ -56,15 +56,15 @@
           <%= question.content %>
           <!-- Social sharing buttons -->
           <div class="row col-xs-12">
-            <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
+            <span class="text-muted count-question-view"><%= question.answers.count %> answers</span>
 
               <% if current_member == question.member %>
-              <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
+              <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary edit-class-botton',
                   style: "margin-right: 5px;"%>
             <% end %>
               <div id="like_button">
                <%= form_tag like_question_path(question.id), remote: true do %>
-                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question") do %>
                     <i class="fa fa-heart"></i>
                   <% end %>
                 <% end %>
@@ -102,8 +102,8 @@
                   <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
                         alt: "User Image", style: "max-width: 56px;" %>
                   <span class="username">
-                    <a href="#"><%= answer.member.alias %></a>
-                    <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                    <a id="id_name_user" href="#"><%= answer.member.alias %></a>
+                    <span class="text-muted move_date_answer"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                   </span>
                 <% end %>
 
