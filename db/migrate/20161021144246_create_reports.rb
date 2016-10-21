@@ -9,7 +9,7 @@ class CreateReports < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    create_table :reports_members, id:false do |t|
+    create_table :members_reports, id:false do |t|
       t.belongs_to :report, index:true
       t.belongs_to :member, index:true
     end
