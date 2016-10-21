@@ -79,7 +79,9 @@
                       <span class="username">
                         <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                        <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <%= link_to report_answer_path(answer), method: :post do %>
+                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <% end %>
                       </span>
                     <% else %>
                       <%= image_tag "/images/missing.png", class: "img-circle img-sm",
@@ -87,7 +89,7 @@
                       <span class="username">
                         <%= "Anonymous" %>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                        <%= link_to  report_answer_path(answer), method: :post do %>
+                        <%= link_to report_answer_path(answer), method: :post do %>
                           <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
                         <% end %>
                       </span>
@@ -98,7 +100,9 @@
                   <span class="username">
                     <a href="#"><%= answer.member.alias %></a>
                     <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                    <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                    <%= link_to report_answer_path(answer), method: :post do %>
+                      <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                    <% end %>
                   </span>
                 <% end %>
 
