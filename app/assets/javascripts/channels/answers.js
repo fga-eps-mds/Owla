@@ -17,6 +17,9 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     return $("#box-question-" + data.question_id).append(data.html);
   },
   updateMessage: function(data) {
+    if(data.answer_created_at !== data.answer_updated_at){
+      $('#answer-' + data.answer_id + '-datetime .edited').removeClass('hidden');
+    }
     return $("#answer-content-" + data.answer_id).html(data.content);
   },
   deleteMessage: function(data) {

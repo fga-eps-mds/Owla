@@ -8,7 +8,9 @@ module AnswerHelper
       question_id: answer.question.id,
       answer_id: answer.id,
       content: answer.content,
-      question_answers_counter: answer.question.answers.count
+      question_answers_counter: answer.question.answers.count,
+      answer_created_at: answer.created_at,
+      answer_updated_at: answer.updated_at
     head :ok
   end
 

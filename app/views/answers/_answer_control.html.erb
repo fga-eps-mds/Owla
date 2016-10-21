@@ -1,21 +1,32 @@
 <span class="text-muted pull-right"> 
+  
+  <span id="answer-<%= answer.id %>-datetime">
+    <% if answer.created_at != answer.updated_at %>
+      <span class="edited">edited</span>
+    <% else %>
+      <span class="edited hidden">edited</span>
+    <% end %>
+  </span>
+
   <%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%>
 
-  <span class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-      <span class="fa fa-gear"></span>
-    </a>
-    <ul class="dropdown-menu">
-      <li role="presentation">
-      <%= link_to "Edit", edit_answer_path(answer), class: "edit-answer",
-          id: "edit-#{answer.id}", role: "menuitem", tabindex: "-1", remote: true %>
-      </li>
-      <li role="presentation">
-      <%= link_to "Delete", answer_path(answer), method: :delete,
-          class: "delete-answer", id: "delete-#{answer.id}", role: "menuitem",
-          tabindex: "-1", remote: true, data: {confirm: "Are you sure?"} %>
-      </li>
-    </ul>
-  </span>
+  <% if answer.member == current_member %>
+    <span class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+        <span class="fa fa-gear"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li role="presentation">
+          <%= link_to "Edit", edit_answer_path(answer), class: "edit-answer",
+            id: "edit-#{answer.id}", role: "menuitem", tabindex: "-1", remote: true %>
+        </li>
+        <li role="presentation">
+          <%= link_to "Delete", answer_path(answer), method: :delete,
+            class: "delete-answer", id: "delete-#{answer.id}", role: "menuitem",
+            tabindex: "-1", remote: true, data: {confirm: "Are you sure?"} %>
+        </li>
+      </ul>
+    </span>
+  <% end %>
 
 </span>
