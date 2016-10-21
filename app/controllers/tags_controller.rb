@@ -37,7 +37,7 @@ class TagsController < ApplicationController
 	  @question = @tag.questions
 
 	  if @tag.update_attributes(tag_params)
-	    flash[:success] = "Tag atualizada com sucesso"
+	    flash[:success] = "Tag updated successfully"
 		redirect_to question_tags_path(@question)
 	  else
 	    render 'edit'
@@ -52,8 +52,7 @@ class TagsController < ApplicationController
 	end
 
 private
-
-	def tag_params
-	  params.require(:tag).permit(:content, :question_id)
-	end
+  def tag_params
+	params.require(:tag).permit(:content, :question_id)
+  end
 end
