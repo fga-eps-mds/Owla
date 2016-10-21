@@ -1,20 +1,41 @@
-<h1>Tag</h1>
-<td><%= link_to 'New Tag', new_question_tag_path %>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Tags
+     <%= link_to 'New Tag', new_question_tag_path, class: 'btn btn-sm btn-primary'%>
+
+  </h1>
+</section>
 <br></br>
-<table>
-  <thead>
-    <tr></tr>
-  </thead>
-    <th>Content</th>
-    <th colspan="3"></th>
-  <% @tags.each do |tag| %>
-    <tr>
-      <td><%= tag.content%></td>
-      <td><%= link_to 'Show', tag %></td>
-      <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-      <td><%= link_to 'Delete', tag, method: :delete, data: {confirm: 'Deseja excluir?' } %></td>
-      <td></td>
-    </tr>
-  <% end %>
-</table>
-<br>
+<!-- Main content -->
+<section class="content">
+  <!-- row -->
+  <div class="row">
+    <div class="col-md-12">
+      <!-- The time line -->
+      <ul class="timeline">
+        <% @tags.each do |tag| %>
+            <!-- timeline item -->
+          <li>
+            <i class="fa fa-th-list bg-blue"></i>
+
+            <div class="timeline-item">
+
+              <h3 
+                class="timeline-header"><%= tag.content %>
+                <%= link_to 'Add to Question', tag, class: "btn btn-danger btn-xs pull-right",
+                    data: { confirm: "Hmmm! Are you sure?" }, method: :delete, style: "margin-right: 6px;" %>
+                <%= link_to 'Edit', edit_tag_path(tag), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
+                            method: :get%>
+                <%= link_to 'Delete', tag, method: :delete, data: {confirm: 'Deseja excluir?' }, class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+              </h3>
+            </div>
+          <li>
+        <% end %>
+        
+      </ul>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

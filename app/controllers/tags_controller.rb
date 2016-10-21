@@ -18,7 +18,7 @@ class TagsController < ApplicationController
 	def create
       @question = Question.find(params[:question_id])
 	  @tag = Tag.new(tag_params)
-	  @tag.questions << @question
+	  @question.tags << @tag
 
 	  if @tag.save
 	    redirect_to topic_path(@question.topic)
@@ -29,17 +29,16 @@ class TagsController < ApplicationController
 	end
 
 	def edit
-	  @question = Question.find(params[:id])
-      @question.tags
+	  @tag = Tag.find(params[:id])
 	end
 
 	def update
-	  @tag = Tag(params[:id])
+	  @tag = Tag.find(params[:id])
 	  @question = @tag.questions
 
 	  if @tag.update_attributes(tag_params)
 	    flash[:success] = "Tag atualizada com sucesso"
-		redirect_to topic_path(@question.topic_id)
+		redirect_to question_tags_path(@question)
 	  else
 	    render 'edit'
 	  end
