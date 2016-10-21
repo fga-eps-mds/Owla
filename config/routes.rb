@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post '/rooms/signout' => 'rooms#signout'
 	post 'moderate_question/:id', to: 'questions#moderate_question', as: 'moderate_question'
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
+  post 'report_question/:id', to: 'reports#create_report_question', as: 'report_question'
+  post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'
 
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'

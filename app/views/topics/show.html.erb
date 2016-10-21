@@ -42,7 +42,9 @@
             </div>
 
             <div class="box-tools">
-              <i class="fa fa-flag" aria-hidden="true" title="Denunciar pergunta"></i>
+              <%= link_to report_question_path(question), method: :post do %>
+                <i class="fa fa-flag" aria-hidden="true" title="Denunciar pergunta"></i>
+              <% end %>
               <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
                 <i class="fa fa-circle-o"></i></button>
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -85,7 +87,9 @@
                       <span class="username">
                         <%= "Anonymous" %>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                        <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <%= link_to  report_answer_path(answer), method: :post do %>
+                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <% end %>
                       </span>
                     <% end %>
                 <% else %>
