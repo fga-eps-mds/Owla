@@ -1,0 +1,80 @@
+<div class="col-md-6 pull-right">
+  <div class="box box-widget">
+    <div class="box-header with-border">
+
+      <div class="user-block">
+        <% if question.anonymous %>
+          <% if(current_member == question.member || current_member == room.owner)  %>
+            <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
+              alt: "User Image", style: "max-width: 56px;" %>
+            <span class="username">
+              <a href="#"><%= question.member.alias %></a>    <span class="fa fa-eye-slash"></span>
+            </span>
+          <% else %>
+            <%= image_tag "/images/missing.png", class: "img-circle img-sm",
+              alt: "User Image", style: "max-width: 56px;" %>
+            <span class="username">
+              <%= "Anonymous" %>
+            </span>
+          <% end %>
+        <% else %>
+          <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
+            alt: "User Image", style: "max-width: 56px;" %>
+          <span class="username">
+            <a href="#"><%= question.member.alias %></a>
+          </span>
+        <% end %>
+        <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+      </div>
+
+      <div class="box-tools">
+        <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+          <i class="fa fa-circle-o"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+
+    <div class="box-body">
+      <%= question.content %>
+      <div class="row col-xs-12">
+        <span class="text-muted pull-right">
+          <span id="question-answers-counter-<%= question.id %>">
+            <%= question.answers.count %>
+          </span> answers
+        </span>
+        <% if current_member == question.member %>
+          <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
+              style: "margin-right: 5px;"%>
+        <% end %>
+      </div>
+    </div>
+  <!-- /.box-body -->
+    <div class="box-footer box-comments" id="box-question-<%= question.id %>">
+      <% question.answers.each do |answer| %>
+        <%= render partial: 'answers/answer', locals: { answer: answer, room: room } %>
+      <% end %> <!-- answer loop -->
+    </div>
+
+    <div class="box-footer">
+      <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle img-sm",
+          alt: "User Image", style: "max-width: 56px;" %>
+      <div class="img-push">
+        <%= form_for new_answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id}, remote: true do |f| %>
+          <div class="input-group">
+            <%= f.text_field :content, class:"form-control content-text", placeholder: "Answer here" %>
+            <%= f.check_box :anonymous %>
+            <%= f.label :anonymous %>
+
+            <div class="input-group-btn">
+              <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
+                  <i class="fa fa-send-o"></i>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

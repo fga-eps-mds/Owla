@@ -1,53 +1,24 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-  <h1>
-    Question
-    <small><%= @subtitle %></small>
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Question</li>
-  </ol>
-</section>
+<div class="row">
+    <div class="pad">
+      <%= form_for question, url: url, remote: true do |f| %>
+        <%= f.text_area :content, class:"textarea", placeholder: placeholder,
+            style: "width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" %>
 
-<!-- Main content -->
-<section class="content">
-  <div class="row">
-    <div class="box">
-      <div class="box-header">
-        <h3 class="box-title"><%= @box_title %>
-          <small>Simple and fast</small>
-        </h3>
-        <!-- tools box -->
-        <div class="pull-right box-tools">
-          <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-            <i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove">
-            <i class="fa fa-times"></i></button>
-        </div>
-        <!-- /. tools -->
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body pad">
-        <%= form_for @question, url: @url do |question| %>
-          <%= question.text_area :content, class:"textarea", placeholder: @placeholder_content,
-              style: "width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" %>
+        <%= f.check_box :anonymous %>
+        <span class="option", style="font-size: 0.8em;">
+          Anonymous
+        </span>
 
-          <%= question.check_box :anonymous %>
-          <%= question.label :anonymous %>
-
-          <%= button_tag(type: "submit", class: "btn btn-app pull-right") do %>
-              <i class="fa fa-save"></i>
-          <% end %>
+        <%= button_tag(type: "submit", class: "btn pull-right") do %>
+            <i class="fa fa-save"></i>
         <% end %>
-      </div>
-    </div>
-    <div class="input-group margin">
-      <div class="input-group-btn">
-        <% if @question.valid? %>
-          <%= button_to "Delete Room", question_path(@question), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
-        <% end %>
-      </div>
+      <% end %>
+  </div>
+  <div class="input-group margin">
+    <div class="input-group-btn">
+      <% if question.valid? %>
+        <%= button_to "Delete Room", question_path(question), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
+      <% end %>
     </div>
   </div>
-</section>
+</div>
