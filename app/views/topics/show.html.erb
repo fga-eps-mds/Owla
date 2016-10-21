@@ -12,8 +12,8 @@
 <section class="content">
   <div class="row">
     <% @topic.questions.each do |question| %>
-      <div class="box box-widget">
-        <div class="col-md-6 pull-right">
+      <div class="col-md-6 pull-right">
+        <div class="box box-widget">
           <div class="box-header with-border">
 
             <div class="user-block">
@@ -49,38 +49,35 @@
               <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
           </div>
-          <!-- /.box-tools -->
-        <!-- /.box-header -->
-        <div class="box-body">
-          <!-- post text -->
-          <%= question.content %>
-          <!-- Social sharing buttons -->
-          <div class="row col-xs-12">
-            <span class="text-muted count-question-view"><%= question.answers.count %> answers</span>
 
-              <% if current_member == question.member %>
-              <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary edit-class-botton',
-                  style: "margin-right: 5px;"%>
-            <% end %>
+          <div class="box-body">
+            <%= question.content %>
+
+            <div class="row col-xs-12">
               <div id="like_button">
-               <%= form_tag like_question_path(question.id), remote: true do %>
+                <%= form_tag like_question_path(question.id), remote: true do %>
                   <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question") do %>
                     <i class="fa fa-heart"></i>
                   <% end %>
                 <% end %>
               </div>
+
+              <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
+
+              <% if current_member == question.member %>
+                <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
+                    style: "margin-right: 5px;"%>
+              <% end %>
+
+              <% if @topic.room.owner == current_member && !question.moderated? %>
+                <%= link_to 'Moderar', moderate_question_url(question.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
+              <% end %> 
+            </div>
           </div>
 
-        </div>
           <div class="box-footer box-comments">
             <% question.answers.each do |answer| %>
               <div class="box-comment">
-                <div id="like_button">
-                  <%= form_tag like_question_path(question.id), remote: true do %>
-                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right") do %>
-                    <i class="fa fa-heart"></i>
-                  <% end %>
-                <% end %>
                 <% if answer.anonymous %>
 
                     <% if(current_member == answer.member || current_member == @room.owner) %>
@@ -102,12 +99,16 @@
                   <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
                         alt: "User Image", style: "max-width: 56px;" %>
                   <span class="username">
-                    <a id="id_name_user" href="#"><%= answer.member.alias %></a>
-                    <span class="text-muted move_date_answer"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                    <a href="#"><%= answer.member.alias %></a>
+                    <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                   </span>
                 <% end %>
 
                 <%= answer.content %>
+
+                <% if @topic.room.owner == current_member && !answer.moderated? %>
+                  <%= link_to 'Moderar', moderate_answer_url(answer.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;", id: 'moderate_answer' %>
+                <% end %>
               </div>
             <% end %>
           </div>
@@ -131,6 +132,7 @@
               <% end %>
             </div>
           </div>
+
         </div>
       </div>
     <% end %>

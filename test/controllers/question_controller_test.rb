@@ -8,7 +8,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
 
     @room = Room.new(name: "calculo 1", description: "teste1")
-    @room.owner = @member;
+    @room.owner = @member
     @room.save
 
     @topic = @room.topics.new(name: "limites", description: "description1")
@@ -46,7 +46,7 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
     patch "/questions/#{@question.id}", params: {
       question: { content: "Derivadas?" }
-    } 
+    }
 
     @question.reload
 
@@ -127,6 +127,23 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   test "boolean attribute should change"  do 
     post "/questions/#{@question.id}/like"
     assert @question.upvote_by(@member), true
+  end
+  
+  test "only room owner should moderate question" do
+    @member2 = Member.create(name: "Thalissonn", alias: "thalissonn", email: "thalissnon@gmail.com", password: "12345678", password_confirmation: "12345678")
+    sign_out_as @member
+    sign_in_as @member2
+    post "/moderate_question/#{@question.id}"
+    @question.reload
+    assert_not_equal "This question has been moderated because it's content was considered inappropriate", @question.content
+    assert_equal false, @question.moderated?
+  end
+
+  test "should message content and moderated attribute change if moderated" do
+    post "/moderate_question/#{@question.id}"
+    @question.reload
+    assert_equal true, @question.moderated?
+    assert_equal "This question has been moderated because it's content was considered inappropriate", @question.content
   end
 
 end
