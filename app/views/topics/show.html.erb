@@ -89,9 +89,7 @@
                       <span class="username">
                         <%= "Anonymous" %>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-
                         <%= link_to report_answer_path(answer), method: :post do %>
-
                           <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
                         <% end %>
                       </span>
