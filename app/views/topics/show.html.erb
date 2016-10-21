@@ -11,7 +11,7 @@
 
 <section class="content">
   <div class="row">
-    <% @topic.questions.each do |question| %>
+    <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
       <div class="col-md-6 pull-right">
         <div class="box box-widget">
           <div class="box-header with-border">
@@ -58,6 +58,7 @@
                 <%= form_tag like_question_path(question.id), remote: true do %>
                   <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question") do %>
                     <i class="fa fa-heart"></i>
+                    <i class="badge bg-red"><%= question.get_likes.size %></i>
                   <% end %>
                 <% end %>
               </div>
@@ -96,6 +97,7 @@
                       </span>
                     <% end %>
                 <% else %>
+              
                   <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
                         alt: "User Image", style: "max-width: 56px;" %>
                   <span class="username">
@@ -103,7 +105,15 @@
                     <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                   </span>
                 <% end %>
-
+              <%if answer.moderated == true %> 
+                <id="like_button">
+                  <%= form_tag like_answer_path(answer.id), remote: true do %>
+                    <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question") do %>
+                      <i class="fa fa-heart"></i>
+                      <i class="badge bg-red"><%= answer.get_likes.size %></i>
+                    <% end %>
+                  <% end %>
+              <% end %>
                 <%= answer.content %>
 
                 <% if @topic.room.owner == current_member && !answer.moderated? %>
