@@ -27,11 +27,22 @@
           </div>
           <!-- /.user-block -->
           <div class="box-tools">
-            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-              <i class="fa fa-circle-o"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              <a id="options-dropdown" type="button" href="#" class="dropdown-toggle btn" data-toggle="dropdown">
+                <i class="fa fa-cog"></i>
+              </a>
+              <ul id="notification-list" class="dropdown-menu">
+                <% if current_member == question.topic.room.owner %>
+                  <li>
+                    <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
+                  </li>
+                <% end %>
+                <li>
+                  <% if current_member == question.member %>
+                  <%= link_to 'Edit', edit_question_path(question) %>
+                  <% end %>
+                </li>
+              </ul>
+
           </div>
           <!-- /.box-tools -->
         </div>
@@ -42,10 +53,6 @@
           <!-- Social sharing buttons -->
           <div class="row col-xs-12">
             <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
-            <% if current_member == question.member %>
-              <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
-                  style: "margin-right: 5px;"%>
-            <% end %>
           </div>
         </div>
         <!-- /.box-body -->
@@ -94,3 +101,11 @@
 </div>
 <!-- /.row -->
 </section>
+
+
+<script>
+    $(function() {
+      $("#options-dropdown").click(function(evt) {
+      })
+    })
+</script>
