@@ -56,7 +56,7 @@
             <div class="row col-xs-12">
               <div id="like_button">
                 <%= form_tag like_question_path(question.id), remote: true do %>
-                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question") do %>
+                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question-answer") do %>
                     <i class="fa fa-heart"></i>
                     <i class="badge bg-red"><%= question.get_likes.size %></i>
                   <% end %>
@@ -105,14 +105,17 @@
                     <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
                   </span>
                 <% end %>
-              <%if answer.moderated == true %> 
-                <id="like_button">
+
+                <div id="like_button">
                   <%= form_tag like_answer_path(answer.id), remote: true do %>
-                    <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question") do %>
+                    <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question-answer") do %>
                       <i class="fa fa-heart"></i>
                       <i class="badge bg-red"><%= answer.get_likes.size %></i>
                     <% end %>
                   <% end %>
+                </div>
+                  
+              <%if answer.moderated == true %> 
               <% end %>
                 <%= answer.content %>
 
