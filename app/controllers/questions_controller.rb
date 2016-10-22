@@ -75,8 +75,12 @@ class QuestionsController < ApplicationController
 
 	def like
     @question.member = current_member
-    @question.like_by(current_member)
+    if not current_member.voted_up_on? @question
+      @question.like_by(current_member)
+    else
+      @question.disliked_by(current_member)
 	  redirect_to :back
+    end
 	end
 
   def moderate_question
