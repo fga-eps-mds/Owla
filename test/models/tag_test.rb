@@ -8,8 +8,7 @@ class TagTest < ActiveSupport::TestCase
     @room = Room.create(name: "c1", description: "-"*2, owner: @member)
     @topic = @room.topics.create(name: "limit", description: "example description")
     @question = @topic.questions.create(content: "Is there a limit?", member: @member)
-    @tag = @question.tags.create(content: "test")
-  
+    @tag = @question.tags.create(content: "test", member: @member)
   end 
 
   test "should save valid tag" do
@@ -17,24 +16,29 @@ class TagTest < ActiveSupport::TestCase
   end 
 
   test "should not save empty tag" do
-    @invalid_tag = @question.tags.create(content: "")
+    @invalid_tag = @question.tags.create(content: "", member: @member)
     assert_not @invalid_tag.save
   end
 
+  test "should not save a tag without an author" do
+    @tag = Tag.new(content: "Orphan tag")
+    assert_not @tag.save
+  end
+
   test "should not save tags with less than two letters content" do
-    @invalid_tag = @question.tags.create(content: "a")
+    @invalid_tag = @question.tags.create(content: "a", member: @member)
     assert_not @invalid_tag.save
   end
 
   test "should not save tags with more than twenty five letters content" do
-    @invalid_tag = @question.tags.create(content: "a"*26)
+    @invalid_tag = @question.tags.create(content: "a"*26, member: @member)
     assert_not @invalid_tag.save
   end 
 
   test "should save a tag with exactly two or twenty five letters content" do
-  	@valid_tag1 = @question.tags.create(content: "a"*2)
+  	@valid_tag1 = @question.tags.create(content: "a"*2, member: @member)
     assert @valid_tag1.save
-    @valid_tag2 = @question.tags.create(content: "a"*25)
+    @valid_tag2 = @question.tags.create(content: "a"*25, member: @member)
     assert @valid_tag2.save
   end
 
