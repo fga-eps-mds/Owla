@@ -18,6 +18,7 @@ class TagsController < ApplicationController
 	def create
       @question = Question.find(params[:question_id])
 	  @tag = Tag.new(tag_params)
+	  @tag.member = current_member
 	  @question.tags << @tag
 
 	  if @tag.save
