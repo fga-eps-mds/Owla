@@ -14,22 +14,79 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     @topic.save
 
     @question = @topic.questions.new(content: "How did I get here?")
-    @question.member = @member
+    @question.member = @member2
     @question.save
 
     @answer = Answer.new(content: "CONTENT TEST")
-    @answer.member = @member
+    @answer.member = @member3
     @answer.question = @question
     @answer.anonymous = false
     @answer.save
 
     @report = Report.create(explanation: "Inappropriate content")
-    @report.moderator = @member
-    @report.reported_id = @member2
-    @report.reports << @member3
-
   end
-  test 'should create report' do
-    
+
+  test 'should create report for question' do
+    sign_in_as @member3
+
+    count_before = Report.count
+    post report_question_path(@question), params: {id: @question.id}
+    count_after = Report.count
+
+    assert count_after, count_before+1
+    assert_redirected_to topic_path(@topic)
+  end
+
+  test 'should not create report for question when not logged in' do
+    count_before = Report.count
+    post report_question_path(@question), params: {id: @question.id}
+    count_after = Report.count
+
+    assert count_after, count_before
+    assert_redirected_to root_path
+  end
+
+  test 'should not create report for question when member already reported' do
+    sign_in_as @member3
+    post report_question_path(@question), params: {id: @question.id}
+
+    count_before = Report.count
+    post report_question_path(@question), params: {id: @question.id}
+    count_after = Report.count
+
+    assert count_after, count_before
+    assert_redirected_to topic_path(@topic)
+  end
+
+    test 'should create report for answer' do
+    sign_in_as @member2
+
+    count_before = Report.count
+    post report_answer_path(@answer), params: {id: @answer.id}
+    count_after = Report.count
+
+    assert count_after, count_before + 1
+    assert_redirected_to topic_path(@topic)
+  end
+
+  test 'should not create report for answer when not logged in' do
+    count_before = Report.count
+    post report_answer_path(@answer), params: {id: @answer.id}
+    count_after = Report.count
+
+    assert count_after, count_before
+    assert_redirected_to root_path
+  end
+
+  test 'should not create report for answer when member already reported' do
+    sign_in_as @member2
+    post report_answer_path(@answer), params: {id: @answer.id}
+
+    count_before = Report.count
+    post report_answer_path(@answer), params: {id: @answer.id}
+    count_after = Report.count
+
+    assert count_after, count_before
+    assert_redirected_to topic_path(@topic)
   end
 end
