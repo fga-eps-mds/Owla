@@ -1,41 +1,6 @@
 class ReportsController < ApplicationController
-
-  def index
-    @reports = Report.all
-  end
-
-  def new
-    @report = Report.new
-  end
-
-  def edit
-    @report = Report.find(params[:id])
-  end
-
-  def update_report_answer
-    @report = Report.find(params[:id])
-
-    if @report.update_attributes(:explanation)
-      flash[:alert] = "Explanation updated"
-      redirect_to topic_path(@report.answer.question.topic)
-    else
-      flash[:alert] = "Explanation could not be updated"
-      render 'edit'
-    end
-  end
-
-  def update_report_question
-    @report = Report.find(params[:id])
-
-    if @report.update_attributes(:explanation)
-      flash[:alert] = "Explanation updated"
-      redirect_to topic_path(@report.question.topic)
-    else
-      flash[:alert] = "Explanation could not be updated"
-      render 'edit'
-    end
-  end
-
+  skip_before_action :verify_authenticity_token if Rails.env.test?
+  before_action :authenticate_member
   def create_report_answer
     member = current_member
     @answer = Answer.find(params[:id])
@@ -63,9 +28,6 @@ class ReportsController < ApplicationController
     end
   end
 
-  def show
-    @report = Report.find(params[:id])
-  end
 
   def create_report_question
     member = current_member
