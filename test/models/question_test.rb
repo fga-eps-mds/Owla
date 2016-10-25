@@ -62,4 +62,37 @@ class QuestionTest < ActiveSupport::TestCase
     q = Question.new
     assert_equal false, q.anonymous
   end
+
+# pdf, word, powerpoint, excel, libreoffice, jpg, jpeg, png
+# zip?
+
+  test "should save question with no attachment" do
+    question = @topic.questions.new(content: "What is love?", member: @member)
+    assert question.save
+
+    question = @topic.questions.new(content: "What is love?", member: @member, attachment: "")
+    assert question.save
+  end
+
+  test "should save question with one attachment" do
+    question = @topic.questions.new(content: "What is love?", member: @member, attachment: "file.pdf")
+    assert question.save
+  end
+
+  test "should not save question with more than one attachment" do
+
+  end
+
+  test "should save question with correct type of attachment" do
+
+  end
+
+  test "should not save question with wrong type of attachment" do
+
+  end
+
+# FIXME download
+# FIXME editar arquivo enviado
+# FIXME deletar arquivo enviado
+
 end
