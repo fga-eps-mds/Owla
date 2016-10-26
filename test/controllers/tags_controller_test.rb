@@ -1,4 +1,5 @@
 require 'test_helper'
+
 class TagsControllerTest < ActionDispatch::IntegrationTest
   
   def setup

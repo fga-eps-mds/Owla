@@ -2,7 +2,6 @@ require 'test_helper'
 
 class TagTest < ActiveSupport::TestCase
 
-
   def setup
     @member = Member.create(name: "Linus Torvalds", alias: "Lineu", email: "linuxFTW@linux.com", password: "i<3linux", password_confirmation: "i<3linux")
     @room = Room.create(name: "c1", description: "-"*2, owner: @member)
@@ -63,5 +62,4 @@ class TagTest < ActiveSupport::TestCase
       assert_equal recovered_tag.count, 0
       assert_equal count_before,count_after+1
   end
-
 end
