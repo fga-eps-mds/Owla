@@ -25,25 +25,27 @@
             <span class="username"><a href="#"><%= question.member.alias %></a></span>
             <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
           </div>
-          <!-- /.user-block -->
+
           <div class="box-tools">
-              <a id="options-dropdown" type="button" href="#" class="dropdown-toggle btn" data-toggle="dropdown">
-                <i class="fa fa-cog"></i>
+            <span class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                <span class="fa fa-gear"></span>
               </a>
-              <ul id="notification-list" class="dropdown-menu">
+              <ul class="dropdown-menu">
                 <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
                   <li>
                     <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
                   </li>
                 <% end %>
-                <li>
-                  <% if current_member == question.member %>
-                  <%= link_to 'Edit', edit_question_path(question) %>
-                  <% end %>
-                </li>
+                  <li>
+                    <% if current_member == question.member %>
+                      <%= link_to 'Edit', edit_question_path(question) %>
+                    <% end %>
+                  </li>
               </ul>
-
+            </span>
           </div>
+
           <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
