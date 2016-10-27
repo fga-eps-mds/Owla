@@ -7,6 +7,6 @@ class Question < ApplicationRecord
   validates :content, presence: true, length: { minimum: 5 }
 
   has_attached_file :attachment
-  validates_attachment :attachment, content_type: { content_type: "application/pdf" }
+  validates_attachment :attachment, content_type: { content_type: ["application/pdf", "image/png"] }
 
 end
