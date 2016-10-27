@@ -64,9 +64,6 @@ class QuestionTest < ActiveSupport::TestCase
     assert_equal false, q.anonymous
   end
 
-# pdf, word, powerpoint, excel, libreoffice, jpg, jpeg, png
-# zip?
-
   test "should save question with no attachment" do
     question = @topic.questions.new(content: "What is love?", member: @member)
     assert question.save
@@ -81,9 +78,11 @@ class QuestionTest < ActiveSupport::TestCase
   end
 
   test "should save question with correct type of attachment" do
-    file2 = File.new('test/fixtures/sample_files/zé.png')
-    question = @topic.questions.new(content: "What is love?", member: @member, attachment: file2)
-    assert question.save
+    %w[docx jpeg jpg odp ods odt pdf png ppt pptx xls xlsx].each do |extension|
+      file = File.new("test/fixtures/sample_files/file.#{extension}")
+      question = @topic.questions.new(content: "What is love?", member: @member, attachment: file)
+      assert question.save
+    end
   end
 
   test "should not save question with wrong type of attachment" do

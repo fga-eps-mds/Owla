@@ -7,6 +7,7 @@ class Question < ApplicationRecord
   validates :content, presence: true, length: { minimum: 5 }
 
   has_attached_file :attachment
-  validates_attachment :attachment, content_type: { content_type: ["application/pdf", "image/png"] }
+
+  validates_attachment_file_name :attachment, :matches => [/^.*\.(doc|docx|odp|ods|odt|pdf|ppt|pptx|xls|xlsx|jpeg|jpg|png)$/]
 
 end
