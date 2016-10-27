@@ -10,14 +10,16 @@ module AnswerHelper
       content: answer.content,
       question_answers_counter: answer.question.answers.count,
       answer_created_at: answer.created_at,
-      answer_updated_at: answer.updated_at
+      answer_updated_at: answer.updated_at,
+      answer_member: current_member.id,
+      is_anonymous: answer.anonymous
     head :ok
   end
 
   def render_answer answer
     ApplicationController.render({
       partial: 'answers/answer',
-      locals: { answer: answer, room: answer.question.topic.room }
+      locals: { answer: answer, room: answer.question.topic.room, current_member: current_member}
     })
   end
 end

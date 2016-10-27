@@ -2,6 +2,7 @@ module SessionsHelper
 
   def log_in(member)
     session[:member_id] = member.id
+    cookies[:member_id] = member.id
   end
 
   def current_member

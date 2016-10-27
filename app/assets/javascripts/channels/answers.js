@@ -14,7 +14,14 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     $("#box-question-" + data.question_id).removeClass('hidden');
     $('.content-text').val('');
     this.updateQuestionCounter(data);
-    return $("#box-question-" + data.question_id).append(data.html);
+    $("#box-question-" + data.question_id).append(data.html);
+    console.log(data.is_anonymous);
+    console.log("member_id: " + getCookie("member_id"));
+    console.log("answer_member_id: " + data.answer_member);
+    if (getCookie("member_id") != data.answer_member && data.is_anonymous){
+      console.log("entrou");
+      return $("box-answer-" + data.answer_id + " #username").html('Anonymous');
+    }
   },
   updateMessage: function(data) {
     if(data.answer_created_at !== data.answer_updated_at){
