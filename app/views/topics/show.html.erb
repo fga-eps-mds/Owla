@@ -51,8 +51,11 @@
           </div>
 
           <div class="box-body">
-            <%= question.content %>
-            <div class="row col-xs-12">
+            <div class="question-content">
+              <%= question.content %>
+            </div>
+
+            <div class="row col-xs-12" id="question-control">
               <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
               <% if current_member == question.member %>
                 <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
@@ -62,6 +65,12 @@
               <% if @topic.room.owner == current_member && !question.moderated? %>
                 <%= link_to 'Moderar', moderate_question_url(question.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
               <% end %> 
+            </div>
+
+            <div class="question-attachment">
+              <% if question.attachment? %>
+                <%= link_to "", question.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-question" %>
+              <% end %>
             </div>
           </div>
 

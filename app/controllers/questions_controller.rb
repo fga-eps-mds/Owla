@@ -76,7 +76,7 @@ class QuestionsController < ApplicationController
   private
 
 		def question_params
-			params.require(:question).permit(:content, :topic_id, :anonymous)
+			params.require(:question).permit(:content, :topic_id, :anonymous, :attachment)
 		end
 
 end
