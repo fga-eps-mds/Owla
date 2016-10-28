@@ -35,7 +35,12 @@ class NotificationTest < ActiveSupport::TestCase
     assert @valid2.save
   end
 
-  test "atribute 'read' should be false by setting" do
-  	assert_equals @notification.read, false
+  test "attribute 'read' should be false by setting" do
+  	assert_equal false, @notification.read 
   end
+
+  test "should save notification with 'read' attribute true" do
+    @valid = Notification.new(message:"-"*5, read: true, member: @member)
+    assert @valid.save
+  end  
 end

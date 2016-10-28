@@ -4,6 +4,7 @@ class Member < ApplicationRecord
   has_and_belongs_to_many :rooms
   has_many :questions
   has_many :answers
+  has_many :notifications
 
   before_save { self.email = email.downcase }
 
