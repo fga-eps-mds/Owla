@@ -14,3 +14,19 @@
  *= require_tree .
  *= require_self
  */
+
+.flash-conteiner {
+  width: 50%;
+  padding-top: 1%;
+}
+
+ .alert.alert {
+   width: 100%;
+   margin-left: 50%;
+   text-align: center;
+ }
+
+ .alert.alert-notice {
+   border: 1px solid #f39c12;
+   background: cornsilk;
+ }

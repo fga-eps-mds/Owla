@@ -10,6 +10,7 @@
 </section>
 
 <section class="content">
+
   <div class="row">
     <% @topic.questions.each do |question| %>
       <div class="col-md-6 pull-right">
@@ -42,11 +43,23 @@
             </div>
 
             <div class="box-tools">
-              <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
-                <i class="fa fa-circle-o"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              <span class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                  <span class="fa fa-gear"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
+                    <li>
+                      <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
+                    </li>
+                  <% end %>
+                    <li>
+                      <% if current_member == question.member %>
+                        <%= link_to 'Edit', edit_question_path(question) %>
+                      <% end %>
+                    </li>
+                </ul>
+              </span>
             </div>
           </div>
           
@@ -151,3 +164,11 @@
     <% end %>
   </div>
 </section>
+
+
+<script>
+    $(function() {
+      $("#options-dropdown").click(function(evt) {
+      })
+    })
+</script>
