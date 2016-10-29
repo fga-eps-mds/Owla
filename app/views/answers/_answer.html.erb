@@ -2,7 +2,7 @@
   <% if answer.anonymous %>
       <% if(current_member == answer.member || current_member == room.owner) %>
 
-        <%= image_tag answer.member.avatar.url(:thumb), class: "img-circle img-sm",
+        <%= image_tag answer.member.avatar.url(:thumb), class: "img-circle img-sm user-image",
           alt: "User Image", style: "max-width: 56px;" %>
         <div class="comment-text">
           <span class="username">

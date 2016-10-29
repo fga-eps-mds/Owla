@@ -12,6 +12,9 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
   },
 
   createMessage: function(data) {
+    var currentMemberId = getCookie("member_id");
+    var roomOwnerId     = getCookie("room_owner_id");
+
     $("#box-question-" + data.question_id).removeClass('hidden');
     $('.content-text').val('');
     this.updateQuestionCounter(data);
@@ -22,13 +25,13 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
 //    console.log("member_id: " + getCookie("member_id"));
 //    console.log("answer_member_id: " + data.answer_member);
 
-    if (getCookie("member_id") != data.answer_member){
+    if (currentMemberId != data.answer_member){
       
       $("#edit-answer-" + data.answer_id).hide();
       $("#delete-answer-" + data.answer_id).hide();
 
-      if(data.is_anonymous){
-        $("#box-answer-" + data.answer_id + " #username").html('Anonymous');
+      if(data.is_anonymous && roomOwnerId != currentMemberId){
+        this.turnAnonymous(data);
       }
     }
 
@@ -49,5 +52,10 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
 
   updateQuestionCounter: function(data) {
     return $("#question-answers-counter-" + data.question_id).html(data.question_answers_counter);
+  },
+
+  turnAnonymous: function(data) {
+      $("#box-answer-" + data.answer_id + " #username").html('Anonymous');
+      $("#box-answer-" + data.answer_id + " .user-image").attr('src', '/images/missing.png');
   }
 });

@@ -24,6 +24,8 @@ class TopicsController < ApplicationController
       @new_question_url = {:action=>"create", :controller=>"questions", :id=>nil, topic_id: @topic.id}
       @question_placeholder = "Type your question here"
       @question_box_title = "Create a new question"
+
+      cookies[:room_owner_id] = @room.owner.id
     end
 
     def edit
