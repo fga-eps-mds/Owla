@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
+  
   def create_report_answer
     member = current_member
     @answer = Answer.find(params[:id])
@@ -28,7 +29,6 @@ class ReportsController < ApplicationController
     end
   end
 
-
   def create_report_question
     member = current_member
     @question = Question.find(params[:id])
@@ -55,6 +55,5 @@ class ReportsController < ApplicationController
       redirect_to topic_path(@topic.id)
     end
   end
-
 
 end
