@@ -7,6 +7,12 @@ class Member < ApplicationRecord
   has_many :questions
   has_many :answers
 
+  has_many :received_reports, foreign_key: "reported_id"
+  has_many :report_moderators, foreign_key: "moderator_id"
+  has_and_belongs_to_many :reports
+
+  has_many :tags
+
   before_save { self.email = email.downcase }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
