@@ -80,6 +80,78 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "Should appear as anonymous user if the member isn't the room owner" do
+    @answer.anonymous = true
+    answer_name = @answer.member.name
+    member_id = 2
+
+    if (@answer.anonymous && @room.owner != member_id)
+      @answer.member.name = "Usuário anônimo"
+    end
+  end
+
+  test "Should appear as anonymous user if the member isn't the answer owner" do
+    @answer.anonymous = true
+    answer_name = @answer.member.name
+    member_id = 2
+
+    if (@answer.anonymous && @answer.member.id != member_id)
+      @answer.member.name = "Usuário anônimo"
+    end
+  end
+
+  test "should appear as anonymous user when answer if the member isn't the room owner and the question owner" do
+    @answer.anonymous = true
+    member_id = 2
+    answer_name = @answer.member.name
+
+    if (@answer.anonymous && @room.owner.id != member_id && member_id != @answer.member.id)
+      @answer.member.name = "Usuário Anônimo"
+    end
+
+    assert_not_equal answer_name, @answer.member.name
+  end
+
+  test "should not appear as anonymous user when answer if the member is the room owner" do
+    answer_name = @answer.member.name
+
+    if (@answer.anonymous && @room.owner.id != @member.id)
+      @answer.member.name = "Usuário anônimo"
+    end
+
+    assert_equal answer_name, @answer.member.name
+  end
+
+  test "should not appear as anonymous user when answer if the member is the question owner" do
+    answer_name = @answer.member.name
+
+    if (@answer.anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
+      @answer.member.name = "Usuário anônimo"
+    end
+
+    assert_equal answer_name, @answer.member.name
+  end
+
+  test "should not appear as anonymous user when answer if the member is the room owner and the question owner" do
+    answer_name = @answer.member.name
+
+    if (@answer.anonymous && @room.owner.id != @member.id && @member.id != @answer.member.id)
+      @answer.member.name = "Usuário anônimo"
+    end
+
+    assert_equal answer_name, @answer.member.name
+  end
+
+  test "answer should have one like after button click" do
+    post "/answers/#{@answer.id}/like"
+    assert_equal 1, @answer.votes_for.size
+  end
+
+  test "boolean attribute for answer should change" do 
+    post "/answers/#{@answer.id}/like"
+    assert @answer.liked_by(@member), true
+  end
+
   test 'only room owner should change moderated attribute of an answer' do
     @not_owner_member = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "123456789", password_confirmation: "123456789")
     sign_out_as @member
@@ -118,21 +190,21 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-      answer = Answer.last
+    answer = Answer.last
 
-      assert_equal answer.anonymous, true
+    assert_equal answer.anonymous, true
   end
 
   test 'should answer not be anonymous if the option is not marked' do
-      post "/questions/#{@question.id}/answers", params: {
-        answer: {
-          content: 'answer content'
-        }
+    post "/questions/#{@question.id}/answers", params: {
+      answer: {
+        content: 'answer content'
       }
+    }
 
-      answer = Answer.last
+    answer = Answer.last
 
-      assert_not_equal answer.anonymous, true
+    assert_not_equal answer.anonymous, true
   end
 
 end

@@ -24,6 +24,15 @@ Rails.application.routes.draw do
     resources :rooms do
         resources :topics do
           resources :questions do
+            member do
+              post "like", to: "questions#like"
+            end
+            resources :answers do 
+              member do
+                post "like", to: "answers#like"
+              end  
+            end
+
             resources :answers
             resources :tags
           end

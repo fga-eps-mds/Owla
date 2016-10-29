@@ -28,6 +28,7 @@ gem "paperclip", "~> 4.3"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'acts_as_votable', '~> 0.10.0'
 
 group :cucumber do
   gem 'capybara',               '~> 2.2'

@@ -12,7 +12,7 @@
 <section class="content">
 
   <div class="row">
-    <% @topic.questions.each do |question| %>
+    <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
       <div class="col-md-6 pull-right">
         <div class="box box-widget">
           <div class="box-header with-border">
@@ -89,10 +89,21 @@
           <br></br>
           <div class="box-body">
             <%= question.content %>
+
             <div class="row col-xs-12">
+              <div id="like_button">
+                <%= form_tag like_question_path(question.id), remote: true do %>
+                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question-answer") do %>
+                    <i class="fa fa-heart"></i>
+                    <i class="badge bg-red"><%= question.get_likes.size %></i>
+                  <% end %>
+                <% end %>
+              </div>
+
               <br></br>
               <%= link_to 'Tags', question_tags_path(question), class: 'btn btn-xs btn-flat btn-primary'%>
               <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
+
               <% if current_member == question.member %>
                 <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
                     style: "margin-right: 5px;"%>
@@ -131,6 +142,7 @@
                       </span>
                     <% end %>
                 <% else %>
+              
                   <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
                         alt: "User Image", style: "max-width: 56px;" %>
                   <span class="username">
@@ -142,6 +154,17 @@
                   </span>
                 <% end %>
 
+                <div id="like_button">
+                  <%= form_tag like_answer_path(answer.id), remote: true do %>
+                    <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question-answer") do %>
+                      <i class="fa fa-heart"></i>
+                      <i class="badge bg-red"><%= answer.get_likes.size %></i>
+                    <% end %>
+                  <% end %>
+                </div>
+                  
+              <%if answer.moderated == true %> 
+              <% end %>
                 <%= answer.content %>
 
                 <% if @topic.room.owner == current_member && !answer.moderated? %>
