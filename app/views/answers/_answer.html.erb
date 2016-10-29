@@ -6,7 +6,9 @@
           alt: "User Image", style: "max-width: 56px;" %>
         <div class="comment-text">
           <span class="username">
-            <a href="#" id="username"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
+            <span id="username">
+              <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
+            </span>
             <%= render partial: 'answers/answer_control', locals: { answer: answer,
                                                                     current_member: current_member} %>
           </span>
@@ -28,9 +30,11 @@
           alt: "User Image", style: "max-width: 56px;" %>
     <div class="comment-text">
       <span class="username">
-        <a href="#" id="username"><%= answer.member.alias %></a>
+        <span id="username">
+          <a href="#"><%= answer.member.alias %></a>
           <%= render partial: 'answers/answer_control', locals: { answer: answer,
                                                                   current_member: current_member} %>
+        </span>
       </span>
   <% end %>
 

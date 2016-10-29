@@ -1,12 +1,12 @@
 App.questionChannel = App.cable.subscriptions.create('QuestionsChannel', {
   received: function(data) {
-    if (data.action === 'create'){
+    if (data.action === 'create_question'){
       return this.createQuestion(data);
     }
-    else if (data.action === 'update'){
+    else if (data.action === 'update_question'){
       return this.updateQuestion(data);
     }
-    else if (data.action === 'delete'){
+    else if (data.action === 'delete_question'){
       return this.deleteQuestion(data);
     }
   },

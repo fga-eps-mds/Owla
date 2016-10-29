@@ -16,12 +16,13 @@
       </a>
       <ul class="dropdown-menu">
         <li role="presentation">
-          <%= link_to "Edit", edit_answer_path(answer), class: "edit-answer",
-            id: "edit-#{answer.id}", role: "menuitem", tabindex: "-1", remote: true %>
+          <%= link_to "Edit", edit_answer_path(answer),
+            id: "edit-answer-#{answer.id}", role: "menuitem",
+            tabindex: "-1", remote: true %>
         </li>
         <li role="presentation">
           <%= link_to "Delete", answer_path(answer), method: :delete,
-            class: "delete-answer", id: "delete-#{answer.id}", role: "menuitem",
+            id: "delete-answer-#{answer.id}", role: "menuitem",
             tabindex: "-1", remote: true, data: {confirm: "Are you sure?"} %>
         </li>
       </ul>

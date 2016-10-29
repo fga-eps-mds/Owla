@@ -23,7 +23,7 @@ class AnswersController < ApplicationController
     @answer.member = current_member
 
     if @answer.save
-      send_cable @answer, 'create'
+      send_cable @answer, 'create_answer'
     end
   end
 
@@ -39,7 +39,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
 
     if @answer.update_attributes(answer_params)
-      send_cable @answer, 'update'
+      send_cable @answer, 'update_answer'
     end
   end
 
@@ -48,7 +48,7 @@ class AnswersController < ApplicationController
     @question = @answer.question
 
     if @answer.destroy
-      send_cable @answer, 'delete'
+      send_cable @answer, 'delete_answer'
     end
   end
 

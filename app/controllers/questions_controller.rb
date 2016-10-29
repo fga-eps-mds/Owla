@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
     @question.member = current_member
 
     if @question.save
-      send_question @question, 'create'
+      send_question @question, 'create_question'
     end
   end
 
