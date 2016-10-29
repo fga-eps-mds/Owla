@@ -48,6 +48,9 @@
                   <span class="fa fa-gear"></span>
                 </a>
                 <ul class="dropdown-menu">
+                  <%= link_to report_question_path(question), method: :post do %>
+                    <i class="fa fa-flag" aria-hidden="true" title="Denunciar pergunta"></i>
+                  <% end %>
                   <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
                     <li>
                       <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
@@ -112,6 +115,9 @@
                       <span class="username">
                         <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                        <%= link_to report_answer_path(answer), method: :post do %>
+                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <% end %>
                       </span>
                     <% else %>
                       <%= image_tag "/images/missing.png", class: "img-circle img-sm",
@@ -119,6 +125,9 @@
                       <span class="username">
                         <%= "Anonymous" %>
                         <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                        <%= link_to report_answer_path(answer), method: :post do %>
+                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                        <% end %>
                       </span>
                     <% end %>
                 <% else %>
@@ -127,6 +136,9 @@
                   <span class="username">
                     <a href="#"><%= answer.member.alias %></a>
                     <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
+                    <%= link_to report_answer_path(answer), method: :post do %>
+                      <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
+                    <% end %>
                   </span>
                 <% end %>
 
