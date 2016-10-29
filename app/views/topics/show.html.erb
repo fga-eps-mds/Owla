@@ -1,11 +1,18 @@
 <section class="content-header">
   <h1>
     <%= @topic.name %>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modal-0">
+      New question
+    </button>
+
     <%= render partial: 'questions/form_modal', locals: { question: @question,
                                                           placeholder: @question_placeholder,
                                                           box_title: @question_box_title,
                                                           url: @new_question_url} %>
   </h1>
+
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Topic</li>
@@ -18,6 +25,11 @@
       <%= render partial: 'questions/question', locals: { question: question,
                                                           room: @topic.room,
                                                           new_answer: @answer} %>
+
+    <%= render partial: 'questions/form_modal', locals: { question: question,
+                                                          placeholder: nil,
+                                                          box_title: "Edit question",
+                                                          url: question_path(question)} %>
     <% end %>
   </div>
 </section>

@@ -14,7 +14,8 @@ App.questionChannel = App.cable.subscriptions.create('QuestionsChannel', {
    return $("#topic-question-box-" + data.topic_id).append(data.html);
   },
   updateQuestion: function(data) {
-   // return $("#answer-content-" + data.answer_id).html(data.content);
+    console.log("passou");
+    return $("#question-" + data.question_id).find(".question-content").html(data.content);
   },
   deleteQuestion: function(data) {
    // this.updateQuestionCounter(data);

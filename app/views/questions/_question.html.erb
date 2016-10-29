@@ -1,4 +1,4 @@
-<div class="col-md-6 pull-right">
+<div class="col-md-6 pull-right" id="question-<%= question.id %>">
   <div class="box box-widget">
     <div class="box-header with-border">
 
@@ -37,7 +37,9 @@
     </div>
 
     <div class="box-body">
-      <%= question.content %>
+      <span class="question-content">
+        <%= question.content %>
+      </span>
       <div class="row col-xs-12">
         <span class="text-muted pull-right">
           <span id="question-answers-counter-<%= question.id %>">
@@ -45,8 +47,10 @@
           </span> answers
         </span>
         <% if current_member == question.member %>
-          <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
-              style: "margin-right: 5px;"%>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-xs btn-flat btn-primary pull-right" data-toggle="modal" data-target="#modal-<%= question.id %>" style="margin-right: 5px;">
+            Edit
+          </button>
         <% end %>
       </div>
     </div>

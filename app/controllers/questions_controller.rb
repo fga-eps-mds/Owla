@@ -34,22 +34,13 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question = Question.find(params[:id])
-    @topic = @question.topic
-    @box_title = "Edit your question"
-    @subtitle  = "Settings"
-    @placeholder_description = @question.content
-    @url = question_path(@question)
   end
 
   def update
     @question = Question.find(params[:id])
 
     if @question.update_attributes(question_params)
-        flash[:success] = "Questão atualizada com sucesso"
-        redirect_to topic_path(@question.topic_id)
-    else
-        render 'edit'
+      send_question @question, 'update_question'
     end
   end
 
