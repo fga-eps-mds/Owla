@@ -43,6 +43,11 @@
 
             <%= question.file_field :attachment, class: 'form-control hidden', id: 'question-attachment-link' %>
 
+            <label class='hidden' id="delete-attachment-label">
+              <%= check_box_tag 'delete_attachment', 1, false %>
+              Delete attachment?
+            </label>
+
             <%= button_tag(type: "submit", class: "btn btn-app pull-right", id: 'submit-question-button') do %>
               <i class="fa fa-save"></i>
             <% end %>
