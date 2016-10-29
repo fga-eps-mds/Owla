@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'rooms/:id/reintegrate_member' => 'rooms#reintegrate_member', as: 'reintegrate_member'
 	post 'moderate_question/:id', to: 'questions#moderate_question', as: 'moderate_question'
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
+  post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
 
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
         resources :topics do
           resources :questions do
             resources :answers
+            resources :tags
           end
         end
     end
