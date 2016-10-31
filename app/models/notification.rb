@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
-  belongs_to :member
-  belongs_to :question
-  belongs_to :answer
+	
+	belongs_to :receiver, class_name: 'Member', foreign_key: 'receiver_id'
 
-  validates :message, presence: true, length: {minimum: 5, maximum: 50}
+	validates :message, presence: true, length: {minimum: 5, maximum: 50}
+
 end
