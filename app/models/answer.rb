@@ -6,5 +6,8 @@ class Answer < ApplicationRecord
 	has_one :report
 	
 	validates :content, presence: true, length: { minimum: 1 }
+  has_many :notifications
+  
+  validates :content, presence: true, length: { minimum: 1 }
 
 end
