@@ -11,14 +11,20 @@ module NotificationHelper
 	end
 
 	def moderated_question
-		if moderated_question == true 
+		if moderate_question == true 
 			notification = Notification.create(message: "Your question has been moderated", read:false, link: moderate_question_path, sender: room.owner)
 			question.notifications << notification 
 		end
 	end
 
+	def reported_question
+	end
+
+	def reported_answer
+	end
+
 	def moderated_answer
-		if moderated_answer == true
+		if moderate_answer == true
 			notification = Notification.create(message: "Your answer has been moderated", read: false, link: moderate_answer_path, sender: room.owner)
 			answer.notifications << notification
 		end

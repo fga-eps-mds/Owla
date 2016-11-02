@@ -29,6 +29,7 @@ class RoomsController < ApplicationController
     elsif room.members.include?(member)
       flash[:notice] = "You are already registered in this room"
     else
+      Notification.joined_room
       room.members << member
     end
 

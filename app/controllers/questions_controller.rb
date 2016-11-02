@@ -88,6 +88,7 @@ class QuestionsController < ApplicationController
     @topic = question.topic
     if current_member == @topic.room.owner
       question.update_attributes(content: "This question has been moderated because it's content was considered inappropriate", moderated: true)
+      Notification.moderated_question
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"

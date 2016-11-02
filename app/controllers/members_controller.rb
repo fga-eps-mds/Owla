@@ -17,6 +17,7 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
 
     if @member.save
+      Notifications.first_notification
       log_in @member
       redirect_to home_path @member
     else

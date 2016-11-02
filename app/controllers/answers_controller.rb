@@ -23,6 +23,7 @@ class AnswersController < ApplicationController
     @answer.member = current_member
 
     if @answer.save
+      Notification.answered_question
       redirect_to topic_path(@question.topic)
     else
       flash[:alert] = "Answer not created"
@@ -67,6 +68,7 @@ class AnswersController < ApplicationController
     @topic = answer.question.topic
     if current_member ==  @topic.room.owner
       answer.update_attributes(content: "This answer has been moderated because it's content was considered inappropriate", moderated: true)
+      Notification.moderated_answer
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"
