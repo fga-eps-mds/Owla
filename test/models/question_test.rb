@@ -91,8 +91,6 @@ class QuestionTest < ActiveSupport::TestCase
     assert_not question.save
   end
 
-# FIXME download
-# FIXME editar arquivo enviado
-# FIXME deletar arquivo enviado
+  # FIXME download
 
 end

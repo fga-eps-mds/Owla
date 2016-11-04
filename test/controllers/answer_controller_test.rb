@@ -24,7 +24,9 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     @question.member = @member
     @question.save
 
-    @answer = Answer.new(content: "CONTENT TEST")
+    attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
+
+    @answer = Answer.new(content: "CONTENT TEST", attachment: attachment)
     @answer.member = @member
     @answer.question = @question
     @answer.anonymous = false
@@ -170,6 +172,64 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     post "/moderate_answer/#{@answer.id}"
     @answer.reload
     assert_equal true, @answer.moderated
+  end
+
+  test "should upload attachment when answer is created" do
+    attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
+
+    assert_difference('Answer.count') do
+      post "/questions/#{@question.id}/answers", params: {
+        answer: {
+          content: "Answer test",
+          attachment: attachment
+        }
+      }
+    end
+
+  end
+
+  test "should not upload wrong type of attachment" do
+    wrong_attachment = fixture_file_upload('test/fixtures/answers.yml', 'application/yaml')
+
+    old_answer = Answer.last
+
+    post "/questions/#{@question.id}/answers", params: {
+      answer: {
+        content: "Testing wrong attachment",
+        attachment: wrong_attachment
+      }
+    }
+
+    assert_equal old_answer, Answer.last
+  end
+
+  test "should delete attachment from answer if option is marked" do
+    answer = Answer.last
+
+    patch "/answers/#{answer.id}", params: {
+      answer: {
+        content: "new question content"
+      },
+      delete_attachment: true
+    }
+
+    answer.reload
+
+    assert_not answer.attachment?
+  end
+
+  test "should not delete attachment if option is not marked" do
+    answer = Answer.last
+
+    patch "/answers/#{answer.id}", params: {
+      answer: {
+        content: "new question content"
+      }
+    }
+
+    answer.reload
+
+    assert answer.attachment?
   end
 
 end
