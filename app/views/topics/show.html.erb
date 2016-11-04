@@ -11,6 +11,7 @@
                                                           placeholder: @question_placeholder,
                                                           box_title: @question_box_title,
                                                           url: @new_question_url} %>
+
   </h1>
 
   <ol class="breadcrumb">
@@ -20,16 +21,32 @@
 </section>
 
 <section class="content">
-  <div class="row" id="topic-question-box-<%= @topic.id %>">
-    <% @topic.questions.each do |question| %>
-      <%= render partial: 'questions/question', locals: { question: question,
-                                                          room: @topic.room,
-                                                          new_answer: @answer} %>
 
-    <%= render partial: 'questions/form_modal', locals: { question: question,
-                                                          placeholder: nil,
-                                                          box_title: "Edit question",
-                                                          url: question_path(question)} %>
+  <% if @topic.slide.present? %>
+    <!-- Slide -->
+    <% if @topic.slide_content_type == 'application/pdf' %>
+      <div class="row">
+        <iframe class="slide-slice" src=<%= @topic.slide.url %>\
+                style="height: <%= @slide_dimensions[:height]%>px;
+                       width:<%= @slide_dimensions[:width]%>px;"
+                frameborder="0">
+        </iframe>
+      </div>
     <% end %>
-  </div>
+    
+    <hr>
+  <% else %>
+    <div class="row" id="topic-question-box-<%= @topic.id %>">
+      <% @topic.questions.each do |question| %>
+        <%= render partial: 'questions/question', locals: { question: question,
+                                                            room: @topic.room,
+                                                            new_answer: @answer} %>
+
+      <%= render partial: 'questions/form_modal', locals: { question: question,
+                                                            placeholder: nil,
+                                                            box_title: "Edit question",
+                                                            url: question_path(question)} %>
+      <% end %>
+    </div>
+  <% end %>
 </section>
