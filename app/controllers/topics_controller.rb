@@ -28,7 +28,8 @@ class TopicsController < ApplicationController
     @question_box_title = "Create a new question"
 
     if @topic.slide.present?
-      @slide_dimensions = get_image_dimensions(@topic.slide.path)
+      @splited_slide = generate_slide_list(@topic)
+      @slide_dimensions = get_image_dimensions(@topic.slide)
     end
 
     cookies[:room_owner_id] = @room.owner.id

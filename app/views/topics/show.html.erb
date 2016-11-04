@@ -23,15 +23,17 @@
 <section class="content">
 
   <% if @topic.slide.present? %>
-    <!-- Slide -->
     <% if @topic.slide_content_type == 'application/pdf' %>
-      <div class="row">
-        <iframe class="slide-slice" src=<%= @topic.slide.url %>\
-                style="height: <%= @slide_dimensions[:height]%>px;
-                       width:<%= @slide_dimensions[:width]%>px;"
-                frameborder="0">
-        </iframe>
-      </div>
+      <!-- Slide -->
+      <% @splited_slide.each do | slide_page_uri | %>
+        <div class="row">
+          <iframe class="slide-slice" src=<%= slide_page_uri %>\
+                  style="height: <%= @slide_dimensions[:height] + 35 %>px;
+                         width:<%= @slide_dimensions[:width]%>px;"
+                  frameborder="0">
+          </iframe>
+        </div>
+      <% end %>
     <% end %>
     
     <hr>
