@@ -20,6 +20,7 @@
 $(document).ready(function(){
   $('#edit-attachment-button').click(function(){
     $('#question-attachment-link').toggleClass('hidden');
+    $('#answer-attachment-link').toggleClass('hidden');
     $('#delete-attachment-label').toggleClass('hidden');
   });
 });

@@ -38,15 +38,17 @@
                 </span>
               <% end %>
 
-              <%= link_to "Edit attachment", "#", class: 'btn btn-primary', id: 'edit-attachment-button', remote: true %>
+              <%= link_to "Manage attachment", "#", class: 'btn btn-primary', id: 'edit-attachment-button', remote: true %>
             </div>
 
             <%= question.file_field :attachment, class: 'form-control hidden', id: 'question-attachment-link' %>
 
-            <label class='hidden' id="delete-attachment-label">
-              <%= check_box_tag 'delete_attachment', 1, false %>
-              Delete attachment?
-            </label>
+            <% if @question.attachment? %>
+              <label class='hidden' id="delete-attachment-label">
+                <%= check_box_tag 'delete_attachment', 1, false %>
+                Delete attachment?
+              </label>
+            <% end %>
 
             <%= button_tag(type: "submit", class: "btn btn-app pull-right", id: 'submit-question-button') do %>
               <i class="fa fa-save"></i>

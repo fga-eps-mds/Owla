@@ -103,6 +103,12 @@
                   </span>
                 <% end %>
 
+                <div class="answer-attachment">
+                  <% if answer.attachment? %>
+                    <%= link_to "", answer.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-answer" %>
+                  <% end %>
+                </div>
+
                 <%= answer.content %>
 
                 <% if @topic.room.owner == current_member && !answer.moderated? %>
