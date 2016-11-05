@@ -29,3 +29,45 @@ $(function () {
 $('.modal-form').on('submit', function() {
   $('.modal').modal('hide');
 });
+
+//Static slide
+$("#carousel-slide").carousel({interval: false});
+
+//Slide id
+
+$('a[data-slide="prev"]').click(function() {
+  slideSize = $('#carousel-slide').attr('size');
+  re = /slide-(\d+)/;
+  previousSlideId = $('.item.active').attr('id').match(re)[1];
+  $('#hidden-slide-id').attr('value', normalizeSlideId(decrement, previousSlideId, slideSize));
+  console.log($('#hidden-slide-id').attr('value'));
+});
+
+$('a[data-slide="next"]').click(function() {
+  slideSize = $('#carousel-slide').attr('size');
+  re = /slide-(\d+)/;
+  previousSlideId = $('.item.active').attr('id').match(re)[1];
+  $('#hidden-slide-id').attr('value', normalizeSlideId(increment, previousSlideId, slideSize));
+  console.log($('#hidden-slide-id').attr('value'));
+});
+
+function normalizeSlideId(func, previous, limit){
+  limit = parseInt(limit);
+  previous = parseInt(previous);
+
+  var normalizedId = func(previous);
+  if(normalizedId < 0)
+    normalizedId = limit - 1;
+  else if(normalizedId >= limit)
+    normalizedId = 0;
+
+  return normalizedId;
+}
+
+function increment(id){
+  return parseInt(id) + 1;
+}
+
+function decrement(id){
+  return parseInt(id) - 1;
+}

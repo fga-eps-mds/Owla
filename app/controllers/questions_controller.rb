@@ -29,6 +29,11 @@ class QuestionsController < ApplicationController
     @question.member = current_member
 
     if @question.save
+      if @topic.slide.present?
+        puts ("#{params[:slide_id] }" + "a"*50)
+        set_slide_id(@question, params[:slide_id])
+      end
+
       send_question @question, 'create_question'
     end
   end
@@ -40,6 +45,10 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
 
     if @question.update_attributes(question_params)
+      if @topic.slide.present?
+        set_slide_id(@question, params[:slide_id])
+      end
+
       send_question @question, 'update_question'
     end
   end
@@ -53,6 +62,11 @@ class QuestionsController < ApplicationController
 
   private
     def question_params
-        params.require(:question).permit(:content, :topic_id, :anonymous)
+        params.require(:question).permit(:content, :topic_id, :anonymous, :slide_id)
+    end
+
+    def set_slide_id(question, slide_id)
+        question.slide_id = slide_id
+        question.save
     end
 end

@@ -10,7 +10,8 @@
     <%= render partial: 'questions/form_modal', locals: { question: @question,
                                                           placeholder: @question_placeholder,
                                                           box_title: @question_box_title,
-                                                          url: @new_question_url} %>
+                                                          url: @new_question_url,
+                                                          slide_id: 0} %>
 
   </h1>
 
@@ -24,18 +25,56 @@
 
   <% if @topic.slide.present? %>
     <% if @topic.slide_content_type == 'application/pdf' %>
-      <!-- Slide -->
-      <% @splited_slide.each do | slide_page_uri | %>
-        <div class="row">
-          <iframe class="slide-slice" src=<%= slide_page_uri %>\
-                  style="height: <%= @slide_dimensions[:height] + 35 %>px;
-                         width:<%= @slide_dimensions[:width]%>px;"
-                  frameborder="0">
-          </iframe>
+        <div class="box-body">
+          <div id="carousel-slide" class="carousel slide" data-ride="carousel" size="<%= @slide[:pages].count %>">
+            <div class="carousel-inner">
+              <% @slide[:pages].each do | slide_page_uri | %>
+                <% if @slide[:pages].index(slide_page_uri) == 0 %>
+                  <div class="item active" id="slide-0">
+                <% else %>
+                  <div class="item" id="slide-<%= @slide[:pages].index(slide_page_uri) %>">
+                <% end %>
+                  <img class="slide-slice" src=<%= slide_page_uri %>\
+                          style="height: <%= @slide[:dimensions][:height] + 35 %>px;
+                                 width:<%= @slide[:dimensions][:width]%>px;" />
+                  </object>
+
+
+                  <hr>
+
+                  <div class="row" id="topic-question-box-<%= @topic.id %>">
+                    <% if @slide[:questions][@slide[:pages].index(slide_page_uri)].present? %>
+                      <% @slide[:questions][@slide[:pages].index(slide_page_uri)].each do |question| %>
+                        <%= render partial: 'questions/question', locals: { question: question,
+                                                                              room: @topic.room,
+                                                                              new_answer: @answer} %>
+
+                        <%= render partial: 'questions/form_modal', locals: { question: question,
+                                                                              placeholder: nil,
+                                                                              box_title: "Edit question",
+                                                                              url: question_path(question),
+                                                                              slide_id: @slide[:pages].index(slide_page_uri)} %>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+
+
+
+                </div>
+              <% end %>
+
+            </div>
+            <a class="left carousel-control" href="#carousel-slide" data-slide="prev">
+              <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-slide" data-slide="next">
+              <span class="fa fa-angle-right"></span>
+            </a>
+          </div>
         </div>
-      <% end %>
+        <!-- /.box-body -->
     <% end %>
-    
     <hr>
   <% else %>
     <div class="row" id="topic-question-box-<%= @topic.id %>">
@@ -44,10 +83,11 @@
                                                             room: @topic.room,
                                                             new_answer: @answer} %>
 
-      <%= render partial: 'questions/form_modal', locals: { question: question,
+        <%= render partial: 'questions/form_modal', locals: { question: question,
                                                             placeholder: nil,
                                                             box_title: "Edit question",
-                                                            url: question_path(question)} %>
+                                                            url: question_path(question),
+                                                            slide_id: nil } %>
       <% end %>
     </div>
   <% end %>

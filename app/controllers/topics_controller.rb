@@ -28,8 +28,11 @@ class TopicsController < ApplicationController
     @question_box_title = "Create a new question"
 
     if @topic.slide.present?
-      @splited_slide = generate_slide_list(@topic)
-      @slide_dimensions = get_image_dimensions(@topic.slide)
+      @slide = {
+        pages: generate_slide_list(@topic),
+        dimensions: get_image_dimensions(@topic.slide),
+        questions: get_slide_questions_list(@topic, params[:slide_id])
+      }
     end
 
     cookies[:room_owner_id] = @room.owner.id
@@ -80,4 +83,9 @@ class TopicsController < ApplicationController
     def topic_params
       params.require(:topic).permit(:name, :description, :room_id, :slide)
     end
+
+    def get_slide_questions_list(topic, slide_id)
+      Question.where(topic: topic).group_by(&:slide_id)
+    end
+
 end

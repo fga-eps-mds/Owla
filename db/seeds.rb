@@ -60,12 +60,15 @@ top2 = room.topics.create(name: "Soluções Energéticas", description: "Soluç�
 puts "Creating questions for topic: #{top.name}"
 ask = top.questions.new(content: "Eu não entendi o sentido do filme Avatar")
 ask2 = top.questions.new(content: "Tenho uma ideia para isso e preciso de pessoas interessadas!")
+ask3 = top.questions.new(content: "Tenho uma ideia!")
 
 member4.questions << ask
 member.questions << ask2
+member.questions << ask3
 
 ask.save
 ask2.save
+ask3.save
 
 ans = ask.answers.new(content: "E alguém sabe?")
 ans2 = ask.answers.new(content: "A professora já ira falar sobre o filme.")

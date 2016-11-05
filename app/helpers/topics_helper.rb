@@ -10,7 +10,8 @@ module TopicsHelper
   def split_slide topic
     if topic.slide.present?
       begin
-        Docsplit.extract_pages(topic.slide.path, output: slide_dir(topic))
+        pdf = Magick::ImageList.new(topic.slide.path)
+        pdf.write(slide_dir(topic) + "/slide.jpg")
       rescue => e
         flash[:alert] = "Sorry, the PDF file is corrupted."
         raise e #TODO catch this exception
@@ -24,14 +25,18 @@ module TopicsHelper
       split_slide topic
     end
 
+    pages = get_image_files topic
+    full_uri_pages = pages.map { |page_name| "/slides/#{topic.id}/#{page_name}" }
+    full_uri_pages.sort_by { |h| h.scan(/.-(\d+)\.jpg/).flatten[0].to_i }
+  end
+
+  def get_image_files topic
     list_of_files = Dir.entries(slide_dir(topic))
-    pages = list_of_files.select { |f| /._\d+\.pdf/.match(f) }
-    pages.map { |page_name| "#{root_path}slides/#{topic.id}/#{page_name}" }
+    list_of_files.select { |f| /.-\d+\.jpg/.match(f) }
   end
 
   def slide_splited? topic
-    list_of_files = Dir.entries(slide_dir(topic))
-    number_of_files = list_of_files.count
+    number_of_files = get_image_files(topic).count
     return number_of_files > 1
   end
 

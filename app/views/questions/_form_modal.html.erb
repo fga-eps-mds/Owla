@@ -9,13 +9,11 @@
       <div class="modal-body">
         <%= render partial: 'questions/form', locals: { question: question,
                                                         placeholder: placeholder,
-                                                        url: url } %>
-<!--      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-
-      <% if question.valid? %>
-        <%= button_to "Delete Question", question_path(question), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
-      <% end %>
-
+                                                        url: url,
+                                                        slide_id: slide_id} %>
+        <% if question.valid? %>
+          <%= button_to "Delete Question", question_path(question), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
+        <% end %>
       </div>
     </div>
   </div>

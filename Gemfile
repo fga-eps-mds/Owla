@@ -25,8 +25,8 @@ gem 'redis', '~> 3.0'
 # gem 'bcrypt', '~> 3.1.7'
 # Paperclip for profile image
 gem "paperclip", "~> 4.3"
-# Docsplit to split PDFs
-gem "docsplit"
+# Gem to convert PDF files to JPG files
+gem 'rmagick'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
