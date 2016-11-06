@@ -22,12 +22,12 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should not search if not logged in" do
     sign_out_as @member
-    post search_url("omelete")
+    get search_url, params: { query: "oi"}
     assert_redirected_to root_path
   end
 
   test "should return correct number of items in search" do
-    post search_url("Software")
+    get search_url, params: { query: "Software"}
 
     assert_response :success
     assert_equal 2, assigns(:rooms).count
@@ -35,7 +35,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "downcase should not make a difference in search" do
-    post search_url("software")
+    get search_url, params: { query: "software" }
 
     assert_response :success
     assert_equal 2, assigns(:rooms).count
@@ -43,7 +43,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "upcase should not make a difference in search" do
-    post search_url("SOFTWARE")
+    get search_url, params: { query: "SOFTWARE" }
 
     assert_response :success
     assert_equal 2, assigns(:rooms).count
