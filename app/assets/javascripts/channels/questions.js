@@ -11,9 +11,14 @@ App.questionChannel = App.cable.subscriptions.create('QuestionsChannel', {
     }
   },
   createQuestion: function(data) {
-   return $("#slide-" + data.slide_id)
-          .find("#topic-question-box-" + data.topic_id)
-          .append(data.html);
+    if(data.slide_id){
+      return $("#slide-" + data.slide_id)
+             .find("#topic-question-box-" + data.topic_id)
+             .append(data.html);
+    } else {
+      return $("#topic-question-box-" + data.topic_id)
+             .append(data.html);
+    }
   },
   updateQuestion: function(data) {
     return $("#question-" + data.question_id)
