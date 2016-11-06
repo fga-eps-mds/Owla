@@ -17,6 +17,7 @@
 //= require admin_lte/admin_lte
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales
+//= require bootstrap-switch
 //= require turbolinks
 
 
@@ -40,7 +41,6 @@ $('a[data-slide="prev"]').click(function() {
   re = /slide-(\d+)/;
   previousSlideId = $('.item.active').attr('id').match(re)[1];
   $('#hidden-slide-id').attr('value', normalizeSlideId(decrement, previousSlideId, slideSize));
-  console.log($('#hidden-slide-id').attr('value'));
 });
 
 $('a[data-slide="next"]').click(function() {
@@ -48,7 +48,6 @@ $('a[data-slide="next"]').click(function() {
   re = /slide-(\d+)/;
   previousSlideId = $('.item.active').attr('id').match(re)[1];
   $('#hidden-slide-id').attr('value', normalizeSlideId(increment, previousSlideId, slideSize));
-  console.log($('#hidden-slide-id').attr('value'));
 });
 
 function normalizeSlideId(func, previous, limit){
@@ -71,3 +70,12 @@ function increment(id){
 function decrement(id){
   return parseInt(id) - 1;
 }
+
+// Initialize bootstrap switch
+$("[name='follow-slide']").bootstrapSwitch();
+
+$('input[name="follow-slide"]').on('switchChange.bootstrapSwitch', function(event, state) {
+  console.log(state); // true | false
+
+
+});

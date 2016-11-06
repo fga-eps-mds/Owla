@@ -12,6 +12,7 @@
  *
  *= require admin_lte/ltr/admin_lte
  *= require bootstrap-wysihtml5
+ *= require bootstrap3-switch
  *= require_tree .
  *= require_self
  */

@@ -33,6 +33,9 @@ gem 'rmagick'
 # Text editor
 gem 'bootstrap-wysihtml5-rails'
 
+# Boosttrap switch
+gem "bootstrap-switch-rails"
+
 gem "codeclimate-test-reporter", group: :test, require: nil
 
 group :cucumber do
