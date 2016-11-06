@@ -7,7 +7,8 @@ module QuestionHelper
       html: html,
       question_id: question.id,
       topic_id: question.topic.id,
-      content: question.content
+      content: question.content,
+      slide_id: question.slide_id
     head :ok
   end
 

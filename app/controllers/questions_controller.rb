@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_member
 
   def index
-      @questions = Question.all
+    @questions = Question.all
   end
 
   def new
@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-      @question = Question.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def create
@@ -27,13 +27,9 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.topic = @topic
     @question.member = current_member
+    set_slide_id(@question, params[:slide_id])
 
     if @question.save
-      if @topic.slide.present?
-        puts ("#{params[:slide_id] }" + "a"*50)
-        set_slide_id(@question, params[:slide_id])
-      end
-
       send_question @question, 'create_question'
     end
   end
@@ -62,11 +58,13 @@ class QuestionsController < ApplicationController
 
   private
     def question_params
-        params.require(:question).permit(:content, :topic_id, :anonymous, :slide_id)
+      params.require(:question).permit(:content,
+                                       :topic_id,
+                                       :anonymous,
+                                       :slide_id)
     end
 
     def set_slide_id(question, slide_id)
-        question.slide_id = slide_id
-        question.save
+      question.slide_id = slide_id
     end
 end

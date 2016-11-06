@@ -1,6 +1,5 @@
 <div class="row">
     <div class="pad">
-    <p>Criando form com o ID: <%= slide_id %></p>
       <%= form_for question, url: url, remote: true, html: { class: 'modal-form' }  do |f| %>
         <input id="hidden-slide-id" name="slide_id" type="hidden" value="<%= slide_id %>" />
         <%= f.text_area :content, class:"textarea", placeholder: placeholder,
