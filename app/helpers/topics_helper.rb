@@ -51,4 +51,12 @@ module TopicsHelper
   def dir_exists topic
     File.exists?(slide_dir(topic))
   end
+
+  def send_slide topic_id, slide_id, action
+    ActionCable.server.broadcast 'questions',
+      action: action,
+      topic_id: topic_id,
+      slide_id: slide_id
+    head :ok
+  end
 end

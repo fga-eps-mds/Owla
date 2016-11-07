@@ -36,19 +36,31 @@ $("#carousel-slide").carousel({interval: false});
 
 //Slide id
 
+
 $('a[data-slide="prev"]').click(function() {
-  slideSize = $('#carousel-slide').attr('size');
-  re = /slide-(\d+)/;
-  previousSlideId = $('.item.active').attr('id').match(re)[1];
-  $('#hidden-slide-id').attr('value', normalizeSlideId(decrement, previousSlideId, slideSize));
+  var slideSize = getSlideSize(); 
+  var previousSlideId = getCurrentSlide();
+  var currentSlideId = normalizeSlideId(decrement, previousSlideId, slideSize);
+  $('#hidden-slide-id').attr('value', currentSlideId);
+  sendSlide(currentSlideId);
 });
 
 $('a[data-slide="next"]').click(function() {
-  slideSize = $('#carousel-slide').attr('size');
-  re = /slide-(\d+)/;
-  previousSlideId = $('.item.active').attr('id').match(re)[1];
-  $('#hidden-slide-id').attr('value', normalizeSlideId(increment, previousSlideId, slideSize));
+  var slideSize = getSlideSize(); 
+  var previousSlideId = getCurrentSlide();
+  var currentSlideId = normalizeSlideId(increment, previousSlideId, slideSize);
+  $('#hidden-slide-id').attr('value', currentSlideId);
+  sendSlide(currentSlideId);
 });
+
+function getSlideSize(){
+  return $('#carousel-slide').attr('size');
+}
+
+function getCurrentSlide(){
+  var re = /slide-(\d+)/;
+  return $('.item.active').attr('id').match(re)[1];
+}
 
 function normalizeSlideId(func, previous, limit){
   limit = parseInt(limit);
@@ -71,11 +83,30 @@ function decrement(id){
   return parseInt(id) - 1;
 }
 
+function getTopicId(){
+  return $("[name='father']").attr('id');
+}
+
+function sendSlide(slideId){
+  var currentMemberId = getCookie("member_id");
+  var roomOwnerId     = getCookie("room_owner_id");
+
+  if(currentMemberId === roomOwnerId){
+    var currentTopicId = getTopicId();
+    var url = "/topics/" +  currentTopicId + "/slide/" + slideId;
+    $.ajax({
+      type: "POST",
+      url: url,
+    });
+  }
+}
 // Initialize bootstrap switch
 $("[name='follow-slide']").bootstrapSwitch();
 
 $('input[name="follow-slide"]').on('switchChange.bootstrapSwitch', function(event, state) {
-  console.log(state); // true | false
-
-
+  if(state){
+    $("#carousel-slide[topic='" + getTopicId() + "']").addClass("following");
+  } else {
+    $("#carousel-slide[topic='" + getTopicId() + "']").removeClass("following");
+  }
 });

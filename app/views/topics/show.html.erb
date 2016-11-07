@@ -1,4 +1,4 @@
-<section class="content-header">
+<section class="content-header" name="father" id="<%= @topic.id %>">
   <h1>
     <%= @topic.name %>
 
@@ -31,7 +31,7 @@
     <% if @topic.slide_content_type == 'application/pdf' %>
 
         <div class="box-body">
-          <div id="carousel-slide" class="carousel slide"\
+          <div id="carousel-slide" topic="<%= @topic.id %>" class="carousel slide following"\
            data-ride="carousel" size="<%= @slide[:pages].count %>">
             <div class="carousel-inner">
               <% @slide[:pages].each do | slide_page_uri | %>

@@ -78,6 +78,10 @@ class TopicsController < ApplicationController
     end
   end
 
+  def update_current_slide
+    send_slide params[:id], params[:slide_id], 'update_slide'
+  end
+
   private
 
     def topic_params
@@ -87,5 +91,4 @@ class TopicsController < ApplicationController
     def get_slide_questions_list(topic, slide_id)
       Question.where(topic: topic).group_by(&:slide_id)
     end
-
 end

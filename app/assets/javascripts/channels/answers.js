@@ -55,7 +55,7 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
   },
 
   turnAnonymous: function(data) {
-      $("#box-answer-" + data.answer_id + " #username").html('Anonymous');
-      $("#box-answer-" + data.answer_id + " .user-image").attr('src', '/images/missing.png');
+    $("#box-answer-" + data.answer_id + " #username").html('Anonymous');
+    $("#box-answer-" + data.answer_id + " .user-image").attr('src', '/images/missing.png');
   }
 });
