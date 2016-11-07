@@ -41,7 +41,7 @@ $('a[data-slide="prev"]').click(function() {
   var slideSize = getSlideSize(); 
   var previousSlideId = getCurrentSlide();
   var currentSlideId = normalizeSlideId(decrement, previousSlideId, slideSize);
-  $('#hidden-slide-id').attr('value', currentSlideId);
+  $("#father-topic-" + getTopicId()).find("#hidden-slide-id").attr('value', currentSlideId);
   sendSlide(currentSlideId);
 });
 
@@ -49,7 +49,7 @@ $('a[data-slide="next"]').click(function() {
   var slideSize = getSlideSize(); 
   var previousSlideId = getCurrentSlide();
   var currentSlideId = normalizeSlideId(increment, previousSlideId, slideSize);
-  $('#hidden-slide-id').attr('value', currentSlideId);
+  $("#father-topic-" + getTopicId()).find("#hidden-slide-id").attr('value', currentSlideId);
   sendSlide(currentSlideId);
 });
 
@@ -84,7 +84,10 @@ function decrement(id){
 }
 
 function getTopicId(){
-  return $("[name='father']").attr('id');
+  var re = /father-topic-(\d+)/;
+  var id = $("[name='father']").attr('id').match(re)[1];
+  console.log(id);
+  return id;
 }
 
 function sendSlide(slideId){
@@ -100,6 +103,7 @@ function sendSlide(slideId){
     });
   }
 }
+
 // Initialize bootstrap switch
 $("[name='follow-slide']").bootstrapSwitch();
 

@@ -34,8 +34,7 @@ App.questionChannel = App.cable.subscriptions.create('QuestionsChannel', {
    // return $("#box-answer-" + data.answer_id).hide();
   },
   updateCurrentSlide: function(data){
-    var topicContent = $("[name='father']#" + data.topic_id);
-    console.log(topicContent.find('#carousel-slide'));
     $("#carousel-slide[topic='" + data.topic_id + "'].following").carousel(parseInt(data.slide_id));
+    $("#father-topic-" + data.topic_id).find("#hidden-slide-id").attr('value', data.slide_id);
   }
 });
