@@ -4,8 +4,9 @@
     <%= link_to 'New Question', new_topic_question_path(@topic), class: 'btn btn-sm btn-default'%>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Topic</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
+    <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id) %></a></li>
+    <li class="active"> <%= @topic.name %> </li>
   </ol>
 </section>
 
@@ -65,7 +66,7 @@
               </span>
             </div>
           </div>
-          
+
           <% color_generator = 0 %>
           <% question.tags.each do |tag| %>
             <% case color_generator %>
@@ -142,7 +143,7 @@
                       </span>
                     <% end %>
                 <% else %>
-              
+
                   <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
                         alt: "User Image", style: "max-width: 56px;" %>
                   <span class="username">
@@ -162,8 +163,8 @@
                     <% end %>
                   <% end %>
                 </div>
-                  
-              <%if answer.moderated == true %> 
+
+              <%if answer.moderated == true %>
               <% end %>
                 <%= answer.content %>
 
