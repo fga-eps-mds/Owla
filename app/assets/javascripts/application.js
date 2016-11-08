@@ -16,3 +16,9 @@
 //= require_tree .
 //= require admin_lte/admin_lte
 //= require turbolinks
+
+$(document).ready(function(){
+  $('#notification-dropdown').click(function(){
+    $('#notification-counter').hide();
+  });
+});

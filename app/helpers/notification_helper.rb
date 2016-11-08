@@ -2,12 +2,16 @@ module NotificationHelper
 	# FIXME links to notifications
 
 	def send_notification method, args
-		self.send(method, args)
+		if args.nil?
+			self.send(method)
+		else
+			self.send(method, args)
+		end
 	end
 
 	def first_notification
 		# FIXME who's gonna send this notification?
-		create_notification("Welcome to Owla!", Member.first, current_member)
+		create_notification("Welcome to Owla!", nil, current_member, '#')
 	end
 
 	def answered_question answer

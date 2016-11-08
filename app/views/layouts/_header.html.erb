@@ -34,9 +34,9 @@
 
         <% if logged_in? %>
           <li class="notifications-link">
-            <%= link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
+            <%= link_to '#', class: 'dropdown-toggle', id: 'notification-dropdown', data: { toggle: 'dropdown' } do %>
               <i class='fa fa-bell'></i>
-              <span class="label label-danger">
+              <span class="label label-danger" id="notification-counter">
                 <!-- FIXME remove counter when dropdown is clicked -->
                 <%= current_member.received_notifications.count %>
               </span>

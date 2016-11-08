@@ -20,7 +20,7 @@ class MembersController < ApplicationController
       log_in @member
       redirect_to home_path @member
 
-      send_notification("first_notification")
+      send_notification("first_notification", nil)
     else
       flash[:alert] = "Member not created"
       render 'new'
