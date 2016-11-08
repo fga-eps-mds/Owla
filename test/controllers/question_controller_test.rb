@@ -121,6 +121,16 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test "question should have one like after button click" do
+    post "/questions/#{@question.id}/like"
+    assert_equal 1, @question.votes_for.size
+  end
+
+  test "boolean attribute should change"  do 
+    post "/questions/#{@question.id}/like"
+    assert @question.upvote_by(@member), true
+  end
+  
   test "only room owner should moderate question" do
     @member2 = Member.create(name: "Thalissonn", alias: "thalissonn", email: "thalissnon@gmail.com", password: "12345678", password_confirmation: "12345678")
     sign_out_as @member
