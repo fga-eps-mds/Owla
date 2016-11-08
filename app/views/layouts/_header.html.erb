@@ -41,14 +41,14 @@
                 <%= current_member.received_notifications.count %>
               </span>
 
+              <!-- FIXME gray box appearing on hover on top of notifications div -->
+
               <ul class="dropdown-menu">
                 <li>
                   <ul class="menu" id="dropdown-menu">
                     <% current_member.received_notifications.reverse.take(3).each do |notification| %>
                       <li id="notification-list">
-                        <a href="#">
-                        <p><%= notification.message %></p>
-                        </a>
+                        <p><%= link_to notification.message, notification.link %></p>
                       </li>
                       <li class="divider"></li>
                     <% end %>

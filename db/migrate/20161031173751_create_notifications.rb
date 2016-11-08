@@ -5,6 +5,7 @@ class CreateNotifications < ActiveRecord::Migration[5.0]
       t.boolean :read, default: :false
       t.integer :receiver_id
       t.integer :sender_id
+      t.string :link
 
       t.timestamps
     end

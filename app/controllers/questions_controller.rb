@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
 		if @question.save
 			redirect_to topic_path(@question.topic)
 
-      send_notification("created_question", @topic)
+      send_notification("created_question", @question)
 		else
 			flash[:alert] = "Question not created"
       redirect_to new_topic_questions_path(@topic)

@@ -14,7 +14,7 @@
   <div class="row">
     <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
       <div class="col-md-6 pull-right">
-        <div class="box box-widget">
+        <div class="box box-widget" id="question-<%= question.id %>">
           <div class="box-header with-border">
 
             <div class="user-block">
@@ -117,7 +117,7 @@
 
           <div class="box-footer box-comments">
             <% question.answers.each do |answer| %>
-              <div class="box-comment">
+              <div class="box-comment" id="answer-<%= answer.id %>">
                 <% if answer.anonymous %>
 
                     <% if(current_member == answer.member || current_member == @room.owner) %>

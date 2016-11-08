@@ -49,7 +49,7 @@ class ReportsController < ApplicationController
       if @report.save
         flash[:alert] = "Your report was submitted"
 
-        send_notification("reported_answer", @room)
+        send_notification("reported_question", @question)
 
         redirect_to topic_path(@topic)
       else
