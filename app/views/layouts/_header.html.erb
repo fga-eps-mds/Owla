@@ -33,7 +33,33 @@
       <ul class="nav navbar-nav">
 
         <% if logged_in? %>
-          <li class="notifications-menu">
+          <li class="notifications-link">
+            <%= link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown' } do %>
+              <i class='fa fa-bell'></i>
+              <span class="label label-danger">
+                <!-- FIXME remove counter when dropdown is clicked -->
+                <%= current_member.received_notifications.count %>
+              </span>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <ul class="menu" id="dropdown-menu">
+                    <% current_member.received_notifications.reverse.take(3).each do |notification| %>
+                      <li id="notification-list">
+                        <a href="#">
+                        <p><%= notification.message %></p>
+                        </a>
+                      </li>
+                      <li class="divider"></li>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="footer"><a href="#">See All Messages</a></li>
+              </ul>
+
+            <% end %>
+          </li>
+          <li class="">
             <%= link_to 'LOGOUT', logout_path, class: "dropdown-toggle" %>
           </li>
         <% end %>
