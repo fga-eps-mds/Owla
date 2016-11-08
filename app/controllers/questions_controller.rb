@@ -15,16 +15,6 @@ class QuestionsController < ApplicationController
     @placeholder_name = "Title"
     @placeholder_description = "Description"
     @url = topic_questions_path(@topic)
-	end
-
-  def new
-    @topic = Topic.find(params[:topic_id])
-    @question = Question.new
-    @box_title = "Create a question"
-    @subtitle  = "Create"
-    @placeholder_name = "Title"
-    @placeholder_description = "Description"
-    @url = topic_questions_path(@topic)
   end
 
 	def create
@@ -36,6 +26,8 @@ class QuestionsController < ApplicationController
 
 		if @question.save
 			redirect_to topic_path(@question.topic)
+
+      send_notification("created_question", @topic)
 		else
 			flash[:alert] = "Question not created"
       redirect_to new_topic_questions_path(@topic)
@@ -73,22 +65,27 @@ class QuestionsController < ApplicationController
     redirect_to topic_path(@topic)
 	end
 
-	def like
+  def like
     @question.member = current_member
-    if not current_member.voted_up_on? @question
+
+    unless current_member.voted_up_on? @question
       @question.like_by(current_member)
+
+      send_notification("liked_question", @question)
     else
       @question.disliked_by(current_member)
-	  redirect_to :back
+      redirect_to :back
     end
-	end
+  end
 
   def moderate_question
     question = Question.find(params[:id])
     @topic = question.topic
     if current_member == @topic.room.owner
       question.update_attributes(content: "This question has been moderated because it's content was considered inappropriate", moderated: true)
-      Notification.moderated_question
+
+      send_notification("moderated_question", question)
+
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"

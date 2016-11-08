@@ -1,41 +1,57 @@
 module NotificationHelper
+	# FIXME links to notifications
+
+	def send_notification method, args
+		self.send(method, args)
+	end
 
 	def first_notification
-		notification = Notification.create(message: "Welcome to Owla!", read: false, link: new_member_path, sender: "Owla Team")
-		current_member.notifications << notification
+		# FIXME who's gonna send this notification?
+		create_notification("Welcome to Owla!", Member.first, current_member)
 	end
 
-	def answered_question
-		notification = Notification.create(message: "#{current_member.name} has answered your question!", read: false, link: answered_path, sender: current_member.name)
-		question.notifications << notification
+	def answered_question answer
+		create_notification("#{show_user_name(answer).capitalize} has answered your question!", current_member, answer.question.member)
 	end
 
-	def moderated_question
-		if moderate_question == true 
-			notification = Notification.create(message: "Your question has been moderated", read:false, link: moderate_question_path, sender: room.owner)
-			question.notifications << notification 
-		end
+	def created_question topic
+		create_notification("A question has been created in #{topic.name}", current_member, topic.room.owner)
 	end
 
-	def reported_question
+	def moderated_question question
+		create_notification("Your question has been moderated", question.topic.room.owner, question.member)
 	end
 
-	def reported_answer
+	def moderated_answer answer
+		create_notification("Your answer has been moderated", answer.question.topic.room.owner, answer.member)
 	end
 
-	def moderated_answer
-		if moderate_answer == true
-			notification = Notification.create(message: "Your answer has been moderated", read: false, link: moderate_answer_path, sender: room.owner)
-			answer.notifications << notification
-		end
+	def reported_question room
+		create_notification("This question has been reported by #{current_member.name}", current_member, room.owner)
 	end
 
-	def joined_room
-		if current_member.joined_room
-			notification = Notification.create(message: "You have joined a new Room", read: false, link: rooms_signup, sender: "Owla")
-			current_member.notifications << notification
-		end
+	def reported_answer room
+		create_notification("This answer has been reported by #{current_member.name}", current_member, room.owner)
 	end
 
+	def joined_room room
+		create_notification("#{current_member.name} has just joined #{room.name}!", current_member, room.owner)
+	end
 	
+	def liked_question question
+		create_notification("#{current_member.name} has liked your question", current_member, question.member)
+	end
+
+	def liked_answer answer
+		create_notification("#{current_member.name} has liked your answer", current_member, answer.member)
+	end
+
+	def create_notification message, sender, receiver
+		Notification.create(message: message, sender: sender, receiver: receiver)
+	end
+
+	def show_user_name object
+		object.anonymous? ? "someone" : current_member.name
+	end
+
 end

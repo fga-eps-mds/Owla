@@ -23,8 +23,9 @@ class AnswersController < ApplicationController
     @answer.member = current_member
 
     if @answer.save
-      Notification.answered_question
       redirect_to topic_path(@question.topic)
+
+      send_notification("answered_question", @answer)
     else
       flash[:alert] = "Answer not created"
       render 'new'
@@ -57,9 +58,11 @@ class AnswersController < ApplicationController
     @answer.member = current_member
     if not current_member.voted_up_on? @answer
       @answer.like_by(current_member)
+
+      send_notification("liked_answer", @answer)
     else
       @answer.disliked_by(current_member)
-    redirect_to :back
+      redirect_to :back
     end
   end
 
@@ -68,7 +71,9 @@ class AnswersController < ApplicationController
     @topic = answer.question.topic
     if current_member ==  @topic.room.owner
       answer.update_attributes(content: "This answer has been moderated because it's content was considered inappropriate", moderated: true)
-      Notification.moderated_answer
+
+      send_notification("moderated_answer", answer)
+
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"

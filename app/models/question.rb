@@ -6,7 +6,6 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_one :report
   has_and_belongs_to_many :tags
-  has_many :notifications
 
   validates :content, presence: true, length: { minimum: 5 }
 

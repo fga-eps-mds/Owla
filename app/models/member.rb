@@ -6,7 +6,8 @@ class Member < ApplicationRecord
   has_and_belongs_to_many :rooms
   has_many :questions
   has_many :answers
-  has_many :notifications
+  has_many :sent_notifications, class_name: 'Notification', foreign_key: 'sender_id'
+  has_many :received_notifications, class_name: 'Notification', foreign_key: 'receiver_id'
 
   has_many :received_reports, foreign_key: "reported_id"
   has_many :report_moderators, foreign_key: "moderator_id"

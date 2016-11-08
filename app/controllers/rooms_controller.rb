@@ -24,13 +24,13 @@ class RoomsController < ApplicationController
     member = current_member
     room = Room.find(params[:id])
 
-    if(room.black_list.include?(current_member.id))
+    if room.black_list.include?(current_member.id)
       flash[:notice] = "You are not allowed to join this room"
     elsif room.members.include?(member)
       flash[:notice] = "You are already registered in this room"
     else
-      Notification.joined_room
       room.members << member
+      send_notification("joined_room", room)
     end
 
     redirect_to room_path(room)
