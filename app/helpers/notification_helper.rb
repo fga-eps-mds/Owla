@@ -1,6 +1,4 @@
 module NotificationHelper
-	# FIXME links to notifications
-
 	def send_notification method, args
 		if args.nil?
 			self.send(method)
@@ -10,7 +8,6 @@ module NotificationHelper
 	end
 
 	def first_notification
-		# FIXME who's gonna send this notification?
 		create_notification("Welcome to Owla!", nil, current_member, '#')
 	end
 
@@ -54,8 +51,8 @@ module NotificationHelper
 		Notification.create(message: message, sender: sender, receiver: receiver, link: link)
 	end
 
-	def show_user_name object
-		object.anonymous? ? "someone" : current_member.name
+	def show_user_name answer
+		(answer.anonymous? && answer.question.topic.room.owner != current_member) ? "someone" : current_member.name
 	end
 
 	def question_notification_link question

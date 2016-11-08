@@ -25,7 +25,9 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to topic_path(@question.topic)
 
-      send_notification("answered_question", @answer)
+      if @answer.member != current_member
+        send_notification("answered_question", @answer)
+      end
     else
       flash[:alert] = "Answer not created"
       render 'new'
@@ -59,7 +61,9 @@ class AnswersController < ApplicationController
     if not current_member.voted_up_on? @answer
       @answer.like_by(current_member)
 
-      send_notification("liked_answer", @answer)
+      if @answer.member != current_member
+        send_notification("liked_answer", @answer)
+      end
     else
       @answer.disliked_by(current_member)
       redirect_to :back

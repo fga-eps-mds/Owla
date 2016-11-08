@@ -18,6 +18,10 @@
 //= require turbolinks
 
 $(document).ready(function(){
+  if($('#notification-counter').html() == 0){
+    $('#notification-counter').hide();
+  }
+
   $('#notification-dropdown').click(function(){
     $('#notification-counter').hide();
   });

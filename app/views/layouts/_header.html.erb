@@ -36,9 +36,9 @@
           <li class="notifications-link">
             <%= link_to '#', class: 'dropdown-toggle', id: 'notification-dropdown', data: { toggle: 'dropdown' } do %>
               <i class='fa fa-bell'></i>
+              <!-- FIXME remove counter when dropdown is clicked -->
               <span class="label label-danger" id="notification-counter">
-                <!-- FIXME remove counter when dropdown is clicked -->
-                <%= current_member.received_notifications.count %>
+                <%= current_member.received_notifications.where(read: "false").count %>
               </span>
 
               <!-- FIXME gray box appearing on hover on top of notifications div -->

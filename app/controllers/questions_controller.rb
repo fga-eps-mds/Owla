@@ -27,7 +27,9 @@ class QuestionsController < ApplicationController
 		if @question.save
 			redirect_to topic_path(@question.topic)
 
-      send_notification("created_question", @question)
+      if @topic.room.owner != @question.member
+        send_notification("created_question", @question)
+      end
 		else
 			flash[:alert] = "Question not created"
       redirect_to new_topic_questions_path(@topic)
@@ -71,7 +73,9 @@ class QuestionsController < ApplicationController
     unless current_member.voted_up_on? @question
       @question.like_by(current_member)
 
-      send_notification("liked_question", @question)
+      if @question.member != current_member
+        send_notification("liked_question", @question)
+      end
     else
       @question.disliked_by(current_member)
       redirect_to :back
