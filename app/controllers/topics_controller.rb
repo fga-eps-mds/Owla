@@ -23,6 +23,7 @@ class TopicsController < ApplicationController
     @question = Question.new
     @answer = Answer.new
     @room = Room.find(@topic.room_id)
+    @owner = @room.owner
     @new_question_url = {:action=>"create", :controller=>"questions", :id=>nil, topic_id: @topic.id}
     @question_placeholder = "Type your question here"
     @question_box_title = "Create a new question"
