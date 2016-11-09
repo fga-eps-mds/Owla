@@ -88,9 +88,11 @@
           <% end %>
           <br></br>
           <div class="box-body">
-            <%= question.content %>
+            <div class="question-content">
+              <%= question.content %>
+            </div>
 
-            <div class="row col-xs-12">
+            <div class="row col-xs-12" id="question-control">
               <div id="like_button">
                 <%= form_tag like_question_path(question.id), remote: true do %>
                   <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question-answer") do %>
@@ -102,6 +104,7 @@
 
               <br></br>
               <%= link_to 'Tags', question_tags_path(question), class: 'btn btn-xs btn-flat btn-primary'%>
+
               <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
 
               <% if current_member == question.member %>
@@ -111,6 +114,12 @@
 
               <% if @topic.room.owner == current_member && !question.moderated? %>
                 <%= link_to 'Moderar', moderate_question_url(question.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
+              <% end %>
+            </div>
+
+            <div class="question-attachment">
+              <% if question.attachment? %>
+                <%= link_to "", question.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-question" %>
               <% end %>
             </div>
           </div>
@@ -154,6 +163,12 @@
                   </span>
                 <% end %>
 
+                <div class="answer-attachment">
+                  <% if answer.attachment? %>
+                    <%= link_to "", answer.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-answer" %>
+                  <% end %>
+                </div>
+
                 <div id="like_button">
                   <%= form_tag like_answer_path(answer.id), remote: true do %>
                     <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question-answer") do %>
@@ -163,8 +178,6 @@
                   <% end %>
                 </div>
                   
-              <%if answer.moderated == true %> 
-              <% end %>
                 <%= answer.content %>
 
                 <% if @topic.room.owner == current_member && !answer.moderated? %>
