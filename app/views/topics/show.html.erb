@@ -51,7 +51,7 @@
 
                   <div class="row" id="topic-question-box-<%= @topic.id %>">
                     <% if @slide[:questions][@slide[:pages].index(slide_page_uri)].present? %>
-                      <% @slide[:questions][@slide[:pages].index(slide_page_uri)].order(:cached_votes_up => :desc).each do |question| %>
+                      <% @slide[:questions][@slide[:pages].index(slide_page_uri)].each do |question| %>
                         <%= render partial: 'questions/question',
                                    locals: { question: question,
                                              room: @topic.room,
