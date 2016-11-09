@@ -41,9 +41,13 @@ class AnswersController < ApplicationController
   def update
     @answer = Answer.find(params[:id])
 
+    if params[:delete_attachment]
+      delete_attachment @answer
+    end
+
     if @answer.update_attributes(answer_params)
       flash[:success] = "Answer updated"
-      redirect_to topic_path(@question.topic)
+      redirect_to topic_path(@answer.question.topic)
     else
       render 'edit'
     end
@@ -85,7 +89,12 @@ class AnswersController < ApplicationController
   end
 
   private
+
     def answer_params
-      params.require(:answer).permit(:content, :question_id, :anonymous)
+      params.require(:answer).permit(:content, :question_id, :anonymous, :attachment)
+    end
+
+    def delete_attachment answer
+      answer.attachment.destroy
     end
 end

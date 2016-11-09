@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
 	post 'moderate_question/:id', to: 'questions#moderate_question', as: 'moderate_question'
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
+  get '/search', to: 'searches#search', as: 'search'
 
   post 'report_question/:id', to: 'reports#create_report_question', as: 'report_question'
   post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'

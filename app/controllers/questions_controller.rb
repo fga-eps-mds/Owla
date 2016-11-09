@@ -52,6 +52,10 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
 
+    if params[:delete_attachment]
+      delete_attachment @question
+    end
+
     if @question.update_attributes(question_params)
       flash[:success] = "Questão atualizada com sucesso"
       redirect_to topic_path(@question.topic_id)
@@ -98,7 +102,11 @@ class QuestionsController < ApplicationController
 
 	private
 		def question_params
-			params.require(:question).permit(:content, :topic_id, :anonymous)
+			params.require(:question).permit(:content, :topic_id, :anonymous, :attachment)
 		end
+
+    def delete_attachment question
+      question.attachment.destroy
+    end
 
 end
