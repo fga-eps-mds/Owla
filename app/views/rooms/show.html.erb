@@ -43,7 +43,7 @@
               <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> Updated at <%= topic.updated_at.strftime('%m/%d/%Y @ %H:%M') %></span>
 
-                <h3 class="timeline-header"><%= topic.name %></h3>
+                <h3 class="timeline-header"><%= link_to "#{topic.name}", topic_path(topic) %></h3>
 
                 <div class="timeline-body">
                   <%= topic.description %>
@@ -57,7 +57,6 @@
                         <%= button_to "Manage", edit_topic_path(topic), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
                             method: :get%>
                       <% end %>
-                      <%= link_to "Enter", topic_path(topic), class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
                     </div>
                   </div>
                 </div>
