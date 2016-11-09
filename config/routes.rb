@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
   post '/rooms/signout' => 'rooms#signout'
@@ -20,6 +23,8 @@ Rails.application.routes.draw do
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
+
+  match '/topics/:id/slide/:slide_id' => 'topics#update_current_slide', via: :post
 
   resources :members, shallow: true do
     resources :rooms do

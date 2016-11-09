@@ -11,6 +11,8 @@
  * It is generally better to create a new file per style scope.
  *
  *= require admin_lte/ltr/admin_lte
+ *= require bootstrap-wysihtml5
+ *= require bootstrap3-switch
  *= require_tree .
  *= require_self
  */
@@ -48,4 +50,9 @@
 .search-results {
   margin: 0% 0 0 5%;
   width: 90%
+}
+
+/* dropdown overflow correction */
+.dropdown-menu {
+    left: -11em;
 }

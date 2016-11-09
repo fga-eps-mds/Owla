@@ -13,8 +13,8 @@ member = Member.create!(name: 'Victor Navarro', alias: 'vi',
 email: 'victor@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
 puts "Creating Alax Alves User"
-member2 = Member.create!(name: 'Alax Alves', alias: 'alax',
-email: 'alax@gmail.com', password: 'testtest', password_confirmation: 'testtest')
+member2 = Member.create!(name: 'Luan Guimaraes', alias: 'lu',
+email: 'luan@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
 puts "Creating Matheus Miranda User"
 member3 = Member.create!(name: 'Matheus Miranda', alias: 'mirandinhazika',
@@ -25,8 +25,8 @@ member4 = Member.create!(name: 'Sabrayna Santos', alias: 'sabrayna',
 email: 'sabrayna@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
 puts "Creating Luan Guimarães User"
-member5 = Member.create!(name: 'Luan Guimarães', alias: 'lu',
-email: 'luan@gmail.com', password: 'testtest', password_confirmation: 'testtest')
+member5 = Member.create!(name: 'Alax Alves', alias: 'alax',
+email: 'alax@gmail.com', password: 'testtest', password_confirmation: 'testtest')
 
 puts "Creating Jessica Cristina User"
 member6 = Member.create!(name: 'Jéssica Cristina', alias: 'je',
@@ -73,12 +73,15 @@ top2 = room.topics.create(name: "Soluções Energéticas", description: "Soluç�
 puts "Creating questions for topic: #{top.name}"
 ask = top.questions.new(content: "Eu não entendi o sentido do filme Avatar")
 ask2 = top.questions.new(content: "Tenho uma ideia para isso e preciso de pessoas interessadas!")
+ask3 = top.questions.new(content: "Tenho uma ideia!")
 
 member4.questions << ask
 member.questions << ask2
+member.questions << ask3
 
 ask.save
 ask2.save
+ask3.save
 
 ans = ask.answers.new(content: "E alguém sabe?")
 ans2 = ask.answers.new(content: "A professora já ira falar sobre o filme.")
