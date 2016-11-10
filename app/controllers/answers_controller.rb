@@ -59,7 +59,6 @@ class AnswersController < ApplicationController
   end
 
   def like
-    @answer.member = current_member
     if not current_member.voted_up_on? @answer
       @answer.like_by(current_member)
 

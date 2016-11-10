@@ -61,7 +61,7 @@
     </div>
 
     <div id="like_button">
-      <%= form_tag like_answer_path(answer.id), remote: true do %>
+      <%= form_tag like_answer_path(answer), remote: true do %>
         <%= button_tag(type: "submit", class: "btn btn-flat btn-xs") do %>
           <i class="fa fa-heart"></i>
           <%= answer.get_likes.size %>

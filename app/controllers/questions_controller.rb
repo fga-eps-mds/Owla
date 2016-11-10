@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
     set_slide_id(@question, params[:slide_id])
 
     if @question.save
+      send_notification('created_question', @question)
       send_question @question, 'create_question'
     end
   end
@@ -52,8 +53,6 @@ class QuestionsController < ApplicationController
   end
 
   def like
-    @question.member = current_member
-
     unless current_member.voted_up_on? @question
       @question.like_by(current_member)
 
