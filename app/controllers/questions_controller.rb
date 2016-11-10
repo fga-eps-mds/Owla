@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 		@questions = Question.all
 	end
 
-	def new
+  def new
     @topic = Topic.find(params[:topic_id])
     @question = Question.new
     @box_title = "Create a question"

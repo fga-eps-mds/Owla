@@ -31,7 +31,7 @@ module NotificationHelper
 		create_notification("This question has been reported by #{current_member.name}", current_member, question.topic.room.owner, question_notification_link(question))
 	end
 
-	def reported_answer room
+	def reported_answer answer
 		create_notification("This answer has been reported by #{current_member.name}", current_member, answer.question.topic.room.owner, answer_notification_link(answer))
 	end
 
