@@ -30,6 +30,10 @@
             <div class="form-group">
               <%= topic.text_area :description, class:"form-control", placeholder: @placeholder_description %>
             </div>
+            <!-- filefield -->
+            <div class="form-group">
+              <%= topic.file_field :slide, class:"form-control" %>
+            </div>
             <%= button_tag(type: "submit", class: "btn btn-app pull-right") do %>
                 <i class="fa fa-save"></i>
             <% end %>

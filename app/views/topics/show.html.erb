@@ -1,8 +1,26 @@
-<section class="content-header">
+<section class="content-header" name="father" id="father-topic-<%= @topic.id %>">
   <h1>
     <%= @topic.name %>
-    <%= link_to 'New Question', new_topic_question_path(@topic), class: 'btn btn-sm btn-default'%>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-default btn-flat"\
+     data-toggle="modal" data-target="#modal-0">
+      New question
+    </button>
+
+    <%= render partial: 'questions/form_modal',
+        locals: { question: @question,
+                  placeholder: @question_placeholder,
+                  box_title: @question_box_title,
+                  url: @new_question_url,
+                  slide_id: 0} %>
+
+    <% if current_member != @owner %> 
+      <input name="follow-slide" type="checkbox" checked>
+    <% end %>
+
   </h1>
+
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
     <li class="active">Topic</li>
@@ -10,213 +28,79 @@
 </section>
 
 <section class="content">
+  <% if @topic.slide.present? %>
+    <% if @topic.slide_content_type == 'application/pdf' %>
 
-  <div class="row">
-    <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
-      <div class="col-md-6 pull-right">
-        <div class="box box-widget" id="question-<%= question.id %>">
-          <div class="box-header with-border">
-
-            <div class="user-block">
-              <% if question.anonymous %>
-                <% if(current_member == question.member || current_member == @room.owner)  %>
-                  <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                    alt: "User Image", style: "max-width: 56px;" %>
-                  <span class="username">
-                    <a href="#"><%= question.member.alias %></a>    <span class="fa fa-eye-slash"></span>
-                  </span>
+        <div class="box-body">
+          <div id="carousel-slide" topic="<%= @topic.id %>" class="carousel slide following"\
+           data-ride="carousel" size="<%= @slide[:pages].count %>">
+            <div class="carousel-inner">
+              <% @slide[:pages].each do | slide_page_uri | %>
+                <% if @slide[:pages].index(slide_page_uri) == 0 %>
+                  <div class="item active" id="slide-0">
                 <% else %>
-                  <%= image_tag "/images/missing.png", class: "img-circle img-sm",
-                    alt: "User Image", style: "max-width: 56px;" %>
-                  <span class="username">
-                    <%= "Anonymous" %>
-                  </span>
+                  <div class="item"\
+                   id="slide-<%= @slide[:pages].index(slide_page_uri) %>">
                 <% end %>
-              <% else %>
-                <%= image_tag (question.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                  alt: "User Image", style: "max-width: 56px;" %>
-                <span class="username">
-                  <a href="#"><%= question.member.alias %></a>
-                </span>
-              <% end %>
-              <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-            </div>
+                  <img class="slide-slice" src=<%= slide_page_uri %>\
+                   style="height: <%= @slide[:dimensions][:height] + 35 %>px;
+                          width:<%= @slide[:dimensions][:width]%>px;" />
+                  </object>
 
-            <div class="box-tools">
-              <span class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                  <span class="fa fa-gear"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <%= link_to report_question_path(question), method: :post do %>
-                    <i class="fa fa-flag" aria-hidden="true" title="Denunciar pergunta"></i>
-                  <% end %>
-                  <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
-                    <li>
-                      <%= link_to 'Ban member', ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post %>
-                    </li>
-                  <% end %>
-                    <li>
-                      <% if current_member == question.member %>
-                        <%= link_to 'Edit', edit_question_path(question) %>
+                  <hr>
+
+                  <div class="row" id="topic-question-box-<%= @topic.id %>">
+                    <% if @slide[:questions][@slide[:pages].index(slide_page_uri)].present? %>
+                      <% @slide[:questions][@slide[:pages].index(slide_page_uri)].each do |question| %>
+                        <%= render partial: 'questions/question',
+                                   locals: { question: question,
+                                             room: @topic.room,
+                                             new_answer: @answer
+                                           } %>
+
+                        <%= render partial: 'questions/form_modal',
+                                   locals: { question: question,
+                                             placeholder: nil,
+                                             box_title: "Edit question",
+                                             url: question_path(question),
+                                             slide_id: @slide[:pages].index(slide_page_uri)
+                                           } %>
                       <% end %>
-                    </li>
-                </ul>
-              </span>
-            </div>
-          </div>
-          
-          <% color_generator = 0 %>
-          <% question.tags.each do |tag| %>
-            <% case color_generator %>
-              <% when 0 %>
-                <span class="label bg-green"><%= tag.content %></span>
-              <% when 1 %>
-                <span class="label bg-red"><%= tag.content %></span>
-              <% when 2 %>
-                <span class="label bg-yellow"><%= tag.content %></span>
-              <% when 3 %>
-                <span class="label bg-purple"><%= tag.content %></span>
-              <% when 4 %>
-                <span class="label bg-blue"><%= tag.content %></span>
-            <% end %>
-            <% if color_generator < 4 %>
-              <% color_generator += 1 %>
-            <% else %>
-              <% color_generator = 0 %>
-            <% end %>
-          <% end %>
-          <br></br>
-          <div class="box-body">
-            <div class="question-content">
-              <%= question.content %>
-            </div>
-
-            <div class="row col-xs-12" id="question-control">
-              <div id="like_button">
-                <%= form_tag like_question_path(question.id), remote: true do %>
-                  <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart heart-question-answer") do %>
-                    <i class="fa fa-heart"></i>
-                    <i class="badge bg-red"><%= question.get_likes.size %></i>
-                  <% end %>
-                <% end %>
-              </div>
-
-              <br></br>
-              <%= link_to 'Tags', question_tags_path(question), class: 'btn btn-xs btn-flat btn-primary'%>
-
-              <span class="text-muted pull-right"><%= question.answers.count %> answers</span>
-
-              <% if current_member == question.member %>
-                <%= link_to 'Edit', edit_question_path(question), class: 'btn btn-xs btn-flat btn-primary pull-right',
-                    style: "margin-right: 5px;"%>
-              <% end %>
-
-              <% if @topic.room.owner == current_member && !question.moderated? %>
-                <%= link_to 'Moderar', moderate_question_url(question.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;" %>
-              <% end %>
-            </div>
-
-            <div class="question-attachment">
-              <% if question.attachment? %>
-                <%= link_to "", question.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-question" %>
-              <% end %>
-            </div>
-          </div>
-
-          <div class="box-footer box-comments">
-            <% question.answers.each do |answer| %>
-              <div class="box-comment" id="answer-<%= answer.id %>">
-                <% if answer.anonymous %>
-
-                    <% if(current_member == answer.member || current_member == @room.owner) %>
-                      <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                        alt: "User Image", style: "max-width: 56px;" %>
-                      <span class="username">
-                        <a href="#"><%= answer.member.alias %></a>    <span class="fa fa-eye-slash"></span>
-                        <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                        <%= link_to report_answer_path(answer), method: :post do %>
-                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
-                        <% end %>
-                      </span>
-                    <% else %>
-                      <%= image_tag "/images/missing.png", class: "img-circle img-sm",
-                        alt: "User Image", style: "max-width: 56px;" %>
-                      <span class="username">
-                        <%= "Anonymous" %>
-                        <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                        <%= link_to report_answer_path(answer), method: :post do %>
-                          <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
-                        <% end %>
-                      </span>
-                    <% end %>
-                <% else %>
-              
-                  <%= image_tag (answer.member.avatar.url(:thumb)), class: "img-circle img-sm",
-                        alt: "User Image", style: "max-width: 56px;" %>
-                  <span class="username">
-                    <a href="#"><%= answer.member.alias %></a>
-                    <span class="text-muted pull-right"><%= answer.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
-                    <%= link_to report_answer_path(answer), method: :post do %>
-                      <i class="fa fa-flag" aria-hidden="true" style="float: right; margin-right: 5px" title="Denunciar resposta"></i>
-                    <% end %>
-                  </span>
-                <% end %>
-
-                <div class="answer-attachment">
-                  <% if answer.attachment? %>
-                    <%= link_to "", answer.attachment.url(:original, false), target: '_blank', class: 'fa fa-paperclip btn btn-xs btn-flat btn-primary pull-right', id: "attachment-answer" %>
-                  <% end %>
-                </div>
-
-                <div id="like_button">
-                  <%= form_tag like_answer_path(answer.id), remote: true do %>
-                    <%= button_tag(type: "submit", class: "btn btn-icon btn-fa-heart pull-right heart-question-answer") do %>
-                      <i class="fa fa-heart"></i>
-                      <i class="badge bg-red"><%= answer.get_likes.size %></i>
-                    <% end %>
-                  <% end %>
-                </div>
-                  
-                <%= answer.content %>
-
-                <% if @topic.room.owner == current_member && !answer.moderated? %>
-                  <%= link_to 'Moderar', moderate_answer_url(answer.id) , method: :post, class: 'btn btn-xs btn-flat btn-primary pull-right', style: "margin-right: 15px;", id: 'moderate_answer' %>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-
-          <div class="box-footer">
-            <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle img-sm",
-                alt: "User Image", style: "max-width: 56px;" %>
-            <div class="img-push">
-              <%= form_for @answer, url: {:action=>"create", :controller=>"answers", :id=>nil, question_id: question.id} do |ans| %>
-                <div class="input-group">
-                  <%= ans.text_field :content, class:"form-control", placeholder: "Answer here" %>
-                  <%= ans.check_box :anonymous %>
-                  <%= ans.label :anonymous %>
-
-                  <div class="input-group-btn">
-                    <%= button_tag(type: "submit", class: "btn btn-flat btn-danger", id: "Buttonflag") do %>
-                        <i class="fa fa-send-o"></i>
                     <% end %>
                   </div>
                 </div>
               <% end %>
+
             </div>
+            <a class="left carousel-control"\
+               href="#carousel-slide" data-slide="prev">
+              <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="right carousel-control"\
+               href="#carousel-slide" data-slide="next">
+              <span class="fa fa-angle-right"></span>
+            </a>
           </div>
 
         </div>
-      </div>
+        <!-- /.box-body -->
     <% end %>
-  </div>
+    <hr>
+  <% else %>
+    <div class="row" id="topic-question-box-<%= @topic.id %>">
+      <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
+        <%= render partial: 'questions/question',
+                   locals: { question: question,
+                             room: @topic.room,
+                             new_answer: @answer} %>
+
+        <%= render partial: 'questions/form_modal',
+                   locals: { question: question,
+                             placeholder: nil,
+                             box_title: "Edit question",
+                             url: question_path(question),
+                             slide_id: nil } %>
+      <% end %>
+    </div>
+  <% end %>
 </section>
-
-
-<script>
-    $(function() {
-      $("#options-dropdown").click(function(evt) {
-      })
-    })
-</script>

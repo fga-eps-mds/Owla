@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
   post '/rooms/signout' => 'rooms#signout'
@@ -24,6 +27,8 @@ Rails.application.routes.draw do
   resources :notifications do 
     get :read, on: :collection
   end
+
+  match '/topics/:id/slide/:slide_id' => 'topics#update_current_slide', via: :post
 
   resources :members, shallow: true do
     resources :rooms do
