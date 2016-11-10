@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :members, shallow: true do
     resources :rooms do
         resources :topics do
-          resources :questions do
+          resources :questions, except: [ :new ] do
             member do
               post "like", to: "questions#like"
             end

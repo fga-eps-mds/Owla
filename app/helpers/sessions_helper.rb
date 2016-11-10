@@ -21,9 +21,9 @@ module SessionsHelper
   def authenticate_member
     if !logged_in?
       redirect_to root_path
+    else
+      cookies[:member_id] = current_member.id
     end
-
-    cookies[:member_id] = current_member.id
   end
 
   def not_allow_to_enter_login
