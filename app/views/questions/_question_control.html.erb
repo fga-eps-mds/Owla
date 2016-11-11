@@ -13,7 +13,7 @@
 
       <% if (current_member == question.topic.room.owner) && (question.member != question.topic.room.owner)  %>
         <li>
-          <%= link_to ban_member_url({topic_id: params[:id], member_id: question.member.id}), method: :post do %>
+          <%= link_to ban_member_path(member_id: question.member.id), method: :post do %>
             <i class="fa fa-ban" aria-hidden="true" title="Ban member"></i>
             Ban member
           <% end %>

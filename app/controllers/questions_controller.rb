@@ -36,6 +36,10 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @topic = @question.topic
 
+    if params[:delete_attachment]
+      delete_attachment @question
+    end
+
     if @question.update_attributes(question_params)
       if @topic.slide.present?
         set_slide_id(@question, params[:slide_id])
@@ -74,6 +78,7 @@ class QuestionsController < ApplicationController
                                  moderated: true)
 
       send_notification("moderated_question", question)
+
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"

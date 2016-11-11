@@ -30,6 +30,7 @@ class RoomsController < ApplicationController
       flash[:notice] = "You are already registered in this room"
     else
       room.members << member
+      member.rooms << room
       send_notification("joined_room", room)
     end
 
@@ -42,6 +43,7 @@ class RoomsController < ApplicationController
 
     if room.members.include?(member)
       room.members.delete(member)
+      member.rooms.delete(room)
     else
       flash[:notice] = "You are not registered in this room"
     end
@@ -92,13 +94,17 @@ class RoomsController < ApplicationController
   end
 
   def ban_member
-      member = Member.find(params[:member_id])
-      topic = Topic.find(params[:topic_id])
-      room = topic.room
-      room.update_attribute(:black_list, room.black_list << member.id)
-      room.members.delete(member)
-      flash[:notice] = "The member was banned from your room"
-      redirect_to topic_path topic
+    member = Member.find(params[:member_id])
+    topic = Topic.find(params[:topic_id])
+    room = topic.room
+
+    room.black_list << member.id
+    room.members.delete(member)
+    room.save
+
+    flash[:notice] = "The member was banned from your room"
+
+    redirect_to topic_path topic
   end
 
   def banned_members
@@ -110,6 +116,7 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     @room.black_list.delete(params[:member_id].to_i)
     @room.save
+
     flash[:notice] = "Member has been removed from black list and can now join the room"
     redirect_to banned_members_url
   end
