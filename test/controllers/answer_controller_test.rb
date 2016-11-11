@@ -41,7 +41,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
          content: "Resposta da pergunta"
        }
      }
-     assert_redirected_to topic_path(@question.topic)
+     assert_response :success
    end
 
    test "should edit answer" do
@@ -72,7 +72,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "should delete answer" do
     assert_difference('Answer.count', -1) do
       delete "/answers/#{@answer.id}"
-      assert_redirected_to question_answers_path(@question)
+      assert_response :success
     end
   end
 
