@@ -7,6 +7,7 @@ class SearchesController < ApplicationController
     @rooms = []
     @topics = []
     @members = []
+    @questions = []
 
     Room.all.each do |room|
       @rooms << room if room.name.downcase.include?(query)
@@ -18,6 +19,10 @@ class SearchesController < ApplicationController
 
     Member.all.each do |member|
       @members << member if member.name.downcase.include?(query)
+    end
+
+    Question.all.each do |question|
+      @questions << question if question.content.downcase.include?(query)
     end
   end
 
