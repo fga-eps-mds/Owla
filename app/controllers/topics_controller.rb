@@ -3,6 +3,7 @@ class TopicsController < ApplicationController
 
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
+  before_action :is_joined, only: [:show]
 
   def index
     @topics = Topic.all

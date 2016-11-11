@@ -31,4 +31,14 @@ module SessionsHelper
       redirect_to home_path(current_member)
     end
   end
+
+  def is_joined
+    topic = Topic.find(params[:id])
+    room = topic.room
+    member = current_member
+    unless room.members.include?(member) or room.owner == member
+      flash[:notice] = "You are not joined in this room"
+      redirect_to home_path(member)
+    end
+  end
 end
