@@ -73,9 +73,9 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     @topic = question.topic
     if current_member == @topic.room.owner
-      question.update_attributes(content: "This question has been moderated \
-                                 because it's content was considered inappropriate",
-                                 moderated: true)
+      question.update_attributes(
+        content: "This question has been moderated because it's content was considered inappropriate",
+        moderated: true)
 
       send_notification("moderated_question", question)
 

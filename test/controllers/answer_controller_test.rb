@@ -6,31 +6,17 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
     @member_wrong = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "12345678", password_confirmation: "12345678")
 
-    @room = Room.new(name: "calculo 1", description: "teste1")
-    @room.owner = @member
-    @room.save
+    @room = Room.create(name: "calculo 1", description: "teste1", owner: @member)
+    @room_wrong = Room.create(name: 'calc2', description: 'teste2', owner: @member_wrong)
 
-    @room_wrong = Room.new(name: 'calc2', description: 'teste2')
-    @room_wrong.owner = @member_wrong
-    @room_wrong.save
+    @topic = @room.topics.create(name: "limites", description: "description1")
+    @topic_wrong = @room_wrong.topics.create(name: 'edo', description: 'teste2')
 
-    @topic = @room.topics.new(name: "limites", description: "description1")
-    @topic.save
-
-    @topic_wrong = @room_wrong.topics.new(name: 'edo', description: 'teste2')
-    @topic_wrong.save
-
-    @question = @topic.questions.new(content: "How did I get here?")
-    @question.member = @member
-    @question.save
+    @question = @topic.questions.create(content: "How did I get here?", member: @member)
 
     attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
 
-    @answer = Answer.new(content: "CONTENT TEST", attachment: attachment)
-    @answer.member = @member
-    @answer.question = @question
-    @answer.anonymous = false
-    @answer.save
+    @answer = @question.answers.create(content: "CONTENT TEST", member: @member, attachment: attachment)
 
     sign_in_as @member
   end

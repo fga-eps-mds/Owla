@@ -18,14 +18,15 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create member" do
     post '/members', params: {
-        member: {
-          name: "matheus",
-          email: "matheuss@gmail.com",
-          password: "123456",
-          password_confirmation: "123456",
-          alias: "membertest8"
-        }
+      member: {
+        name: "matheus",
+        email: "matheuss@gmail.com",
+        password: "123456",
+        password_confirmation: "123456",
+        alias: "membertest8"
       }
+    }
+
     assert_redirected_to home_path Member.last
   end
 
