@@ -12,3 +12,15 @@
   overflow: hidden;
   width: 100%;
 }
+
+.footer > #notification-dropdown {
+  display: none;
+}
+
+.empty-notifications {
+  margin-left: 15px;
+}
+
+.see-notification {
+  width: 0;
+}

@@ -38,10 +38,9 @@
               <i class='fa fa-bell'></i>
               <!-- FIXME remove counter when dropdown is clicked -->
               <span class="label label-danger" id="notification-counter">
-                <%= current_member.received_notifications.where(read: "false").count %>
+                <% counter = current_member.received_notifications.where(read: "false").count %>
+                <%= counter if counter %>
               </span>
-
-              <!-- FIXME gray box appearing on hover on top of notifications div -->
 
               <ul class="dropdown-menu">
                 <li>
@@ -54,13 +53,15 @@
                     <% end %>
                   </ul>
                 </li>
-                <li class="footer"><a href="#">See All Messages</a></li>
+                <li class="footer">
+                  <%= link_to "See all", notifications_path %>
+                </li>
               </ul>
 
             <% end %>
           </li>
-          <li class="">
-            <%= link_to 'LOGOUT', logout_path, class: "dropdown-toggle" %>
+          <li class="logout-link">
+            <%= link_to 'Logout', logout_path %>
           </li>
         <% end %>
 
