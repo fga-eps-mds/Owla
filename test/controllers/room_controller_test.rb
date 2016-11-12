@@ -9,7 +9,7 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
                           password: '123456',
                           password_confirmation: '123456',
                           alias: 'mateusin')
-    @member2 = Member.create(name: 'vitor',
+    @another_member = Member.create(name: 'vitor',
                             email: 'vitor@gmail.com',
                             password: '123456',
                             password_confirmation: '123456',
@@ -30,6 +30,11 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     sign_out_as @member
     get member_rooms_path(@member)
     assert_redirected_to root_path
+  end
+
+  test "should show room" do
+    get "/rooms/#{@room.id}"
+    assert_response :success
   end
 
   test "should get new" do
@@ -84,23 +89,23 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should user be in room's black_list if owner bans him" do
-      @member2.rooms << @room
-      @member2.save
+      @another_member.rooms << @room
+      @another_member.save
 
-      post "/topics/#{@topic.id}/ban_member", params: {member_id: @member2.id, topic_id: @topic.id}
+      post "/topics/#{@topic.id}/ban_member", params: {member_id: @another_member.id, topic_id: @topic.id}
       @room.reload
 
-      assert @room.black_list.include? @member2.id
+      assert @room.black_list.include? @another_member.id
   end
 
   test "should user not be banned by another regular user" do
       @member3 = Member.create(name: 'matheusss', email: 'matheusss@gmail.com', password: '12345678', password_confirmation: '12345678', alias: 'mateussisn')
-      @member2.rooms << @room
+      @another_member.rooms << @room
       @member3.rooms << @room
-      @member2.save
+      @another_member.save
       @member3.save
       sign_out_as @member
-      sign_in_as @member2
+      sign_in_as @another_member
       post "/topics/#{@topic.id}/ban_member", params: {member_id: @member3.id, topic_id: @topic.id}
       @room.reload
 
@@ -108,48 +113,123 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should member not enter room if he is in it's blacklist" do
-    @member2.rooms << @room
-    post "/topics/#{@topic.id}/ban_member", params: {member_id: @member2.id, topic_id: @topic.id}
+    @another_member.rooms << @room
+    post "/topics/#{@topic.id}/ban_member", params: {member_id: @another_member.id, topic_id: @topic.id}
     sign_out_as @member
-    sign_in_as @member2
+    sign_in_as @another_member
     post "/rooms/signup", params: {id: @room.id}
 
     assert_equal "You are not allowed to join this room", flash[:notice]
-    assert_not @room.members.include? @member2
+    assert_not @room.members.include? @another_member
   end
 
   test "should member enter room if he is reintegrated" do
-    @member2 = Member.create(name: 'matheuss', email: 'matheuss@gmail.com', password: '123456', password_confirmation: '123456', alias: 'mateusisn')
-    @member2.rooms << @room
+    @another_member = Member.create(name: 'matheuss', email: 'matheuss@gmail.com', password: '123456', password_confirmation: '123456', alias: 'mateusisn')
+    @another_member.rooms << @room
 
     post "/topics/#{@topic.id}/ban_member", params: {
-      member_id: @member2.id
+      member_id: @another_member.id
     }
 
     post "/rooms/#{@room.id}/reintegrate_member", params: {
-      member_id: @member2.id
+      member_id: @another_member.id
     }
 
     sign_out_as @member
-    sign_in_as @member2
+    sign_in_as @another_member
 
     post "/rooms/signup", params: {
       id: @room.id
     }
 
-    assert @room.members.include? @member2
+    assert @room.members.include? @another_member
+  end
+
+  test "should user be able to join room" do
+    sign_out_as @member
+    sign_in_as @another_member
+
+    post "/rooms/signup", params: {
+      id: @room.id
+    }
+
+    assert @room.members.include? @another_member
+    assert @another_member.rooms.include? @room
+  end
+
+  test "should user not be able to join room if he is already joined" do
+    sign_out_as @member
+    sign_in_as @another_member
+
+    post "/rooms/signup", params: {
+      id: @room.id
+    }
+
+    assert @room.members.include? @another_member
+    assert @another_member.rooms.include? @room
+
+    # trying to enter twice
+    post "/rooms/signup", params: {
+      id: @room.id
+    }
+
+    assert "You are already registered in this room", flash[:notice]
+  end
+
+  test "should user exits room" do
+    sign_out_as @member
+    sign_in_as @another_member
+
+    post "/rooms/signup", params: {
+      id: @room.id
+    }
+
+    assert @room.members.include? @another_member
+    assert @another_member.rooms.include? @room
+
+    post "/rooms/signout", params: {
+      id: @room.id
+    }
+
+    @room.reload
+    @another_member.reload
+
+    assert_not @room.members.include? @another_member
+    assert_not @another_member.rooms.include? @room
+    assert_redirected_to room_path(@room)
+  end
+
+  test "should user cannot exit room if he is not joined in it" do
+    sign_out_as @member
+    sign_in_as @another_member
+
+    post "/rooms/signout", params: {
+      id: @room.id
+    }
+
+    @room.reload
+    @another_member.reload
+
+    assert_not @room.members.include? @another_member
+    assert_not @another_member.rooms.include? @room
+    assert "You are not registered in this room", flash[:notice]
+    assert_redirected_to room_path(@room)
+  end
+
+  # TODO
+  test "should room owner cannot exit his room" do
   end
 
   # FIXME randomly breaks
   # test "should owner be able to reintegrate someone who is in black list" do
-  #   @member2.rooms << @room
+  #   @another_member.rooms << @room
 
-  #   post "/topics/#{@topic.id}/ban_member", params: { member: @member2, topic: @topic }
-  #   post "/rooms/#{@room.id}/reintegrate_member", params: { id: @room.id, member: @member2 }
+  #   post "/topics/#{@topic.id}/ban_member", params: { member: @another_member, topic: @topic }
+  #   post "/rooms/#{@room.id}/reintegrate_member", params: { id: @room.id, member: @another_member }
 
   #   @room.reload
 
-  #   assert_not @room.black_list.include?(@member2)
+  #   assert_not @room.black_list.include?(@another_member)
   #   assert_redirected_to banned_members_url
   # end
 

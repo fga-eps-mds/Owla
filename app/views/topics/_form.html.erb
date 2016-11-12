@@ -44,6 +44,7 @@
       <!-- /.box -->
       <div class="input-group margin">
         <div class="input-group-btn">
+          <!-- FIXME change this condition -->
           <% if @topic.valid? %>
             <%= button_to "Delete Topic", topic_path(@topic), class: "btn btn-flat btn-danger", data: { confirm: "Hmmm! Are you sure?" }, method: :delete %>
           <% end %>

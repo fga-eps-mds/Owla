@@ -1,13 +1,11 @@
 class TopicsController < ApplicationController
   include TopicsHelper
+  include RoomHelper
 
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
   before_action :is_joined, only: [:show]
-
-  def index
-    @topics = Topic.all
-  end
+  before_action :is_owner, only: [:destroy, :edit, :update]
 
   def new
     @room = Room.find(params[:room_id])
@@ -63,7 +61,7 @@ class TopicsController < ApplicationController
     if @topic.update_attributes(topic_params)
       redirect_to topic_path @topic
     else
-      flash[:alert] = "Sorry, try again."
+      flash[:alert] = "Sorry, try again"
       render 'edit'
     end
   end
@@ -75,7 +73,7 @@ class TopicsController < ApplicationController
     if @topic.save
       redirect_to topic_path(@topic)
     else
-      flash[:alert] = "Sorry, try again."
+      flash[:alert] = "Sorry, try again"
       render 'new'
     end
   end
