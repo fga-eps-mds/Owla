@@ -31,6 +31,7 @@ class RoomsController < ApplicationController
     else
       room.members << member
       member.rooms << room
+      send_notification("joined_room", room)
     end
 
     redirect_to room_path(room)
