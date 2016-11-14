@@ -54,5 +54,5 @@
 
 /* dropdown overflow correction */
 .dropdown-menu {
-    left: -11em;
+    left: -11.5em !important;
 }
