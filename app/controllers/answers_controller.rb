@@ -24,6 +24,7 @@ class AnswersController < ApplicationController
     @answer.member = current_member
 
     if @answer.save
+      send_notification("answered_question", @answer)
       send_cable @answer, 'create_answer'
     end
   end
@@ -58,12 +59,15 @@ class AnswersController < ApplicationController
   end
 
   def like
-    @answer.member = current_member
     if not current_member.voted_up_on? @answer
       @answer.like_by(current_member)
+
+      if @answer.member != current_member
+        send_notification("liked_answer", @answer)
+      end
     else
       @answer.disliked_by(current_member)
-    redirect_to :back
+      redirect_to :back
     end
   end
 
@@ -71,6 +75,7 @@ class AnswersController < ApplicationController
     answer = Answer.find(params[:id])
     @topic = answer.question.topic
     if current_member ==  @topic.room.owner
+      send_notification("moderated_answer", answer)
       answer.update_attributes(
         content: "This answer has been moderated because it's content was considered inappropriate",
         moderated: true)

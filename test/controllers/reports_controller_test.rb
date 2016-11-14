@@ -58,7 +58,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to topic_path(@topic)
   end
 
-    test 'should create report for answer' do
+  test 'should create report for answer' do
     sign_in_as @member2
 
     count_before = Report.count

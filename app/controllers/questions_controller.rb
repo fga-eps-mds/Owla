@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
   before_action :show, :only => [:like]
-	
+
   def index
     @questions = Question.all
   end
@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
     set_slide_id(@question, params[:slide_id])
 
     if @question.save
+      send_notification('created_question', @question)
       send_question @question, 'create_question'
     end
   end
@@ -56,12 +57,15 @@ class QuestionsController < ApplicationController
   end
 
   def like
-    @question.member = current_member
-    if not current_member.voted_up_on? @question
+    unless current_member.voted_up_on? @question
       @question.like_by(current_member)
+
+      if @question.member != current_member
+        send_notification("liked_question", @question)
+      end
     else
       @question.disliked_by(current_member)
-	  redirect_to :back
+      redirect_to :back
     end
   end
 
@@ -72,6 +76,9 @@ class QuestionsController < ApplicationController
       question.update_attributes(
         content: "This question has been moderated because it's content was considered inappropriate",
         moderated: true)
+
+      send_notification("moderated_question", question)
+
       redirect_to topic_path(@topic)
     else
       flash[:notice] = "You do not have permission!"

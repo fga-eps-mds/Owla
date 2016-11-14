@@ -18,6 +18,9 @@ class ReportsController < ApplicationController
 
       if @report.save
         flash[:alert] = "Your report was submitted"
+
+        send_notification("reported_answer", @answer)
+
         redirect_to topic_path(@topic)
       else
         flash[:alert] = "Report not created"
@@ -45,6 +48,9 @@ class ReportsController < ApplicationController
 
       if @report.save
         flash[:alert] = "Your report was submitted"
+
+        send_notification("reported_question", @question)
+
         redirect_to topic_path(@topic)
       else
         flash[:alert] = "Report not created"

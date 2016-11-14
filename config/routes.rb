@@ -24,6 +24,10 @@ Rails.application.routes.draw do
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
 
+  resources :notifications do 
+    get :read, on: :collection
+  end
+
   match '/topics/:id/slide/:slide_id' => 'topics#update_current_slide', via: :post
 
   resources :members, shallow: true do
@@ -47,6 +51,7 @@ Rails.application.routes.draw do
   end
 
   get 'sessions/new'
+  get 'notifications' => 'notifications#index'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   get '/logout',  to: 'sessions#destroy'
