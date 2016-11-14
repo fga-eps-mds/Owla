@@ -9,6 +9,9 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     else if (data.action === 'delete_answer'){
       return this.deleteMessage(data);
     }
+    else if (data.action === 'like_answer' || data.action === 'dislike_answer'){
+      return this.showLikes(data);
+    }
   },
 
   createMessage: function(data) {
@@ -19,11 +22,6 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     $('.content-text').val('');
     this.updateQuestionCounter(data);
     $("#box-question-" + data.question_id).append(data.html);
-
-//    console.log("passou aqui");
-//    console.log(data.is_anonymous);
-//    console.log("member_id: " + getCookie("member_id"));
-//    console.log("answer_member_id: " + data.answer_member);
 
     if (currentMemberId != data.answer_member){
       $("#edit-answer-" + data.answer_id).hide();
@@ -56,5 +54,9 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
   turnAnonymous: function(data) {
     $("#box-answer-" + data.answer_id + " #username").html('Anonymous');
     $("#box-answer-" + data.answer_id + " .user-image").attr('src', '/images/missing.png');
+  },
+
+  showLikes: function(data) {
+    $("#answer-like-" + data.answer_id).html(data.likes);
   }
 });

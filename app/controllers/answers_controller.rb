@@ -65,12 +65,12 @@ class AnswersController < ApplicationController
 
       if @answer.member != current_member
         send_notification("liked_answer", @answer)
+        send_cable @answer, 'like_answer'
       end
     else
       @answer.disliked_by(current_member)
+      send_cable @answer, 'dislike_answer'
     end
-
-    redirect_to :back
   end
 
   def moderate_answer

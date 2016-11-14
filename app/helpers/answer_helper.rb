@@ -1,6 +1,12 @@
 module AnswerHelper
   def send_cable answer, action
-    html =  render_answer(answer)
+    html = ""
+
+    if action == 'like_answer' || action == 'dislike_answer'
+      html = render_like(answer)
+    else
+      html = render_answer(answer)
+    end
 
     ActionCable.server.broadcast 'answers',
       action: action,
@@ -12,14 +18,23 @@ module AnswerHelper
       answer_created_at: answer.created_at,
       answer_updated_at: answer.updated_at,
       answer_member: current_member.id,
-      is_anonymous: answer.anonymous
+      is_anonymous: answer.anonymous,
+      likes: answer.get_likes.size
     head :ok
   end
 
   def render_answer answer
     ApplicationController.render({
       partial: 'answers/answer',
-      locals: { answer: answer, room: answer.question.topic.room, current_member: current_member}
+      locals: { answer: answer, room: answer.question.topic.room, current_member: current_member }
     })
   end
+
+  def render_like answer
+    ApplicationController.render({
+      partial: 'likes/likes',
+      locals: { url: like_answer_path(answer), object: answer }
+    })
+  end
+
 end
