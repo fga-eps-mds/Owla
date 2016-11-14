@@ -15,8 +15,8 @@ Rails.application.routes.draw do
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
   get '/search', to: 'searches#search', as: 'search'
 
-  post 'report_question/:id', to: 'reports#create_report_question', as: 'report_question'
-  post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'
+  post 'report_question/:id', to: 'questions#report_question', as: 'report_question'
+  post 'report_answer/:id', to: 'answers#report_answer', as: 'report_answer'
 
   post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
 

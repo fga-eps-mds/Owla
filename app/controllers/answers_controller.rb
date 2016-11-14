@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
   before_action :show, :only => [:like]
+  before_action :check_report, only: [:report_answer]
 
   def index
     @answers = Answer.all
@@ -86,7 +87,36 @@ class AnswersController < ApplicationController
     end
   end
 
+  def report_answer
+    member = current_member
+    @answer = Answer.find(params[:id])
+
+    @topic = @answer.question.topic
+    @room = @topic.room
+
+    @report = Report.new(moderator: @room.owner, reported: @answer.member, answer: @answer)
+    @report.members << current_member
+    if @report.save
+      flash[:alert] = "Your report was submitted"
+      send_notification("reported_answer", @answer)
+      redirect_to topic_path(@topic)
+    else
+      flash[:alert] = "Report not created"
+      redirect_to topic_path(@topic)
+    end
+  end
+
   private
+
+    def check_report
+      member = current_member
+      @answer = Answer.find(params[:id])
+      
+      if (@answer.report.blank? == false) && @answer.report.members.include?(member)
+        flash[:alert] = "You have already reported this user"
+        redirect_to topic_path(@answer.question.topic.id)
+      end
+    end
 
     def answer_params
       params.require(:answer).permit(:content, :question_id, :anonymous, :attachment)
