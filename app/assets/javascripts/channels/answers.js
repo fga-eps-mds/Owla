@@ -9,8 +9,8 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     else if (data.action === 'delete_answer'){
       return this.deleteMessage(data);
     }
-    else if (data.action === 'like_answer' || data.action === 'dislike_answer'){
-      return this.showLikes(data);
+    else if (data.action === 'update_likes'){
+      return this.updateLikes(data);
     }
   },
 
@@ -56,7 +56,7 @@ App.messages = App.cable.subscriptions.create('AnswersChannel', {
     $("#box-answer-" + data.answer_id + " .user-image").attr('src', '/images/missing.png');
   },
 
-  showLikes: function(data) {
+  updateLikes: function(data) {
     $("#answer-like-" + data.answer_id).html(data.likes);
   }
 });

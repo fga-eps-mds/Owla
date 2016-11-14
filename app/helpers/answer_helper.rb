@@ -1,8 +1,9 @@
 module AnswerHelper
+
   def send_cable answer, action
     html = ""
 
-    if action == 'like_answer' || action == 'dislike_answer'
+    if action == 'update_likes'
       html = render_like(answer)
     else
       html = render_answer(answer)

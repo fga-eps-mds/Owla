@@ -61,13 +61,13 @@ class QuestionsController < ApplicationController
       @question.like_by(current_member)
 
       if @question.member != current_member
-        send_notification("liked_question", @question)
+        send_notification('liked_question', @question)
       end
     else
       @question.disliked_by(current_member)
     end
 
-    redirect_to :back
+    send_question @question, 'update_likes'
   end
 
   def moderate_question
