@@ -68,8 +68,9 @@ class AnswersController < ApplicationController
       end
     else
       @answer.disliked_by(current_member)
-      redirect_to :back
     end
+
+    redirect_to :back
   end
 
   def moderate_answer
