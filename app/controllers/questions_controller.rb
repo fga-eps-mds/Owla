@@ -65,8 +65,9 @@ class QuestionsController < ApplicationController
       end
     else
       @question.disliked_by(current_member)
-      redirect_to :back
     end
+
+    redirect_to :back
   end
 
   def moderate_question
