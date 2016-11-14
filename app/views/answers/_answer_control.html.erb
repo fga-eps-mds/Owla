@@ -32,6 +32,7 @@
           <li>
             <%= link_to moderate_answer_url(answer.id),
               method: :post, id: 'moderate_answer' do %>
+              <i class="fa fa-microphone-slash" aria-hidden="true" title="Moderate question"></i>
               Moderate answer
             <% end %>
           </li>
