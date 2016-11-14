@@ -216,23 +216,19 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to room_path(@room)
   end
 
-  # TODO
-  test "should room owner cannot exit his room" do
-  end
-
   # FIXME randomly breaks
   # test "should owner be able to reintegrate someone who is in black list" do
   #   @another_member.rooms << @room
-
+  #
   #   post "/topics/#{@topic.id}/ban_member", params: { member: @another_member, topic: @topic }
   #   post "/rooms/#{@room.id}/reintegrate_member", params: { id: @room.id, member: @another_member }
-
+  #
   #   @room.reload
-
+  #
   #   assert_not @room.black_list.include?(@another_member)
   #   assert_redirected_to banned_members_url
   # end
-
+  #
   # FIXME randomly breaks
   # test "should room owner get banned members" do
   #   get "/rooms/#{@room.id}/banned_members"
