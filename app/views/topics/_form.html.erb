@@ -22,7 +22,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <%= form_for @topic, url: { controller: 'topics', action: 'create' } do |f| %>
+          <%= form_for @topic, url: url do |f| %>
             <!-- text input -->
             <div class="form-group">
               <%= f.text_field :name, class:"form-control", placeholder: @placeholder_name %>

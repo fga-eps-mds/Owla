@@ -3,7 +3,7 @@ require 'test_helper'
 class TopicsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
-    @member = Member.create(name: 'matheus', 
+    @member = Member.create(name: 'matheus',
                           email: 'matheus@gmail.com',
                           password: '123456',
                           password_confirmation: '123456',
@@ -59,7 +59,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_equal "Sorry, try again", flash[:alert]
+    assert_equal "Sorry, try again", flash[:notice]
   end
 
   test "should get edit topic page" do
@@ -111,7 +111,7 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
 
     @topic.reload
 
-    assert_equal "Sorry, try again", flash[:alert]
+    assert_equal "Sorry, try again", flash[:notice]
   end
 
   test "should delete topic" do

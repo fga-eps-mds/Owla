@@ -55,7 +55,6 @@ class TopicsController < ApplicationController
     @subtitle  = "Settings"
     @placeholder_name = @topic.name
     @placeholder_description = @topic.description
-    @url = topic_path(@topic)
   end
 
   def update
@@ -64,7 +63,7 @@ class TopicsController < ApplicationController
     if @topic.update_attributes(topic_params)
       redirect_to topic_path @topic
     else
-      flash[:alert] = "Sorry, try again"
+      flash[:notice] = "Sorry, try again"
       render 'edit'
     end
   end
