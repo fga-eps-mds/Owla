@@ -15,9 +15,9 @@
 //= require jquery_ujs
 //= stub cable
 //= require admin_lte/admin_lte
+//= require bootstrap-switch
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales
-//= require bootstrap-switch
 //= require turbolinks
 
 $(document).ready(function(){
