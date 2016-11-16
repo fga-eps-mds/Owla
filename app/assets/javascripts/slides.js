@@ -64,7 +64,6 @@ $(document).ready(function(){
   function getTopicId(){
     var re = /father-topic-(\d+)/;
     var id = $("[name='father']").attr('id').match(re)[1];
-    console.log(id);
     return id;
   }
 
