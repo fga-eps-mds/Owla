@@ -35,6 +35,11 @@
         <% else %>
           <!-- Page content -->
           <div class="container">
+            <div class="flash-conteiner">
+              <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+              <% end %>
+            </div>
             <%= yield %>
           </div>
         <% end %>
