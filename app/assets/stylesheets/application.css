@@ -11,6 +11,48 @@
  * It is generally better to create a new file per style scope.
  *
  *= require admin_lte/ltr/admin_lte
+ *= require bootstrap-wysihtml5
+ *= require bootstrap3-switch
  *= require_tree .
  *= require_self
  */
+
+.flash-conteiner {
+  width: 50%;
+  padding-top: 1%;
+}
+
+.alert.alert {
+ 	width: 100%;
+  margin-left: 50%;
+	text-align: center;
+}
+
+.alert.alert-notice {
+	border: 1px solid #f39c12;
+  background: cornsilk;
+}
+
+.submission {
+  display: none;
+}
+
+#query {
+  margin-left: 1.5em;
+}
+
+.rooms > h2,
+.people > h2,
+.topics > h2 {
+  border-bottom: 1px solid gray;
+}
+
+.search-results {
+  margin: 0% 0 0 5%;
+  width: 90%
+}
+
+/* dropdown overflow correction */
+.dropdown-menu {
+    left: -11.5em !important;
+}
