@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
   root 'sessions#new'
   post '/rooms/signup' => 'rooms#signup'
   post '/rooms/signout' => 'rooms#signout'
@@ -10,9 +13,10 @@ Rails.application.routes.draw do
 
 	post 'moderate_question/:id', to: 'questions#moderate_question', as: 'moderate_question'
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
+  get '/search', to: 'searches#search', as: 'search'
 
-  post 'report_question/:id', to: 'reports#create_report_question', as: 'report_question'
-  post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'
+  post 'report_question/:id', to: 'questions#report_question', as: 'report_question'
+  post 'report_answer/:id', to: 'answers#report_answer', as: 'report_answer'
 
   post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
 
@@ -20,10 +24,16 @@ Rails.application.routes.draw do
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
 
+  resources :notifications do 
+    get :read, on: :collection
+  end
+
+  match '/topics/:id/slide/:slide_id' => 'topics#update_current_slide', via: :post
+
   resources :members, shallow: true do
     resources :rooms do
         resources :topics do
-          resources :questions do
+          resources :questions, except: [ :new ] do
             member do
               post "like", to: "questions#like"
             end
@@ -41,6 +51,7 @@ Rails.application.routes.draw do
   end
 
   get 'sessions/new'
+  get 'notifications' => 'notifications#index'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   get '/logout',  to: 'sessions#destroy'
