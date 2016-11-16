@@ -11,7 +11,7 @@
 
           <%= form_for(:session, url: login_path) do |f| %>
             <div class="form-group has-feedback">
-              <%= f.email_field :email, class:  'form-control', placeholder: 'Email' %>
+              <%= f.email_field :email, class:  'form-control', placeholder: 'Email', autofocus: true %>
               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">

@@ -14,7 +14,7 @@
     </div>
     <div class="search">
       <%= form_tag("/search", method: "get") do %>
-        <%= text_field_tag(:query) %>
+        <%= text_field_tag :query, nil, autofocus: true %>
         <div class="submission">
           <%= submit_tag("Search") %>
         </div>
