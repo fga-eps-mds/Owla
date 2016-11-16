@@ -8,7 +8,7 @@ module NotificationHelper
 	end
 
 	def first_notification
-		create_notification("Welcome to Owla!", nil, current_member, '#')
+		create_notification("Welcome to Owla!", nil, current_member, home_path(current_member))
 	end
 
 	def answered_question answer

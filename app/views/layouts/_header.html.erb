@@ -39,33 +39,9 @@
       <ul class="nav navbar-nav">
 
         <% if logged_in? %>
-          <li class="notifications-link">
-            <%= link_to '#', class: 'dropdown-toggle', id: 'notification-dropdown', data: { toggle: 'dropdown' } do %>
-              <i class='fa fa-bell'></i>
-              <!-- FIXME remove counter when dropdown is clicked -->
-              <span class="label label-danger" id="notification-counter">
-                <% counter = current_member.received_notifications.where(read: "false").count %>
-                <%= counter if counter %>
-              </span>
 
-              <ul class="dropdown-menu">
-                <li>
-                  <ul class="menu" id="dropdown-menu">
-                    <% current_member.received_notifications.reverse.take(3).each do |notification| %>
-                      <li id="notification-list">
-                        <p><%= link_to notification.message, notification.link %></p>
-                      </li>
-                      <li class="divider"></li>
-                    <% end %>
-                  </ul>
-                </li>
-                <li class="footer">
-                  <%= link_to "See all", notifications_path %>
-                </li>
-              </ul>
+          <%= render 'layouts/notifications' %>
 
-            <% end %>
-          </li>
           <li class="logout-link">
             <%= link_to 'Logout', logout_path %>
           </li>
