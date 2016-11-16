@@ -15,7 +15,7 @@
                   url: @new_question_url,
                   slide_id: 0} %>
 
-    <% if current_member != @owner %> 
+    <% if current_member != @owner and @topic.slide.present? %> 
       <input name="follow-slide" type="checkbox" checked>
     <% end %>
 
