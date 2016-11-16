@@ -1,8 +1,6 @@
 <div id="like_button">
-  <%= form_tag url, remote: true do %>
-    <%= button_tag(type: "submit", class: "btn btn-flat btn-xs") do %>
+  <%= link_to url, method: :post, remote: true do %>
       <i class="fa fa-heart"></i>
-      <b><%= object.get_likes.size %></b>
-    <% end %>
+      <b id="<%= object.class.to_s.downcase%>-like-<%= object.id %>"><%= object.get_likes.size %></b>
   <% end %>
 </div>
