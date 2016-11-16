@@ -30,7 +30,6 @@ class RoomsController < ApplicationController
       flash[:notice] = "You are already registered in this room"
     else
       room.members << member
-      member.rooms << room
       send_notification("joined_room", room)
     end
 
