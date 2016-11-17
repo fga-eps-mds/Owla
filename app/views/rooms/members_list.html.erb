@@ -1,0 +1,11 @@
+<h1> Room's Members </h1>
+
+<table id="room-blacklist">
+  <% unless @members_list.empty? %>
+    <% @members_list.each do |member_id| %>
+      <tr>
+        <td id="member-name"><%= "#{Member.find(member_id).name}" %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

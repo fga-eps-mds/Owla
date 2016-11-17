@@ -111,6 +111,11 @@ class RoomsController < ApplicationController
     @banned_members = Member.where(id: room.black_list)
   end
 
+  def members_list
+    room = Room.find(params[:id])
+    @members_list = Member.where(id: room.members)
+  end
+
   def reintegrate_member
     @room = Room.find(params[:id])
     @room.black_list.delete(params[:member_id].to_i)
