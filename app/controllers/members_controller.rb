@@ -45,9 +45,11 @@ class MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
-    @member.destroy
-
-    redirect_to members_path
+    
+    #if @member.id == current_member
+      @member.destroy
+    #  redirect_to members_path
+    #end
   end
 
   def home

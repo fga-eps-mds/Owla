@@ -1,11 +1,32 @@
-<h1> Room's Members </h1>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Room's Members
+  </h1>
+</section>
+<br></br>
+<!-- Main content -->
+<section class="content">
+  <!-- row -->
+  <div class="row">
+    <div class="col-md-12">
+      <!-- The time line -->
+      <ul class="timeline">
+        <% unless @members_list.empty? %>
+    	<% @members_list.each do |member_id| %>
+            <!-- timeline item -->
+          <li>
+            <i class="fa fa-th-list bg-blue"></i>
 
-<table id="room-blacklist">
-  <% unless @members_list.empty? %>
-    <% @members_list.each do |member_id| %>
-      <tr>
-        <td id="member-name"><%= "#{Member.find(member_id).name}" %></td>
-      </tr>
-    <% end %>
-  <% end %>
-</table>
+            <div class="timeline-item">
+              	<h3 class="timeline-header"><%= Member.find(member_id).name %></h3>
+            </div>
+          <li>
+        <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>
