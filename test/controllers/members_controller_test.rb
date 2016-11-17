@@ -3,10 +3,10 @@ include SessionsHelper
 
 class MembersControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @member = Member.create(name: 'matheus', 
-                          email: 'matheus@gmail.com', 
-                          password: '123456', 
-                          password_confirmation: '123456', 
+    @member = Member.create(name: 'matheus',
+                          email: 'matheus@gmail.com',
+                          password: '123456',
+                          password_confirmation: '123456',
                           alias: 'mateusin')
     sign_in_as @member
   end
@@ -69,7 +69,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     @member.reload
     assert_not_equal old_name, @member.name
 
-    assert_redirected_to members_path
+    assert_redirected_to root_path
   end
 
   test "should fail to update member when is not logged in" do

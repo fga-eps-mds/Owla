@@ -32,9 +32,9 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
 
     if @member.update_attributes(member_params)
-      redirect_to members_path
+      redirect_to root_path
     else
-      flash[:alert] = "Member not updated"
+      flash.now[:alert] = "Member not updated"
       render 'edit'
     end
   end
