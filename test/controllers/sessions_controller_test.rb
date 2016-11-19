@@ -3,10 +3,10 @@ include SessionsHelper
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
   def setup
-  	@member = Member.create(name: 'matheus', 
-                          email: 'matheus@gmail.com', 
-                          password: '123456', 
-                          password_confirmation: '123456', 
+    @member = Member.create(name: 'matheus',
+                          email: 'matheus@gmail.com',
+                          password: '123456',
+                          password_confirmation: '123456',
                           alias: 'mateusin')
   end
   test "should get new" do
@@ -17,6 +17,13 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should create session" do
   	sign_in_as @member
   	assert_redirected_to home_path(@member)
+  end
+
+  test "should not login with wrong email" do
+    @member.email = "teste"
+    sign_in_as @member
+
+    assert_equal "Invalid email or password", flash[:danger]
   end
 
   test "should logout" do

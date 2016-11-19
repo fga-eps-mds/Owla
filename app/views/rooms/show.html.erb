@@ -1,9 +1,13 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
+  <h1>
     <%= @room.name %>
+  </h1>
+  <div id="room-buttons">
     <% if current_member == @room.owner %>
       <%= link_to 'Edit', edit_room_path(@room), class: 'btn btn-sm btn-primary'%>
+      <%= link_to 'Members List', members_list_url, class: 'btn btn-sm btn-default'%>
       <%= link_to 'Banned Members', banned_members_url, class: 'btn btn-sm btn-default'%>
       <%= link_to 'New Topic', new_room_topic_path(@room), class: 'btn btn-sm btn-default'%>
     <% elsif @room.presence_in current_member.rooms %>
@@ -11,6 +15,7 @@
     <% else %>
       <%= link_to 'Join', rooms_signup_path(id: @room.id), class: 'btn btn-sm btn-success', method: :post %>
     <% end %>
+  </div>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> <%= link_to 'Home', root_path %> </a></li>
@@ -57,7 +62,7 @@
                         <%= button_to "Manage", edit_topic_path(topic), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
                             method: :get%>
                       <% end %>
-                      <%= link_to "Enter", topic_path(topic), class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+                      <%= link_to "Enter", topic_path(topic), class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;", method: :get %>
                     </div>
                   </div>
                 </div>

@@ -24,12 +24,13 @@ class RoomsController < ApplicationController
     member = current_member
     room = Room.find(params[:id])
 
-    if(room.black_list.include?(current_member.id))
+    if room.black_list.include?(current_member.id)
       flash[:notice] = "You are not allowed to join this room"
     elsif room.members.include?(member)
       flash[:notice] = "You are already registered in this room"
     else
       room.members << member
+      send_notification("joined_room", room)
     end
 
     redirect_to room_path(room)
@@ -41,6 +42,7 @@ class RoomsController < ApplicationController
 
     if room.members.include?(member)
       room.members.delete(member)
+      member.rooms.delete(room)
     else
       flash[:notice] = "You are not registered in this room"
     end
@@ -91,24 +93,44 @@ class RoomsController < ApplicationController
   end
 
   def ban_member
-      member = Member.find(params[:member_id])
+    member = Member.find(params[:member_id])
+
+    unless params[:topic_id].nil?
       topic = Topic.find(params[:topic_id])
       room = topic.room
-      room.update_attribute(:black_list, room.black_list << member.id)
-      room.members.delete(member)
-      flash[:notice] = "The member was banned from your room"
-      redirect_to topic_path topic
+    else
+      room = Room.find(params[:room_id])
+    end
+
+    room.black_list << member.id
+    room.members.delete(member)
+    room.save
+
+    flash[:notice] = "The member was banned from your room"
+
+    unless params[:topic_id].nil?
+      redirect_to topic_path(topic)
+    else
+      redirect_to members_list_path(room)
+    end
+
   end
 
   def banned_members
-    room = Room.find(params[:id])
-    @banned_members = Member.where(id: room.black_list)
+    @room = Room.find(params[:id])
+    @banned_members = Member.where(id: @room.black_list)
+  end
+
+  def members_list
+    @room = Room.find(params[:id])
+    @members_list = Member.where(id: @room.members)
   end
 
   def reintegrate_member
     @room = Room.find(params[:id])
     @room.black_list.delete(params[:member_id].to_i)
     @room.save
+
     flash[:notice] = "Member has been removed from black list and can now join the room"
     redirect_to banned_members_url
   end

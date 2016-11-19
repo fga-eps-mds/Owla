@@ -6,29 +6,17 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
     @member_wrong = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "12345678", password_confirmation: "12345678")
 
-    @room = Room.new(name: "calculo 1", description: "teste1")
-    @room.owner = @member
-    @room.save
+    @room = Room.create(name: "calculo 1", description: "teste1", owner: @member)
+    @room_wrong = Room.create(name: 'calc2', description: 'teste2', owner: @member_wrong)
 
-    @room_wrong = Room.new(name: 'calc2', description: 'teste2')
-    @room_wrong.owner = @member_wrong
-    @room_wrong.save
+    @topic = @room.topics.create(name: "limites", description: "description1")
+    @topic_wrong = @room_wrong.topics.create(name: 'edo', description: 'teste2')
 
-    @topic = @room.topics.new(name: "limites", description: "description1")
-    @topic.save
+    @question = @topic.questions.create(content: "How did I get here?", member: @member)
 
-    @topic_wrong = @room_wrong.topics.new(name: 'edo', description: 'teste2')
-    @topic_wrong.save
+    attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
 
-    @question = @topic.questions.new(content: "How did I get here?")
-    @question.member = @member
-    @question.save
-
-    @answer = Answer.new(content: "CONTENT TEST")
-    @answer.member = @member
-    @answer.question = @question
-    @answer.anonymous = false
-    @answer.save
+    @answer = @question.answers.create(content: "CONTENT TEST", member: @member, attachment: attachment)
 
     sign_in_as @member
   end
@@ -39,7 +27,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
          content: "Resposta da pergunta"
        }
      }
-     assert_redirected_to topic_path(@question.topic)
+     assert_response :success
    end
 
    test "should edit answer" do
@@ -70,7 +58,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "should delete answer" do
     assert_difference('Answer.count', -1) do
       delete "/answers/#{@answer.id}"
-      assert_redirected_to question_answers_path(@question)
+      assert_response :success
     end
   end
 
@@ -182,6 +170,64 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_equal true, @answer.moderated
   end
 
+  test "should upload attachment when answer is created" do
+    attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
+
+    assert_difference('Answer.count') do
+      post "/questions/#{@question.id}/answers", params: {
+        answer: {
+          content: "Answer test",
+          attachment: attachment
+        }
+      }
+    end
+
+  end
+
+  test "should not upload wrong type of attachment" do
+    wrong_attachment = fixture_file_upload('test/fixtures/answers.yml', 'application/yaml')
+
+    old_answer = Answer.last
+
+    post "/questions/#{@question.id}/answers", params: {
+      answer: {
+        content: "Testing wrong attachment",
+        attachment: wrong_attachment
+      }
+    }
+
+    assert_equal old_answer, Answer.last
+  end
+
+  test "should delete attachment from answer if option is marked" do
+    answer = Answer.last
+
+    patch "/answers/#{answer.id}", params: {
+      answer: {
+        content: "new question content"
+      },
+      delete_attachment: true
+    }
+
+    answer.reload
+
+    assert_not answer.attachment?
+  end
+
+  test "should not delete attachment if option is not marked" do
+    answer = Answer.last
+
+    patch "/answers/#{answer.id}", params: {
+      answer: {
+        content: "new question content"
+      }
+    }
+
+    answer.reload
+
+    assert answer.attachment?
+  end
+
   test 'should answer be anonymous if the option is marked' do
     post "/questions/#{@question.id}/answers", params: {
       answer: {
@@ -206,5 +252,5 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_equal answer.anonymous, true
   end
-
+  
 end
