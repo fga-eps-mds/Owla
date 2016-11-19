@@ -39,8 +39,11 @@
       <ul class="nav navbar-nav">
 
         <% if logged_in? %>
-          <li class="notifications-menu">
-            <%= link_to 'LOGOUT', logout_path, class: "dropdown-toggle" %>
+
+          <%= render 'layouts/notifications' %>
+
+          <li class="logout-link">
+            <%= link_to 'Logout', logout_path %>
           </li>
         <% end %>
 
