@@ -1,3 +1,19 @@
 // Place all the styles related to the Tags controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#color-picker{
+	margin-left: 8%;
+}
+
+.minicolors {
+	margin-left: 13px;
+	width: 186px;
+}
+
+#tag_color{
+	top: 4px;
+	left: 172px;
+	width: 186px;
+	height: 28px;
+}

@@ -19,6 +19,8 @@
 //= require bootstrap-wysihtml5/locales
 //= require bootstrap-switch
 //= require turbolinks
+//= require jquery.minicolors.simple_form
+//= require jquery.minicolors
 
 $(document).ready(function(){
   if($('#notification-counter').html() == 0){
@@ -53,7 +55,7 @@ $("#carousel-slide").carousel({interval: false});
 
 
 $('a[data-slide="prev"]').click(function() {
-  var slideSize = getSlideSize(); 
+  var slideSize = getSlideSize();
   var previousSlideId = getCurrentSlide();
   var currentSlideId = normalizeSlideId(decrement, previousSlideId, slideSize);
   $("#father-topic-" + getTopicId()).find("#hidden-slide-id").attr('value', currentSlideId);
@@ -61,7 +63,7 @@ $('a[data-slide="prev"]').click(function() {
 });
 
 $('a[data-slide="next"]').click(function() {
-  var slideSize = getSlideSize(); 
+  var slideSize = getSlideSize();
   var previousSlideId = getCurrentSlide();
   var currentSlideId = normalizeSlideId(increment, previousSlideId, slideSize);
   $("#father-topic-" + getTopicId()).find("#hidden-slide-id").attr('value', currentSlideId);

@@ -15,6 +15,7 @@
  *= require bootstrap3-switch
  *= require_tree .
  *= require_self
+ *= require jquery.minicolors
  */
 
 .flash-conteiner {

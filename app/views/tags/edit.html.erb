@@ -2,10 +2,11 @@
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
-<%= form_for @tag do |m| %>
-	<%= m.label :content, "Name" %>
-	<%= m.text_field :content %>
+<%= form_for @tag do |f| %>
+	<%= f.label :content, "Name" %>
+	<%= f.text_field :content %>
+  <%= f.input :color, as: :minicolors %>
 	<br>
-	
-	<%= m.submit "Edit Tag" %>
+
+	<%= f.submit "Edit Tag" %>
 <% end %>
