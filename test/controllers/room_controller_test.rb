@@ -81,6 +81,12 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/rooms/#{@room.id}"
   end
 
+  test "should not edit room with wrong params" do
+    patch "/rooms/#{@room.id}", params: {room: { name: "" } }
+
+    assert_equal "Error updating room", flash[:alert]
+  end
+
   test "should destroy room" do
     assert_difference('Room.count', -1) do
       delete "/rooms/#{@room.id}"
@@ -216,23 +222,20 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to room_path(@room)
   end
 
-  # FIXME randomly breaks
-  # test "should owner be able to reintegrate someone who is in black list" do
-  #   @another_member.rooms << @room
-  #
-  #   post "/topics/#{@topic.id}/ban_member", params: { member: @another_member, topic: @topic }
-  #   post "/rooms/#{@room.id}/reintegrate_member", params: { id: @room.id, member: @another_member }
-  #
-  #   @room.reload
-  #
-  #   assert_not @room.black_list.include?(@another_member)
-  #   assert_redirected_to banned_members_url
-  # end
-  #
-  # FIXME randomly breaks
-  # test "should room owner get banned members" do
-  #   get "/rooms/#{@room.id}/banned_members"
-  #   assert_response :success
-  # end
+  test "should get members list from room" do
+    get "/rooms/#{@room.id}/members_list"
+    assert_response :success
+  end
+
+  test "should ban member from members list" do
+    post "/topics/#{@topic.id}/ban_member", params: {
+      member_id: @another_member.id,
+      room_id: @room.id
+    }
+
+    @room.reload
+    assert @room.black_list.include?(@another_member.id)
+    assert_redirected_to members_list_path(@room)
+  end
 
 end
