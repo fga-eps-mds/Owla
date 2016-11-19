@@ -1,0 +1,15 @@
+<div class="row" id="topic-question-box-<%= @topic.id %>">
+  <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
+    <%= render partial: 'questions/question',
+                        locals: { question: question,
+                        room: @topic.room,
+                        new_answer: @answer} %>
+
+    <%= render partial: 'questions/form_modal',
+                        locals: { question: question,
+                        placeholder: nil,
+                        box_title: "Edit question",
+                        url: question_path(question),
+                        slide_id: nil } %>
+  <% end %>
+</div>

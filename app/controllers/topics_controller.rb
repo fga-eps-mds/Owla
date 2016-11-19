@@ -80,6 +80,12 @@ class TopicsController < ApplicationController
     send_slide params[:id], params[:slide_id], 'update_slide'
   end
 
+  def search_by_tag
+    @topic = Topic.find(params[:id])
+    @tag = Tag.find_by(content: params[:tag])
+    @questions = @tag.questions.where(topic_id: params[:topic_id])
+  end
+
   private
 
     def topic_params

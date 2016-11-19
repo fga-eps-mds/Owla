@@ -15,11 +15,16 @@
                   url: @new_question_url,
                   slide_id: 0} %>
 
-    <% if current_member != @owner %> 
+    <% if current_member != @owner %>
       <input name="follow-slide" type="checkbox" checked>
     <% end %>
 
   </h1>
+
+  <%= form_tag "/topic/:id/search_by_tag", method: :get do %>
+    <%= select_tag :tag, options_for_select(current_member.tags.collect { |u| u.content }) %>
+    <%= submit_tag 'Go!' %>
+  <% end %>
 
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
