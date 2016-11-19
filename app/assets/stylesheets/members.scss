@@ -35,7 +35,8 @@
 	width: 20%;
 }
 
-.box-body {
+.box-body.question,
+.box-body.answer {
 	text-align: center;
 	font-weight: bolder;
 }

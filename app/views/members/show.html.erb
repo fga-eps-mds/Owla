@@ -19,7 +19,7 @@
       <div class="box-header with-border">
         <i class="fa fa-question"></i>Questions
       </div>
-      <div class="box-body">
+      <div class="box-body question">
         <%= Question.where(member_id: @member.id).count %>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="box-header with-border">
         <i class="fa fa-exclamation"></i>Answers
       </div>
-      <div class="box-body">
+      <div class="box-body answer">
         <%= Answer.where(member_id: @member.id).count %>
       </div>
     </div>
