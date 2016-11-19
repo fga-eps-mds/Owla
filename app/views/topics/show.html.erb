@@ -21,6 +21,11 @@
 
   </h1>
 
+  <%= form_tag "/topics/#{@topic.id}/search_by_tag", method: :get do %>
+    <%= select_tag :tag, options_for_select(current_member.tags.collect { |u| u.content }) %>
+    <%= submit_tag 'Go!' %>
+  <% end %>
+
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
     <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id) %></a></li>
