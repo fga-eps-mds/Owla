@@ -12,19 +12,15 @@
     <div class="col-md-12">
       <!-- The time line -->
       <ul class="timeline">
-        <% if !@banned_members.empty? %>
-        <% @banned_members.each do |member_id| %>
-            <!-- timeline item -->
+        <% @banned_members.each do |member| %>
           <li>
             <i class="fa fa-th-list bg-blue"></i>
-
             <div class="timeline-item">
-              	<h3 class="timeline-header"><%= Member.find(member_id).name %>
-              	<%= link_to "Reintegrate Member", reintegrate_member_url(member_id: member_id), class: 'btn btn-sm btn-success pull-right', method: :post, style: "margin: -5px;" %></td>
-              	</h3>
+              <h3 class="timeline-header"><%= member.name %>
+                <%= link_to "Reintegrate Member", reintegrate_member_url(member_id: member.id), class: 'btn btn-sm btn-success pull-right', method: :post, style: "margin: -5px;" %></td>
+              </h3>
             </div>
-          <li>
-        <% end %>
+          </li>
         <% end %>
       </ul>
     </div>

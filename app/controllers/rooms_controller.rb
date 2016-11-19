@@ -117,8 +117,8 @@ class RoomsController < ApplicationController
   end
 
   def banned_members
-    room = Room.find(params[:id])
-    @banned_members = Member.where(id: room.black_list)
+    @room = Room.find(params[:id])
+    @banned_members = Member.where(id: @room.black_list)
   end
 
   def members_list

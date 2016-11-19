@@ -45,7 +45,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show member" do
-    get '/members/', params: {id: @member.id}
+    get "/members/#{@member.id}"
     assert_response :success
   end
 
@@ -111,7 +111,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should delete member" do
     delete "/members/#{@member.id}"
-    assert_redirected_to members_path
+    assert_redirected_to root_path
   end
 
   test "should not delete user if no one is logged in" do
@@ -122,8 +122,18 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "should logged member go to homepage" do
+    sign_out_as @member
+    get login_path
+    assert_response :success
+
+    sign_in_as @member
+    get login_path
+    assert_redirected_to home_path(@member)
+  end
+
 # [TO DO: should not test CSS class]
-#  test "should not delete member if does note exist" do
+#  test "should not delete member if does not exist" do
 #    delete "/members/#{99}"
 #
 #    assert_response :missing
