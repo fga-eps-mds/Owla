@@ -27,8 +27,9 @@
   <% end %>
 
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Topic</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
+    <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id) %></a></li>
+    <li class="active"> <%= @topic.name %> </li>
   </ol>
 </section>
 
