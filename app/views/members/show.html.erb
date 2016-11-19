@@ -1,12 +1,38 @@
-<div id="profile-photo">
-        <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle", id: "show-member" %>
-</div>
+<div class="member-show">
+  <div class="profile-actions">
+    <%= link_to "", edit_member_path(@member), class: 'btn btn-default fa fa-pencil', id: 'edit-path' %>
+  </div>
 
-<div class="member-info">
-  <table id="member-attributes">
-    <tr><td><%= @member.name%></td></tr>
-    <tr><td><%= @member.email%></td></tr>
-    <tr><td><%= @member.alias%></td></tr>
-    <tr><td><%= link_to "Edit", edit_member_path(@member), class: "btn btn-info", id: "edit-path" %></td></tr>
-  </table>
+  <div id="profile-photo">
+    <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle", id: "show-member" %>
+  </div>
+
+  <div class="member-info">
+    <table id="member-attributes">
+      <tr><td><%= "#{@member.name}, member since #{@member.created_at.strftime("%d %b. %Y")}" %></td></tr>
+    </table>
+  </div>
+
+  <div class="member-statistics">
+
+    <div class="member-questions box box-solid">
+      <div class="box-header with-border">
+        <i class="fa fa-question"></i>Questions
+      </div>
+      <div class="box-body question">
+        <%= Question.where(member_id: @member.id).count %>
+      </div>
+    </div>
+
+    <div class="member-answers box box-solid">
+      <div class="box-header with-border">
+        <i class="fa fa-exclamation"></i>Answers
+      </div>
+      <div class="box-body answer">
+        <%= Answer.where(member_id: @member.id).count %>
+      </div>
+    </div>
+
+  </div>
+
 </div>
