@@ -7,6 +7,8 @@
     <tr><td><%= @member.name%></td></tr>
     <tr><td><%= @member.email%></td></tr>
     <tr><td><%= @member.alias%></td></tr>
-    <tr><td><%= link_to "Edit", edit_member_path(@member), class: "btn btn-info", id: "edit-path" %></td></tr>
+    <% if current_member == @member %>
+      <tr><td><%= link_to "Edit", edit_member_path(@member), class: "btn btn-info", id: "edit-path" %></td></tr>
+    <% end %>
   </table>
 </div>
