@@ -1,5 +1,5 @@
 <div class="row" id="topic-question-box-<%= @topic.id %>">
-  <% @topic.questions.order(:cached_votes_up => :desc).each do |question| %>
+  <% @questions.order(:cached_votes_up => :desc).each do |question| %>
     <%= render partial: 'questions/question',
                         locals: { question: question,
                         room: @topic.room,

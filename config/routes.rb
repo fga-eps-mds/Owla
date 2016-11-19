@@ -56,5 +56,5 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   get '/logout',  to: 'sessions#destroy'
-  get '/topic/:id/search_by_tag', to: 'topics#search_by_tag'
+  get '/topics/:id/search_by_tag', to: 'topics#search_by_tag'
 end

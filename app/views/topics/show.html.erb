@@ -21,7 +21,7 @@
 
   </h1>
 
-  <%= form_tag "/topic/:id/search_by_tag", method: :get do %>
+  <%= form_tag "/topic/#{@topic.id}/search_by_tag", method: :get do %>
     <%= select_tag :tag, options_for_select(current_member.tags.collect { |u| u.content }) %>
     <%= submit_tag 'Go!' %>
   <% end %>

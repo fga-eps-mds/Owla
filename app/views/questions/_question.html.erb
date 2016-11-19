@@ -113,7 +113,7 @@
           alt: "User Image",
           style: "max-width: 56px;" %>
       <div class="img-push">
-        <%= form_for new_answer, url: { action: "create",
+        <%= form_for Answer.new, url: { action: "create",
                                         controller: "answers",
                                         id: nil,
                                         question_id: question.id},

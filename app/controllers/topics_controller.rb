@@ -83,7 +83,7 @@ class TopicsController < ApplicationController
   def search_by_tag
     @topic = Topic.find(params[:id])
     @tag = Tag.find_by(content: params[:tag])
-    @questions = @tag.questions.where(topic_id: params[:topic_id])
+    @questions = @tag.questions.where(topic_id: params[:id])
   end
 
   private
