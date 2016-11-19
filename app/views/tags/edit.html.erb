@@ -2,7 +2,7 @@
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
-<%= form_for @tag do |f| %>
+<%= simple_form_for @tag do |f| %>
 	<%= f.label :content, "Name" %>
 	<%= f.text_field :content %>
   <%= f.input :color, as: :minicolors %>

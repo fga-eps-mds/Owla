@@ -20,7 +20,7 @@ class TagsController < ApplicationController
 	  @tag = Tag.new(tag_params)
 	  @tag.member = current_member
 	  @question.tags << @tag
-
+    
 	  if @tag.save
 	    redirect_to topic_path(@question.topic)
 	  else
