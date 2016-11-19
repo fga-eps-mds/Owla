@@ -81,6 +81,12 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to "/rooms/#{@room.id}"
   end
 
+  test "should not edit room with wrong params" do
+    patch "/rooms/#{@room.id}", params: {room: { name: "" } }
+
+    assert_equal "Error updating room", flash[:alert]
+  end
+
   test "should destroy room" do
     assert_difference('Room.count', -1) do
       delete "/rooms/#{@room.id}"

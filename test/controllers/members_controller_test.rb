@@ -30,6 +30,20 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to home_path Member.last
   end
 
+  test "should not create member with wrong params" do
+    post '/members', params: {
+      member: {
+        wrong_param: "matheus",
+        email: "matheuss@gmail.com",
+        password: "123456",
+        password_confirmation: "123456",
+        alias: "membertest8"
+      }
+    }
+
+    assert_equal "Member not created", flash[:alert]
+  end
+
   test "should show member" do
     get '/members/', params: {id: @member.id}
     assert_response :success
@@ -70,6 +84,18 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal old_name, @member.name
 
     assert_redirected_to root_path
+  end
+
+  test "should not edit member with wrong params" do
+    patch "/members/#{@member.id}", params: {
+                                              member: {name: "joao",
+                                              wrong_param: 'matheus@gmail.com',
+                                              password: '12345678',
+                                              password_confirmation: '123456',
+                                              alias: 'mateusin'}
+                                            }
+
+    assert_equal "Member not updated", flash.now[:alert]
   end
 
   test "should fail to update member when is not logged in" do

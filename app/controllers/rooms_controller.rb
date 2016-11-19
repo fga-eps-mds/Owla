@@ -94,8 +94,13 @@ class RoomsController < ApplicationController
 
   def ban_member
     member = Member.find(params[:member_id])
-    topic = Topic.find(params[:topic_id])
-    room = topic.room
+
+    unless params[:topic_id].nil?
+      topic = Topic.find(params[:topic_id])
+      room = topic.room
+    else
+      room = Room.find(params[:room_id])
+    end
 
     room.black_list << member.id
     room.members.delete(member)
@@ -103,7 +108,12 @@ class RoomsController < ApplicationController
 
     flash[:notice] = "The member was banned from your room"
 
-    redirect_to topic_path topic
+    unless params[:topic_id].nil?
+      redirect_to topic_path(topic)
+    else
+      redirect_to members_list_path(room)
+    end
+
   end
 
   def banned_members
@@ -112,8 +122,8 @@ class RoomsController < ApplicationController
   end
 
   def members_list
-    room = Room.find(params[:id])
-    @members_list = Member.where(id: room.members)
+    @room = Room.find(params[:id])
+    @members_list = Member.where(id: @room.members)
   end
 
   def reintegrate_member
