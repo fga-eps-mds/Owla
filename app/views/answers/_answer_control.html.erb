@@ -28,7 +28,7 @@
           </li>
         <% end %>
 
-      <% if (current_member == answer.question.topic.room.owner) && (answer.question.member != answer.question.topic.room.owner)  %>
+      <% if (current_member == answer.question.topic.room.owner) && (answer.question.member != answer.question.topic.room.owner) && !(room.black_list.include? (answer.member.id)) %>
         <li>
           <%= link_to ban_member_path(member_id: answer.member.id, topic_id: answer.question.topic.id), method: :post do %>
             <i class="fa fa-ban" aria-hidden="true" title="Ban member"></i>
