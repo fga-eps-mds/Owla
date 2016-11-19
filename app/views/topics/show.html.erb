@@ -15,15 +15,16 @@
                   url: @new_question_url,
                   slide_id: 0} %>
 
-    <% if current_member != @owner %> 
+    <% if current_member != @owner %>
       <input name="follow-slide" type="checkbox" checked>
     <% end %>
 
   </h1>
 
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Topic</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
+    <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id) %></a></li>
+    <li class="active"> <%= @topic.name %> </li>
   </ol>
 </section>
 
