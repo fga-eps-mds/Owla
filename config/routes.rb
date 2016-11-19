@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/rooms/signout' => 'rooms#signout'
 
   post '/topics/:id/ban_member' => 'rooms#ban_member', as: 'ban_member'
+  get 'rooms/:id/members_list' => 'rooms#members_list', as: 'members_list'
   get 'rooms/:id/banned_members' => 'rooms#banned_members', as: 'banned_members'
   post 'rooms/:id/reintegrate_member' => 'rooms#reintegrate_member', as: 'reintegrate_member'
 
@@ -24,7 +25,7 @@ Rails.application.routes.draw do
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
 
-  resources :notifications do 
+  resources :notifications do
     get :read, on: :collection
   end
 
@@ -37,10 +38,10 @@ Rails.application.routes.draw do
             member do
               post "like", to: "questions#like"
             end
-            resources :answers do 
+            resources :answers do
               member do
                 post "like", to: "answers#like"
-              end  
+              end
             end
 
             resources :answers

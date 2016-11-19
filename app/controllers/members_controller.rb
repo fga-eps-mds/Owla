@@ -32,9 +32,9 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
 
     if @member.update_attributes(member_params)
-      redirect_to members_path
+      redirect_to root_path
     else
-      flash[:alert] = "Member not updated"
+      flash.now[:alert] = "Member not updated"
       render 'edit'
     end
   end
@@ -45,9 +45,11 @@ class MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
-    @member.destroy
 
-    redirect_to members_path
+    if @member == current_member
+      @member.destroy
+     redirect_to root_path
+    end
   end
 
   def home
