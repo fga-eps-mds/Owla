@@ -1,12 +1,30 @@
-<h1> Room's Blacklist </h1>
-
-<table id="room-blacklist">
-  <% if !@banned_members.empty? %>
-    <% @banned_members.each do |member_id| %>
-      <tr>
-        <td id="member-name"><%= "#{Member.find(member_id).name}" %></td>
-        <td id="reintegrate-member"><%= link_to "Reintegrate Member", reintegrate_member_url(member_id: member_id), class: 'btn btn-sm btn-success', method: :post %></td>
-      </tr>
-    <% end %>
-  <% end %>
-</table>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Room's Blacklist
+  </h1>
+</section>
+<br></br>
+<!-- Main content -->
+<section class="content">
+  <!-- row -->
+  <div class="row">
+    <div class="col-md-12">
+      <!-- The time line -->
+      <ul class="timeline">
+        <% @banned_members.each do |member| %>
+          <li>
+            <i class="fa fa-th-list bg-blue"></i>
+            <div class="timeline-item">
+              <h3 class="timeline-header"><%= member.name %>
+                <%= link_to "Reintegrate Member", reintegrate_member_url(member_id: member.id), class: 'btn btn-sm btn-success pull-right', method: :post, style: "margin: -5px;" %></td>
+              </h3>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

@@ -35,7 +35,7 @@
               style: "max-width: 56px;" %>
 
           <span class="username">
-            <a href="#"><%= question.member.alias %></a>
+            <%= link_to question.member.alias, "/members/#{question.member.id}" %>
           </span>
         <% end %>
         <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
@@ -113,7 +113,7 @@
           alt: "User Image",
           style: "max-width: 56px;" %>
       <div class="img-push">
-        <%= form_for new_answer, url: { action: "create",
+        <%= form_for Answer.new, url: { action: "create",
                                         controller: "answers",
                                         id: nil,
                                         question_id: question.id},

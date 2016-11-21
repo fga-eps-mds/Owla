@@ -17,28 +17,51 @@
  *= require_self
  */
 
+html, body, #wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url("overlay-background.png"), url("login-bg-repeat.jpg") !important;
+}
+
 .flash-conteiner {
   width: 50%;
   padding-top: 1%;
 }
 
 .alert.alert {
- 	width: 100%;
+  width: 100%;
   margin-left: 50%;
-	text-align: center;
+  text-align: center;
 }
 
 .alert.alert-notice {
-	border: 1px solid #f39c12;
+  border: 1px solid #f39c12;
   background: cornsilk;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  bottom: 0px;
+  /*FIXME*/
+  display: none;
+}
+
+#header-logo-name {
+  vertical-align: middle;
+}
+
+.main-header > .logo {
+  color: #222222 !important;
+  background-color: #ffffff !important;
 }
 
 .submission {
   display: none;
-}
-
-#query {
-  margin-left: 1.5em;
 }
 
 .rooms > h2,
