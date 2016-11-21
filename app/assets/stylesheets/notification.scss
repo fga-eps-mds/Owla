@@ -2,13 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#query {
-  margin-left: 36px !important;
+.input-group {
+  background-color: white;
 }
 
-.fa-search:before {
-  position: absolute;
-  margin: 9px;
+.search-icon {
+  float: left;
+  margin: 10px;
+}
+
+.search-input {
+  margin-left: 33px;
+}
+
+#query {
+  padding-left: 0;
+  font-family: arial;
+  background-color: white;
 }
 
 #notification-list {
