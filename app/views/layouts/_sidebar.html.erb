@@ -12,14 +12,12 @@
         <small><i class="fa fa-circle text-success"></i> Online</small>
       </div>
     </div>
-    <div class="search">
-      <%= form_tag("/search", method: "get") do %>
-        <%= text_field_tag :query, nil, autofocus: true %>
-        <div class="submission">
-          <%= submit_tag("Search") %>
-        </div>
-      <% end %>
-    </div>
+          <%= form_tag("/search", method: "get", class: 'fa fa-search sidebar-form') do %>
+            <%= text_field_tag :query, nil, autofocus: true, class: 'input-group' %>
+          <% end %>
+          <div class="submission">
+            <%= submit_tag("Search") %>
+          </div>
     <ul class="sidebar-menu">
       <li class="treeview">
         <a href="#">
