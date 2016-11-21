@@ -53,7 +53,7 @@ class MembersController < ApplicationController
   end
 
   def home
-    @member = Member.find(params[:id])
+    @rooms = current_member.rooms.all + current_member.my_rooms.all
   end
 
   def joined_rooms
