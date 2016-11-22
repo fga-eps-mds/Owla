@@ -83,7 +83,11 @@ class TopicsController < ApplicationController
   def search_by_tag
     @topic = Topic.find(params[:id])
     @tag = Tag.find_by(content: params[:tag])
-    @questions = @tag.questions.where(topic_id: params[:id])
+    if @tag.nil?
+      redirect_to topic_path(@topic)
+    else
+      @questions = @tag.questions.where(topic_id: params[:id])
+    end
   end
 
   private
