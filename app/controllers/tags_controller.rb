@@ -3,8 +3,9 @@ class TagsController < ApplicationController
     before_action :authenticate_member
 
 	def index
-    @tags = Tag.all
     session[:question_identifier] = params[:question_id]
+    @tags = Tag.all
+    @question = Question.find(session[:question_identifier])
 	end
 
 	def new
@@ -32,9 +33,6 @@ class TagsController < ApplicationController
 
 	def edit
 	  @tag = Tag.find(params[:id])
-    puts "*"*80
-    puts @tag.inspect
-    puts "*"*80
 	end
 
 	def update
@@ -51,8 +49,8 @@ class TagsController < ApplicationController
 
 	def destroy
       @tag = Tag.find(params[:id])
+      @question = Question.find(session[:question_identifier])
       @tag.destroy
-      @question = @tag.questions
       redirect_to question_tags_path(@question)
 	end
 
@@ -60,6 +58,13 @@ class TagsController < ApplicationController
     @tag = Tag.find(params[:id])
     @question = Question.find(session[:question_identifier])
     @question.tags << @tag
+    redirect_to topic_path(@question.topic)
+  end
+
+  def remove_tag_from_question
+    @tag = Tag.find(params[:id])
+    @question = Question.find(session[:question_identifier])
+    @question.tags.delete(@tag)
     redirect_to topic_path(@question.topic)
   end
 
