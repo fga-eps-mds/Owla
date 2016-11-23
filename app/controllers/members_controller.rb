@@ -59,12 +59,14 @@ class MembersController < ApplicationController
   def joined_rooms
     @rooms = current_member.rooms.all + current_member.my_rooms.all
     @subtitle = 'Joined rooms'
+    @title = 'Joined rooms'
     render 'rooms'
   end
 
   def my_rooms
     @rooms = current_member.my_rooms.all
     @subtitle = 'My own rooms'
+    @title = 'My rooms'
     render 'rooms'
   end
 
