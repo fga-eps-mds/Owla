@@ -9,3 +9,12 @@
 #room-buttons {
   margin: 7px 0 0 0;
 }
+
+.box.box-solid > .box-header .btn:hover, .box.box-solid > .box-header a:hover {
+  background: none;
+}
+
+.question.box-body.clearfix {
+  text-align: left;
+  font-weight: normal;
+}
