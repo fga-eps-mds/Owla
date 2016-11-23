@@ -58,4 +58,5 @@ Rails.application.routes.draw do
   get '/logout',  to: 'sessions#destroy'
   get '/topics/:id/search_by_tag', to: 'topics#search_by_tag', as: 'search_by_tag'
   get '*unmatched_route', :to => 'static_pages#routing_error'
+  get '/help', to: 'static_pages#help'
 end

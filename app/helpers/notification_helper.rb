@@ -38,7 +38,7 @@ module NotificationHelper
 	def joined_room room
 		create_notification("#{current_member.name} has just joined #{room.name}!", current_member, room.owner, room_path(room))
 	end
-	
+
 	def liked_question question
 		create_notification("#{current_member.name} has liked your question", current_member, question.member, question_notification_link(question))
 	end
@@ -48,7 +48,9 @@ module NotificationHelper
 	end
 
 	def create_notification message, sender, receiver, link
-		Notification.create(message: message, sender: sender, receiver: receiver, link: link)
+		if sender != receiver
+			Notification.create(message: message, sender: sender, receiver: receiver, link: link)
+		end
 	end
 
 	def show_user_name answer
