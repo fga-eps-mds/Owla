@@ -44,7 +44,7 @@
       <%= render partial: 'questions/question_control',
         locals: { question: question, room: room } %>
 
-      <!-- TODO: FIX -->
+
       <% question.tags.each do |tag| %>
         <span class="label" style="background-color: <%= tag.color %>"><%= tag.content %></span>
       <% end %>

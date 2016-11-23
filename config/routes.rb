@@ -19,12 +19,14 @@ Rails.application.routes.draw do
   post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'
 
   post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
+  get '/tags/:id/add_tag_to_question', to: 'tags#add_tag_to_question', as: 'add_tag_to_question'
 
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
 
-  resources :notifications do 
+
+  resources :notifications do
     get :read, on: :collection
   end
 
@@ -37,10 +39,10 @@ Rails.application.routes.draw do
             member do
               post "like", to: "questions#like"
             end
-            resources :answers do 
+            resources :answers do
               member do
                 post "like", to: "answers#like"
-              end  
+              end
             end
 
             resources :answers

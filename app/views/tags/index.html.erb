@@ -26,7 +26,7 @@
                   <%= link_to 'Delete', tag, method: :delete, data: {confirm: 'Deseja excluir?' }, class:"btn btn-danger btn-xs pull-right", style: "margin-right: 6px;" %>
                   <%= link_to 'Edit', edit_tag_path(tag), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;", method: :get %>
                 <% end %>
-                <%= link_to 'Add to Question', tag, method: :delete, data: {confirm: 'Deseja excluir?' }, class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+                <%= link_to 'Add to Question', add_tag_to_question_path(tag), class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
               </h3>
             </div>
           <li>

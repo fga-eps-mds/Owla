@@ -3,7 +3,8 @@ class TagsController < ApplicationController
     before_action :authenticate_member
 
 	def index
-	  @tags = Tag.all
+    @tags = Tag.all
+    session[:question_identifier] = params[:question_id]
 	end
 
 	def new
@@ -16,11 +17,11 @@ class TagsController < ApplicationController
 	end
 
 	def create
-      @question = Question.find(params[:question_id])
+    @question = Question.find(params[:question_id])
 	  @tag = Tag.new(tag_params)
 	  @tag.member = current_member
 	  @question.tags << @tag
-    
+
 	  if @tag.save
 	    redirect_to topic_path(@question.topic)
 	  else
@@ -31,11 +32,14 @@ class TagsController < ApplicationController
 
 	def edit
 	  @tag = Tag.find(params[:id])
+    puts "*"*80
+    puts @tag.inspect
+    puts "*"*80
 	end
 
 	def update
 	  @tag = Tag.find(params[:id])
-	  @question = @tag.questions
+    @question = Question.find(session[:question_identifier])
 
 	  if @tag.update_attributes(tag_params)
 	    flash[:success] = "Tag updated successfully"
@@ -51,6 +55,13 @@ class TagsController < ApplicationController
       @question = @tag.questions
       redirect_to question_tags_path(@question)
 	end
+
+  def add_tag_to_question
+    @tag = Tag.find(params[:id])
+    @question = Question.find(session[:question_identifier])
+    @question.tags << @tag
+    redirect_to topic_path(@question.topic)
+  end
 
 private
   def tag_params
