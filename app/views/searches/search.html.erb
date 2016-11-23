@@ -1,8 +1,8 @@
 <div class="search-results">
   <div class="rooms">
-    <h2>Rooms</h2>
+    <h3>Rooms</h3>
     <% if @rooms.empty? %>
-      <h3>There are no rooms that matches your search.</h3>
+      <h4>There are no rooms that matches your search.</h4>
     <% else %>
       <% @rooms.each do |room| %>
         <div class="room box box-solid">
@@ -18,9 +18,9 @@
     </div>
 
   <div class="topics">
-    <h2>Topics</h2>
+    <h3>Topics</h3>
     <% if @topics.empty? %>
-      <h3>There are no topics that matches your search.</h3>
+      <h4>There are no topics that matches your search.</h4>
     <% else %>
       <% @topics.each do |topic| %>
         <div class="topic box box-solid">
@@ -36,9 +36,9 @@
   </div>
 
   <div class="people">
-    <h2>People</h2>
+    <h3>People</h3>
       <% if @members.empty? %>
-        <h3>There is no person that matches your search.</h3>
+        <h4>There is no person that matches your search.</h4>
       <% else %>
         <% @members.each do |member| %>
           <div class="member box box-solid">
@@ -51,9 +51,9 @@
     </div>
 
     <div class="questions">
-    <h2>Questions</h2>
+    <h3>Questions</h3>
       <% if @questions.empty? %>
-        <h3>There is no question that matches your search.</h3>
+        <h4>There is no question that matches your search.</h4>
       <% else %>
         <% @questions.each do |question| %>
           <div class="question box box-solid">
