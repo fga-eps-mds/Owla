@@ -1,11 +1,6 @@
-<div class="route-error">
+<%= render 'owl' %>
 
-       <div class="background-owl">
-               <img src="/images/blue_owla.png" class="route-owl">
-       </div>
-
-       <div class="error-info">
-         <h2> Ooops! This page doesn't exist! </h2>
-       </div>
-
-</div>
+ <div class="error-info">
+   <h2> Ooops! Something went wrong! We're working to fix it! </h2>
+   <%= link_to "Go Back", root_path, class: 'btn btn-info' %>
+ </div>
