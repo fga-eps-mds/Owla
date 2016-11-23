@@ -64,10 +64,6 @@ body {
   display: none;
 }
 
-#query {
-  margin-left: 1.5em;
-}
-
 .rooms > h2,
 .people > h2,
 .topics > h2 {

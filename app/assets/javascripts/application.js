@@ -21,6 +21,8 @@
 //= require turbolinks
 
 $(document).ready(function(){
+  $(".main-sidebar").height($(".content-wrapper").height());
+
   $('#notification-dropdown').click(function(){
     $('#notification-counter').hide();
   });

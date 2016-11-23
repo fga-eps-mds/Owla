@@ -52,7 +52,7 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
   test "should not show member when member does not exist"  do
 
     get '/members/show', params: {id: 12}
-    assert_response :missing
+    assert_redirected_to server_error_path
   end
 
   test "should fail to get details when is not logged" do

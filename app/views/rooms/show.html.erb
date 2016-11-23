@@ -1,4 +1,5 @@
 <!-- Content Header (Page header) -->
+<% @title = @room.name %>
 <section class="content-header">
   <h1>
   <h1>
@@ -18,7 +19,7 @@
   </div>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> <%= link_to 'Home', root_path %> </a></li>
     <li class="active"><%= @room.name %></li>
   </ol>
 </section>
@@ -48,7 +49,7 @@
               <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> Updated at <%= topic.updated_at.strftime('%m/%d/%Y @ %H:%M') %></span>
 
-                <h3 class="timeline-header"><%= topic.name %></h3>
+                <h3 class="timeline-header"><%= link_to "#{topic.name}", topic_path(topic) %></h3>
 
                 <div class="timeline-body">
                   <%= topic.description %>

@@ -2,6 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.input-group {
+  background-color: white;
+}
+
+.search-icon {
+  float: left;
+  margin: 10px;
+}
+
+.search-input {
+  margin-left: 33px;
+}
+
+#query {
+  padding-left: 0;
+  font-family: arial;
+  background-color: white;
+}
+
 #notification-list {
   list-style-type: none;
 }
