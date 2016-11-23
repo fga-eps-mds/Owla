@@ -61,12 +61,13 @@ class QuestionsController < ApplicationController
       @question.like_by(current_member)
 
       if @question.member != current_member
-        send_notification("liked_question", @question)
+        send_notification('liked_question', @question)
       end
     else
       @question.disliked_by(current_member)
-      redirect_to :back
     end
+
+    send_question @question, 'update_likes'
   end
 
   def moderate_question
@@ -85,7 +86,38 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def report_question
+      member = current_member
+      @question = Question.find(params[:id])
+
+      @topic = @question.topic
+      @room = @topic.room
+      @report = Report.new(moderator: @room.owner, reported: @question.member, question: @question)
+      @report.members << current_member
+
+      if @report.save
+        flash[:alert] = "Your report was submitted"  
+        send_notification("reported_question", @question)
+
+        redirect_to topic_path(@topic)
+      else
+        flash[:alert] = "Report not created"
+        redirect_to topic_path(@topic)
+      end      
+    end
+
 	private
+    
+    def check_question
+      member = current_member
+      @question = Question.find(params[:id])
+
+      if (@question.report.blank? == false) && @question.report.members.include?(member)
+        flash[:alert] = "You have already reported this user"
+        redirect_to topic_path(@question.topic.id)
+      end
+    end
+
     def question_params
       params.require(:question).permit(:content,
                                        :topic_id,

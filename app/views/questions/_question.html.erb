@@ -35,7 +35,7 @@
               style: "max-width: 56px;" %>
 
           <span class="username">
-            <a href="#"><%= question.member.alias %></a>
+            <%= link_to question.member.alias, "/members/#{question.member.id}" %>
           </span>
         <% end %>
         <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
@@ -62,16 +62,9 @@
         <%= link_to 'Tags', question_tags_path(question),
             class: 'btn btn-xs btn-flat btn-primary'%>
 
-        <div id="like_button" style="margin: 0em 2em">
-          <%= form_tag like_question_path(question.id), remote: true do %>
-            <%= button_tag(type: "submit", class: "btn btn-xs btn-flat") do %>
-              <i class="fa fa-heart"></i>
-              <%= question.get_likes.size %>
-            <% end %>
-          <% end %>
-        </div>
+        <%= render partial: 'likes/likes', locals: { url: like_question_path(question.id), object: question } %>
 
-        <span class="text-muted pull-right">
+        <span class="text-muted pull-right" id="like-counts-text">
           <span id="question-answers-counter-<%= question.id %>">
             <%= question.answers.count %>
           </span> answers
@@ -102,7 +95,7 @@
           alt: "User Image",
           style: "max-width: 56px;" %>
       <div class="img-push">
-        <%= form_for new_answer, url: { action: "create",
+        <%= form_for Answer.new, url: { action: "create",
                                         controller: "answers",
                                         id: nil,
                                         question_id: question.id},

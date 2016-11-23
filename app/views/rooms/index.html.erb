@@ -1,4 +1,5 @@
 <!-- Content Header (Page header) -->
+<% @title = "All Rooms" %>
 <section class="content-header">
   <h1>
     Rooms
@@ -31,21 +32,11 @@
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Description</th>
-              <th></th>
-            </tr>
             <% @rooms.each do | room | %>
-              <tr>
-                <td><%= room.id %></td>
-                <td><%= room.name %></td>
-                <td><%= room.created_at.strftime("%m/%d/%Y") %></td>
-                <td><%= room.description %></td>
-                <td><%= link_to 'Visit', room_path(room), class:"label label-success"%></td>
-              </tr>
+                  <td><%= link_to("#{room.name}", room_path(room)) %></td>
+                  <td><%= room.created_at.strftime("%m/%d/%Y") %></td>
+                  <td><%= room.description %></td>
+                </tr>
             <% end %>
           </table>
         </div>

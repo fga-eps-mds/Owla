@@ -1,0 +1,35 @@
+<!-- Content Header (Page header) -->
+<% @title = "Members of #{@room.name}" %>
+<section class="content-header">
+  <h1>
+    Room's Members
+  </h1>
+</section>
+<br></br>
+<!-- Main content -->
+<section class="content">
+  <!-- row -->
+  <div class="row">
+    <div class="col-md-12">
+      <!-- The time line -->
+      <ul class="timeline">
+        <% unless @members_list.empty? %>
+    	     <% @members_list.each do |member_id| %>
+              <!-- timeline item -->
+              <li>
+                <i class="fa fa-th-list bg-blue"></i>
+
+                <div class="timeline-item">
+                  	<h3 class="timeline-header"><%= Member.find(member_id).name %>
+                      <%= link_to "Ban Member", ban_member_path(member_id: member_id, room_id: @room.id), class: 'btn btn-sm btn-danger ban-button pull-right ', method: :post %>
+                    </h3>
+                </div>
+              <li>
+            <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</section>

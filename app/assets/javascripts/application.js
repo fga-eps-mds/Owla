@@ -15,17 +15,15 @@
 //= require jquery_ujs
 //= stub cable
 //= require admin_lte/admin_lte
+//= require bootstrap-switch
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales
-//= require bootstrap-switch
 //= require turbolinks
 //= require jquery.minicolors.simple_form
 //= require jquery.minicolors
 
 $(document).ready(function(){
-  if($('#notification-counter').html() == 0){
-    $('#notification-counter').hide();
-  }
+  $(".main-sidebar").height($(".content-wrapper").height());
 
   $('#notification-dropdown').click(function(){
     $('#notification-counter').hide();

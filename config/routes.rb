@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/rooms/signout' => 'rooms#signout'
 
   post '/topics/:id/ban_member' => 'rooms#ban_member', as: 'ban_member'
+  get 'rooms/:id/members_list' => 'rooms#members_list', as: 'members_list'
   get 'rooms/:id/banned_members' => 'rooms#banned_members', as: 'banned_members'
   post 'rooms/:id/reintegrate_member' => 'rooms#reintegrate_member', as: 'reintegrate_member'
 
@@ -15,8 +16,8 @@ Rails.application.routes.draw do
   post 'moderate_answer/:id', to: 'answers#moderate_answer', as: 'moderate_answer'
   get '/search', to: 'searches#search', as: 'search'
 
-  post 'report_question/:id', to: 'reports#create_report_question', as: 'report_question'
-  post 'report_answer/:id', to: 'reports#create_report_answer', as: 'report_answer'
+  post 'report_question/:id', to: 'questions#report_question', as: 'report_question'
+  post 'report_answer/:id', to: 'answers#report_answer', as: 'report_answer'
 
   post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
   get '/tags/:id/add_tag_to_question', to: 'tags#add_tag_to_question', as: 'add_tag_to_question'
@@ -25,7 +26,6 @@ Rails.application.routes.draw do
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
   match '/members/:id/myrooms' => 'members#my_rooms', via: :get, as: 'my_rooms'
-
 
   resources :notifications do
     get :read, on: :collection
@@ -58,5 +58,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   get '/logout',  to: 'sessions#destroy'
-
+  get '/topics/:id/search_by_tag', to: 'topics#search_by_tag', as: 'search_by_tag'
+  get '/help', to: 'static_pages#help'
+  get '*unmatched_route', :to => 'static_pages#routing_error'
+  get 'server_error', to: 'static_pages#server_error'
 end

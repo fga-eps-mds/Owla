@@ -45,4 +45,20 @@
         </div>
       <% end %>
   </div>
+
+    <div class="questions">
+    <h2>Questions</h2>
+      <% if @questions.empty? %>
+        <h3>There is no question that matches your search.</h3>
+      <% else %>
+        <% @questions.each do |question| %>
+        <div class="question">
+          <table>
+            <tr><td><%= link_to "#{question.content}", topic_path(question.topic) %></tr></td>
+          </table>
+          <% end %>
+        </div>
+      <% end %>
+  </div>
+
 </div>
