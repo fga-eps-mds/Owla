@@ -9,8 +9,8 @@ class TagsController < ApplicationController
 	end
 
 	def new
-      @question = Question.find(params[:question_id])
-      @tag = Tag.new
+    @question = Question.find(params[:question_id])
+    @tag = Tag.new
 	end
 
 	def show
@@ -48,10 +48,10 @@ class TagsController < ApplicationController
 	end
 
 	def destroy
-      @tag = Tag.find(params[:id])
-      @question = Question.find(session[:question_identifier])
-      @tag.destroy
-      redirect_to question_tags_path(@question)
+    @tag = Tag.find(params[:id])
+    @question = Question.find(session[:question_identifier])
+    @tag.destroy
+    redirect_to question_tags_path(@question)
 	end
 
   def add_tag_to_question
@@ -70,6 +70,6 @@ class TagsController < ApplicationController
 
 private
   def tag_params
-	params.require(:tag).permit(:content, :question_id, :color)
+	  params.require(:tag).permit(:content, :question_id, :color)
   end
 end
