@@ -82,7 +82,7 @@
 
         <%= render partial: 'likes/likes', locals: { url: like_question_path(question.id), object: question } %>
 
-        <span class="text-muted pull-right">
+        <span class="text-muted pull-right" id="like-counts-text">
           <span id="question-answers-counter-<%= question.id %>">
             <%= question.answers.count %>
           </span> answers
