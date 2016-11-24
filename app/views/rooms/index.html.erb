@@ -1,4 +1,5 @@
 <!-- Content Header (Page header) -->
+<% @title = "All Rooms" %>
 <section class="content-header">
   <h1>
     Rooms
@@ -18,33 +19,15 @@
       <div class="box">
         <div class="box-header">
           <%= button_to "New Room", new_member_room_path(current_member), class: "btn btn-default", method: :get %>
-          <div class="box-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
           <table class="table table-hover">
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Description</th>
-              <th></th>
-            </tr>
             <% @rooms.each do | room | %>
               <tr>
-                <td><%= room.id %></td>
-                <td><%= room.name %></td>
+                <td><%= link_to("#{room.name}", room_path(room)) %></td>
                 <td><%= room.created_at.strftime("%m/%d/%Y") %></td>
                 <td><%= room.description %></td>
-                <td><%= link_to 'Visit', room_path(room), class:"label label-success"%></td>
               </tr>
             <% end %>
           </table>

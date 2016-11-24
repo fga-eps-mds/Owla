@@ -20,3 +20,7 @@
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales
 //= require turbolinks
+
+$(document).ready(function(){
+  $(".main-sidebar").height($(".content-wrapper").height());
+});

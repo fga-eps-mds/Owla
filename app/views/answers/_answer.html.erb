@@ -38,7 +38,7 @@
     <div class="comment-text">
       <span class="username">
         <span id="username">
-          <a href="#"><%= answer.member.alias %></a>
+          <%= link_to answer.member.alias, "/members/#{answer.member.id}" %>
           <%= render partial: 'answers/answer_control',
                      locals: { answer: answer,
                                current_member: current_member,

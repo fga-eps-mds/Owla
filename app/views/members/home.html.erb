@@ -1,12 +1,13 @@
 <!-- Content Header (Page header) -->
+<% @title = "Home" %>
 <section class="content-header">
   <h1>
     Rooms
-    <small>My rooms</small>
+    <small>Joined rooms</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">My rooms</li>
+    <li class="active">Joined rooms</li>
   </ol>
 </section>
 
@@ -16,7 +17,7 @@
     <% if current_member.rooms.count.zero? %>
       <p> You do not have rooms </p>
     <% else %>
-      <% current_member.rooms.each_slice(6).first.each do | room | %>
+      <% @rooms.each_slice(6).first.each do | room | %>
         <div class="col-md-4">
           <!-- Widget: user widget style 1 -->
           <%= link_to room_path(room) do %>

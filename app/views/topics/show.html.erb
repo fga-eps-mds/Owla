@@ -1,3 +1,4 @@
+<% @title = @topic.name %>
 <section class="content-header" name="father" id="father-topic-<%= @topic.id %>">
   <h1>
     <%= @topic.name %>
@@ -15,15 +16,21 @@
                   url: @new_question_url,
                   slide_id: 0} %>
 
-    <% if current_member != @owner %> 
+    <% if current_member != @owner and @topic.slide.present? %>
       <input name="follow-slide" type="checkbox" checked>
     <% end %>
 
   </h1>
 
+  <%= form_tag "/topics/#{@topic.id}/search_by_tag", method: :get do %>
+    <%= select_tag(:tag, options_for_select(current_member.tags.collect { |u| u.content }), {:prompt => 'Filter by tags'}) %>
+    <%= submit_tag 'Go!' %>
+  <% end %>
+
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Topic</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
+    <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id) %></a></li>
+    <li class="active"> <%= @topic.name %> </li>
   </ol>
 </section>
 
@@ -31,59 +38,59 @@
   <% if @topic.slide.present? %>
     <% if @topic.slide_content_type == 'application/pdf' %>
 
-        <div class="box-body">
-          <div id="carousel-slide" topic="<%= @topic.id %>" class="carousel slide following"\
-           data-ride="carousel" size="<%= @slide[:pages].count %>">
-            <div class="carousel-inner">
-              <% @slide[:pages].each do | slide_page_uri | %>
-                <% if @slide[:pages].index(slide_page_uri) == 0 %>
-                  <div class="item active" id="slide-0">
-                <% else %>
-                  <div class="item"\
-                   id="slide-<%= @slide[:pages].index(slide_page_uri) %>">
-                <% end %>
-                  <img class="slide-slice" src=<%= slide_page_uri %>\
-                   style="height: <%= @slide[:dimensions][:height] + 35 %>px;
-                          width:<%= @slide[:dimensions][:width]%>px;" />
-                  </object>
-
-                  <hr>
-
-                  <div class="row" id="topic-question-box-<%= @topic.id %>">
-                    <% if @slide[:questions][@slide[:pages].index(slide_page_uri)].present? %>
-                      <% @slide[:questions][@slide[:pages].index(slide_page_uri)].each do |question| %>
-                        <%= render partial: 'questions/question',
-                                   locals: { question: question,
-                                             room: @topic.room,
-                                             new_answer: @answer
-                                           } %>
-
-                        <%= render partial: 'questions/form_modal',
-                                   locals: { question: question,
-                                             placeholder: nil,
-                                             box_title: "Edit question",
-                                             url: question_path(question),
-                                             slide_id: @slide[:pages].index(slide_page_uri)
-                                           } %>
-                      <% end %>
-                    <% end %>
-                  </div>
-                </div>
+      <div class="box-body">
+        <div id="carousel-slide" topic="<%= @topic.id %>" class="carousel slide following"\
+         data-ride="carousel" size="<%= @slide[:pages].count %>">
+          <div class="carousel-inner">
+            <% @slide[:pages].each do | slide_page_uri | %>
+              <% if @slide[:pages].index(slide_page_uri) == 0 %>
+                <div class="item active" id="slide-0">
+              <% else %>
+                <div class="item"\
+                 id="slide-<%= @slide[:pages].index(slide_page_uri) %>">
               <% end %>
+                <img class="slide-slice" src=<%= slide_page_uri %>\
+                 style="height: <%= @slide[:dimensions][:height] + 35 %>px;
+                        width:<%= @slide[:dimensions][:width]%>px;" />
+                </object>
 
-            </div>
-            <a class="left carousel-control"\
-               href="#carousel-slide" data-slide="prev">
-              <span class="fa fa-angle-left"></span>
-            </a>
-            <a class="right carousel-control"\
-               href="#carousel-slide" data-slide="next">
-              <span class="fa fa-angle-right"></span>
-            </a>
+                <hr>
+
+                <div class="row" id="topic-question-box-<%= @topic.id %>">
+                  <% if @slide[:questions][@slide[:pages].index(slide_page_uri)].present? %>
+                    <% @slide[:questions][@slide[:pages].index(slide_page_uri)].sort_by{ |slides| -slides.cached_votes_up }.each do |question| %>
+                      <%= render partial: 'questions/question',
+                                 locals: { question: question,
+                                           room: @topic.room,
+                                           new_answer: @answer
+                                         } %>
+
+                      <%= render partial: 'questions/form_modal',
+                                 locals: { question: question,
+                                           placeholder: nil,
+                                           box_title: "Edit question",
+                                           url: question_path(question),
+                                           slide_id: @slide[:pages].index(slide_page_uri)
+                                         } %>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
           </div>
-
+          <a class="left carousel-control"\
+             href="#carousel-slide" data-slide="prev">
+            <span class="fa fa-angle-left"></span>
+          </a>
+          <a class="right carousel-control"\
+             href="#carousel-slide" data-slide="next">
+            <span class="fa fa-angle-right"></span>
+          </a>
         </div>
-        <!-- /.box-body -->
+
+      </div>
+      <!-- /.box-body -->
     <% end %>
     <hr>
   <% else %>

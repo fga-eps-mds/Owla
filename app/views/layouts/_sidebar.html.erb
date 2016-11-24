@@ -12,14 +12,17 @@
         <small><i class="fa fa-circle text-success"></i> Online</small>
       </div>
     </div>
-    <div class="search">
-      <%= form_tag("/search", method: "get") do %>
-        <%= text_field_tag(:query) %>
-        <div class="submission">
-          <%= submit_tag("Search") %>
+
+    <%= form_tag("/search", method: 'get', class: 'sidebar-form') do %>
+      <div class="input-group">
+        <span class="fa fa-search search-icon">
+        </span>
+        <div class="search-input">
+          <%= text_field_tag :query, nil, autofocus: true, class: 'form-control fa fa-search', placeholder: "Search here" %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
+
     <ul class="sidebar-menu">
       <li class="treeview">
         <a href="#">
@@ -71,6 +74,7 @@
       <li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/" target="_blank"><i class="fa fa-circle-o text-aqua"></i> <span>Contribute</span></a></li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/issues/new" target="_blank"><i class="fa fa-circle-o text-yellow"></i><span>  Report bug</span></a></li>
+        <li><%= link_to "About", help_path %></li>
     </ul>
   </section>
   <!-- /.sidebar -->
