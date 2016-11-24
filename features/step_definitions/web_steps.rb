@@ -2,11 +2,25 @@ Given(/^I go to (.+)$/) do |path|
   visit path
 end
 
-Given(/^I visit "(.+)" edit room/) do |object|
-room = Room.find_by(name: object)
-visit edit_room_path(room)
+Given(/^I visit "(.+)" room$/) do |object|
+  room = Room.find_by(name: object)
+  visit room_path(room)
 end
 
+Given(/^I visit "(.+)" edit room$/) do |object|
+  room = Room.find_by(name: object)
+  visit edit_room_path(room)
+end
+
+Given(/^I visit "(.+)" topic$/) do |object|
+  topic = Topic.find_by(name: object)
+  visit topic_path(topic)
+end
+
+Given(/^I visit "(.+)" edit topic$/) do |object|
+  topic = Topic.find_by(name: object)
+  visit edit_topic_path(topic)
+end
 When(/^I click "(.+)"$/) do |link|
   click_link(link)
 end
@@ -67,6 +81,11 @@ end
 Given(/^"(.+)" has created "(.+)" room$/) do |object, value|
   member = Member.find_by(name: object)
   room = Room.create(name: value, description: "2015/1", owner_id: member.id)
+end
+
+Given(/^"(.+)" room has "(.+)" topic$/) do |object, value|
+  room = Room.find_by(name: object)
+  topic = Topic.create(name: value, description: "Aula de 22/11", room_id: room.id)
 end
 
 And(/^the object with attribute "(.+)" and value "(.+)" of "(.+)" klass was created$/) do |attribute, value, klass|
