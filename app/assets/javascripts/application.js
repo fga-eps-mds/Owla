@@ -23,6 +23,12 @@
 $(document).ready(function(){
   $(".main-sidebar").height($(".content-wrapper").height());
 
+  $("#slide-left-arrow, #slide-right-arrow").click(function(){
+    setTimeout(function(){
+      $(".main-sidebar").height($(".content-wrapper").height());
+    }, 800);
+  });
+
   $('#notification-dropdown').click(function(){
     $('#notification-counter').hide();
   });
