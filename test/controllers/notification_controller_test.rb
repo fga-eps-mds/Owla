@@ -19,6 +19,36 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
     @answer_member_2 = @question.answers.create(content: "CONTENT TEST", member: @member2)
   end
 
+  test "should get notifications page" do
+    get notifications_path
+
+    assert_response :success
+  end
+
+  test "should notification be read when user enters notification page" do
+    sign_out_as @member
+    sign_in_as @member2
+
+    assert_difference('Notification.count') do
+      post "/questions/#{@question.id}/answers", params: {
+        answer: {
+          content: "Resposta da pergunta"
+        }
+      }
+    end
+
+    sign_out_as @member2
+    sign_in_as @member
+
+    notification = Notification.last
+    old_read_value = notification.read
+
+    get notifications_path
+    notification.reload
+
+    assert_not_equal old_read_value, notification.read
+  end
+
   test "should create notification when user signs up" do
     sign_out_as @member
 
