@@ -20,15 +20,6 @@
 
         </div>
 
-        <%= f.file_field :attachment, class: 'form-control', id: 'question-attachment-link' %>
-
-        <% if question.attachment? %>
-          <label class='hidden' id="delete-attachment-label">
-            <%= check_box_tag 'delete_attachment', 1, false %>
-            Delete attachment?
-          </label>
-        <% end %>
-
         <%= button_tag(type: "submit", class: "btn pull-right") do %>
             <i class="fa fa-save"></i>
         <% end %>
