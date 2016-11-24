@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module TopicsHelper
   def get_image_dimensions image
     dimensions = Paperclip::Geometry.from_file(image.path)
@@ -46,6 +48,10 @@ module TopicsHelper
 
   def create_dir topic
     Dir.mkdir(slide_dir(topic)) unless dir_exists(topic)
+  end
+
+  def delete_dir topic
+    FileUtils.rm_r(slide_dir(topic)) if dir_exists(topic)
   end
 
   def dir_exists topic

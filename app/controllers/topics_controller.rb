@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
     @answer = Answer.new
     @room = Room.find(@topic.room_id)
     @owner = @room.owner
-    @new_question_url = {:action=>"create", :controller=>"questions", :id=>nil, topic_id: @topic.id}
+    @new_question_url = { action: 'create', controller: 'questions', id: nil, topic_id: @topic.id }
     @question_placeholder = "Type your question here"
     @question_box_title = "Create a new question"
 
@@ -60,6 +60,10 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
 
+    unless params[:topic][:slide].nil?
+      delete_dir(@topic)
+    end
+
     if @topic.update_attributes(topic_params)
       redirect_to topic_path @topic
     else
@@ -71,6 +75,9 @@ class TopicsController < ApplicationController
   def destroy
     @topic = Topic.find(params[:id])
     @room = @topic.room
+
+    delete_dir(@topic)
+
     @topic.destroy
 
     redirect_to room_path @room
