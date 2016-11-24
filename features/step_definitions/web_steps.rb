@@ -38,6 +38,11 @@ Then(/^I should be in "(.+)" homepage$/) do |object|
   assert current_path == "/members/#{member.id}/home"
 end
 
+Then(/^I should be in "(.+)" profile$/) do |object|
+  member = Member.find_by(name: object)
+  assert current_path == "/members/#{member.id}"
+end
+
 Then(/^I should be in "(.+)" edit$/) do |object|
   member = Member.find_by(name: object)
   assert current_path == "/members/#{member.id}/home"
@@ -67,6 +72,7 @@ Then(/^I should be in "(.+)" topic$/) do |object|
   topic = Topic.find_by(name: object)
   assert current_path == "/topics/#{topic.id}"
 end
+
 
 When(/^I write "(.+)" on "(.+)"$/) do |value, field|
   fill_in field, :with => value
