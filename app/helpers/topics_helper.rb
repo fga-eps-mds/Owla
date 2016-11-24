@@ -13,7 +13,7 @@ module TopicsHelper
         pdf = Magick::ImageList.new(topic.slide.path)
         pdf.write(slide_dir(topic) + "/slide.jpg")
       rescue => e
-        flash[:alert] = "Sorry, the PDF file is corrupted."
+        flash[:notice] = "Sorry, the PDF file is corrupted."
         raise e #TODO catch this exception
       end
     end
@@ -32,7 +32,7 @@ module TopicsHelper
 
   def get_image_files topic
     list_of_files = Dir.entries(slide_dir(topic))
-    list_of_files.select { |f| /.-\d+\.jpg/.match(f) }
+    list_of_files.select { |f| /\.jpg/.match(f) }
   end
 
   def slide_splited? topic

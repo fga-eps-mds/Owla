@@ -81,18 +81,21 @@
                 </div>
               </div>
             <% end %>
-
           </div>
-          <a class="left carousel-control" id="slide-left-arrow"\
-             href="#carousel-slide" data-slide="prev"\
-             style="height: <%= @slide[:dimensions][:height] + 35 %>px">
-            <span class="fa fa-angle-left"></span>
-          </a>
-          <a class="right carousel-control" id="slide-right-arrow"\
-             href="#carousel-slide" data-slide="next"\
-             style="height: <%= @slide[:dimensions][:height] + 35 %>px">
-            <span class="fa fa-angle-right"></span>
-          </a>
+
+          <% if @slide[:pages].size > 1 %>
+            <a class="left carousel-control" id="slide-left-arrow"\
+               href="#carousel-slide" data-slide="prev"\
+               style="height: <%= @slide[:dimensions][:height] + 35 %>px">
+              <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="right carousel-control" id="slide-right-arrow"\
+               href="#carousel-slide" data-slide="next"\
+               style="height: <%= @slide[:dimensions][:height] + 35 %>px">
+              <span class="fa fa-angle-right"></span>
+            </a>
+          <% end %>
+
         </div>
 
       </div>
