@@ -67,7 +67,8 @@ body {
 
 .rooms > h2,
 .people > h2,
-.topics > h2 {
+.topics > h2,
+.questions > h2 {
   border-bottom: 1px solid gray;
 }
 

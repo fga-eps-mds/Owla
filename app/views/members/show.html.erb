@@ -5,7 +5,7 @@
   </div>
 
   <div id="profile-photo">
-    <%= image_tag (current_member.avatar.url(:thumb)), class: "img-circle", id: "show-member" %>
+    <%= image_tag (@member.avatar.url(:thumb)), class: "img-circle", id: "show-member" %>
   </div>
 
   <div class="member-info">

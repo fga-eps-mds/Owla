@@ -74,7 +74,11 @@
       <li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/" target="_blank"><i class="fa fa-circle-o text-aqua"></i> <span>Contribute</span></a></li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/issues/new" target="_blank"><i class="fa fa-circle-o text-yellow"></i><span>  Report bug</span></a></li>
-        <li><%= link_to "About", help_path %></li>
+        <li><%= link_to help_path do %>
+              <i class="fa fa-circle-o text-green"></i>
+              <span> About </span>
+            <% end %>
+        </li>
     </ul>
   </section>
   <!-- /.sidebar -->

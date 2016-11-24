@@ -1,64 +1,70 @@
 <div class="search-results">
   <div class="rooms">
-    <h2>Rooms</h2>
+    <h3>Rooms</h3>
     <% if @rooms.empty? %>
-      <h3>There are no rooms that matches your search.</h3>
+      <h4>There are no rooms that matches your search.</h4>
     <% else %>
       <% @rooms.each do |room| %>
-        <div class="room">
-          <table>
-            <tr><td><%= link_to "#{room.name}", "#"%></td></tr>
-            <tr><td><%= room.description %></td></tr>
-          </table>
+        <div class="room box box-solid">
+          <div class="room box-header with-border">
+            <%= link_to "#{room.name}", room_path(room) %>
+          </div>
+          <div class="room box-body clearfix">
+            <%= room.description %>
+          </div>
         </div>
       <% end %>
     <% end %>
     </div>
 
   <div class="topics">
-    <h2>Topics</h2>
+    <h3>Topics</h3>
     <% if @topics.empty? %>
-      <h3>There are no topics that matches your search.</h3>
+      <h4>There are no topics that matches your search.</h4>
     <% else %>
       <% @topics.each do |topic| %>
-      <div class="topic">
-        <table>
-          <tr><td><%= link_to "#{topic.name}", topic_path(topic) %></td></tr>
-          <tr><td> In room <%= link_to("#{topic.room.name}", room_path(topic.room)) %></td></tr>
-        </table>
-      </div>
+        <div class="topic box box-solid">
+          <div class="topic box-header with-border">
+            <%= link_to "#{topic.name}", topic_path(topic) %>
+          </div>
+          <div class="topic box-body clearfix">
+            <%= "In room #{topic.room.name}" %>
+          </div>
+        </div>
       <% end %>
     <% end %>
   </div>
 
   <div class="people">
-    <h2>People</h2>
+    <h3>People</h3>
       <% if @members.empty? %>
-        <h3>There is no person that matches your search.</h3>
+        <h4>There is no person that matches your search.</h4>
       <% else %>
         <% @members.each do |member| %>
-        <div class="person">
-          <table>
-            <tr><td><%= link_to "#{member.name}", member_path(member) %></tr></td>
-          </table>
-          <% end %>
-        </div>
+          <div class="member box box-solid">
+            <div class="member box-header with-border">
+              <%= link_to "#{member.name}", member_path(member) %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
-  </div>
+    </div>
 
     <div class="questions">
-    <h2>Questions</h2>
+    <h3>Questions</h3>
       <% if @questions.empty? %>
-        <h3>There is no question that matches your search.</h3>
+        <h4>There is no question that matches your search.</h4>
       <% else %>
         <% @questions.each do |question| %>
-        <div class="question">
-          <table>
-            <tr><td><%= link_to "#{question.content}", topic_path(question.topic) %></tr></td>
-          </table>
-          <% end %>
-        </div>
+          <div class="question box box-solid">
+            <div class="question box-header with-border">
+              <%= link_to "In topic #{question.topic.name}", topic_path(question.topic) %>
+            </div>
+            <div class="question box-body clearfix">
+              <%= "#{question.content}" %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
   </div>
-
 </div>

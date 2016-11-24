@@ -192,6 +192,18 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
     assert question.attachment?
   end
 
+  test "should dislike question if user click like button twice" do
+    post "/questions/#{@question.id}/like"
+
+    @question.reload
+    old_likes = @question.get_likes.size
+
+    post "/questions/#{@question.id}/like"
+
+    @question.reload
+    assert_equal old_likes, @question.get_likes.size + 1
+  end
+
   # FIXME acceptance test
   test "should not show member name and avatar to other users if question is anonymous" do
 

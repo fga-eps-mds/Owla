@@ -135,7 +135,7 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, @answer.votes_for.size
   end
 
-  test "boolean attribute for answer should change" do 
+  test "boolean attribute for answer should change" do
     post "/answers/#{@answer.id}/like"
     assert @answer.liked_by(@member), true
   end
@@ -146,8 +146,11 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @not_owner_member
     post "/moderate_answer/#{@answer.id}"
     @answer.reload
+
     assert_not_equal true, @answer.moderated
   end
+
+
 
   test 'only room owner should change content of a moderated answer' do
     @not_owner_member = Member.create(name: "Thalisson2", alias: "thalisson2", email: "thalisson2@gmail.com", password: "123456789", password_confirmation: "123456789")
@@ -252,5 +255,17 @@ class AnswersControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_equal answer.anonymous, true
   end
-  
+
+  test "should dislike answer if user click like button twice" do
+    post "/answers/#{@answer.id}/like"
+
+    @answer.reload
+    old_likes = @answer.get_likes.size
+
+    post "/answers/#{@answer.id}/like"
+
+    @answer.reload
+    assert_equal old_likes, @answer.get_likes.size + 1
+  end
+
 end
