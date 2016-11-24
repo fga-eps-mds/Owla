@@ -23,12 +23,6 @@
 $(document).ready(function(){
   $(".main-sidebar").height($(".content-wrapper").height());
 
-  $("#slide-left-arrow, #slide-right-arrow").click(function(){
-    setTimeout(function(){
-      $(".main-sidebar").height($(".content-wrapper").height());
-    }, 800);
-  });
-
   $('#notification-dropdown').click(function(){
     $('#notification-counter').hide();
   });
@@ -38,6 +32,17 @@ $(document).ready(function(){
     $('#answer-attachment-link').toggleClass('hidden');
     $('#delete-attachment-label').toggleClass('hidden');
   });
+
+  $("#slide-left-arrow, #slide-right-arrow").click(function(){
+    setTimeout(function(){
+      $(".main-sidebar").height($(".content-wrapper").height());
+    }, 800);
+  });
+
+  // putting arrows on top of slide (not responsive)
+  var offset = ($(".item.active").width() - $(".slide-slice").width()) / 2;
+  $('#slide-left-arrow').css('margin-left', offset + 'px');
+  $('#slide-right-arrow').css('margin-right', offset + 'px');
 });
 
 // Customize text editor
