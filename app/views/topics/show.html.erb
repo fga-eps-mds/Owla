@@ -22,11 +22,13 @@
 
   </h1>
 
+  <!-- search by tags -->
   <%= form_tag "/topics/#{@topic.id}/search_by_tag", method: :get do %>
     <%= select_tag(:tag, options_for_select(current_member.tags.collect { |u| u.content }), {:prompt => 'Filter by tags'}) %>
     <%= submit_tag 'Go!' %>
   <% end %>
 
+  <!-- navigability -->
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i><%= link_to 'Home', root_path %> </a></li>
     <li><a href="#"><%= link_to @topic.room.name, room_path(@topic.room.id), id: "navigation-room-name" %></a></li>
@@ -35,6 +37,7 @@
 </section>
 
 <section class="content">
+  <!-- slide -->
   <% if @topic.slide.present? %>
     <% if @topic.slide_content_type == 'application/pdf' %>
 
@@ -42,6 +45,7 @@
         <div id="carousel-slide" topic="<%= @topic.id %>" class="carousel slide following"\
          data-ride="carousel" size="<%= @slide[:pages].count %>">
           <div class="carousel-inner">
+
             <% @slide[:pages].each do | slide_page_uri | %>
               <% if @slide[:pages].index(slide_page_uri) == 0 %>
                 <div class="item active" id="slide-0">
@@ -51,7 +55,7 @@
               <% end %>
                 <img class="slide-slice" src=<%= slide_page_uri %>\
                  style="height: <%= @slide[:dimensions][:height] + 35 %>px;
-                        width:<%= @slide[:dimensions][:width]%>px;" />
+                        width: <%= @slide[:dimensions][:width] %>px;" />
                 </object>
 
                 <hr>
@@ -77,16 +81,21 @@
                 </div>
               </div>
             <% end %>
-
           </div>
-          <a class="left carousel-control"\
-             href="#carousel-slide" data-slide="prev">
-            <span class="fa fa-angle-left"></span>
-          </a>
-          <a class="right carousel-control"\
-             href="#carousel-slide" data-slide="next">
-            <span class="fa fa-angle-right"></span>
-          </a>
+
+          <% if @slide[:pages].size > 1 %>
+            <a class="left carousel-control" id="slide-left-arrow"\
+               href="#carousel-slide" data-slide="prev"\
+               style="height: <%= @slide[:dimensions][:height] + 35 %>px">
+              <span class="fa fa-angle-left"></span>
+            </a>
+            <a class="right carousel-control" id="slide-right-arrow"\
+               href="#carousel-slide" data-slide="next"\
+               style="height: <%= @slide[:dimensions][:height] + 35 %>px">
+              <span class="fa fa-angle-right"></span>
+            </a>
+          <% end %>
+
         </div>
 
       </div>
