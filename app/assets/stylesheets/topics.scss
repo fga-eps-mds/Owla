@@ -54,3 +54,11 @@
   display: block;
   margin: auto;
 }
+
+.search.content-header {
+  display: flex;
+}
+
+.search.content-header > h1 {
+  margin: 0 1%;
+}
