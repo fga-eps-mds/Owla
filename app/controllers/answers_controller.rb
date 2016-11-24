@@ -110,10 +110,9 @@ class AnswersController < ApplicationController
   private
 
     def check_report
-      member = current_member
       @answer = Answer.find(params[:id])
       
-      if (@answer.report.blank? == false) && @answer.report.members.include?(member)
+      if (@answer.report.blank? == false) && @answer.report.members.include?(current_member)
         flash[:alert] = "You have already reported this user"
         redirect_to topic_path(@answer.question.topic.id)
       end

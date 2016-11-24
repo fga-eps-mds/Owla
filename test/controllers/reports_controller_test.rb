@@ -33,7 +33,18 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     post report_question_path(@question), params: {id: @question.id}
     count_after = Report.count
 
-    assert count_after, count_before+1
+    assert count_after, count_before + 1
+    assert_redirected_to topic_path(@topic)
+  end
+
+  test 'should not create report for question without question id' do
+    sign_in_as @member3
+
+    count_before = Report.count
+    post report_question_path(@question)
+    count_after = Report.count
+
+    assert count_after, count_before
     assert_redirected_to topic_path(@topic)
   end
 
@@ -89,4 +100,5 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     assert count_after, count_before
     assert_redirected_to topic_path(@topic)
   end
+
 end
