@@ -17,3 +17,16 @@
 	width: 186px;
 	height: 28px;
 }
+
+#new_tag > div > label > abbr {
+  display: none;
+}
+
+#tag-colorpicker {
+  height: 28px;
+  width: 186px;
+}
+
+#new_tag {
+  margin-left: 10px;
+}
