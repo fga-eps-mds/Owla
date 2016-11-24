@@ -41,6 +41,10 @@ class MembersController < ApplicationController
 
   def edit
     @member = Member.find(params[:id])
+    if current_member != @member
+      flash[:notice] = "You do not have permission!"
+      redirect_to root_path
+    end
   end
 
   def destroy

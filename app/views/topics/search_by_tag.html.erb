@@ -1,3 +1,13 @@
+<% @title = "Filter by #{params[:tag]}" %>
+  <section class="content-header">
+    <div class="search content-header">
+      <span class="button-back"><%= link_to "Back", topic_path(@questions.first.topic), class: 'btn btn-info' %></span>
+      <h1>
+        <%= "You have searched for #{params[:tag]}"%>
+        <small><%= "#{pluralize(@questions.count, 'result')}" %></small>
+      </h1>
+    </div>
+  </section>
 <div class="row" id="topic-question-box-<%= @topic.id %>">
   <% @questions.order(:cached_votes_up => :desc).each do |question| %>
     <%= render partial: 'questions/question',
