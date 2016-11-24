@@ -135,6 +135,7 @@ class RoomsController < ApplicationController
 
   def reintegrate_member
     @room = Room.find(params[:id])
+
     @room.black_list.delete(params[:member_id].to_i)
     @room.save
 
