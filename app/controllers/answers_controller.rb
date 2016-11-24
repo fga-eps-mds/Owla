@@ -5,15 +5,6 @@ class AnswersController < ApplicationController
   before_action :show, :only => [:like]
   before_action :check_report, only: [:report_answer]
 
-  def index
-    @answers = Answer.all
-  end
-
-  def new
-    @question = Question.find(params[:question_id])
-    @answer = Answer.new
-  end
-
   def show
     @answer = Answer.find(params[:id])
   end
@@ -101,9 +92,6 @@ class AnswersController < ApplicationController
       flash[:alert] = "Your report was submitted"
       send_notification("reported_answer", @answer)
       redirect_to topic_path(@topic)
-    else
-      flash[:alert] = "Report not created"
-      redirect_to topic_path(@topic)
     end
   end
 
@@ -111,7 +99,7 @@ class AnswersController < ApplicationController
 
     def check_report
       @answer = Answer.find(params[:id])
-      
+
       if (@answer.report.blank? == false) && @answer.report.members.include?(current_member)
         flash[:alert] = "You have already reported this user"
         redirect_to topic_path(@answer.question.topic.id)
