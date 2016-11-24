@@ -12,6 +12,11 @@ Given(/^I visit "(.+)" edit room$/) do |object|
   visit edit_room_path(room)
 end
 
+Given(/^I visit "(.+)" topic$/) do |object|
+  topic = Topic.find_by(name: object)
+  visit topic_path(topic)
+end
+
 Given(/^I visit "(.+)" edit topic$/) do |object|
   topic = Topic.find_by(name: object)
   visit edit_topic_path(topic)
