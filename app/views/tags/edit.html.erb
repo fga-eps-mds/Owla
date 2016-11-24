@@ -7,6 +7,7 @@
 	<%= f.label :content, "Name" %>
 	<%= f.text_field :content %>
   <%= f.input :color, as: :minicolors %>
+  <%= hidden_field_tag :question, params[:question_id] %>
 	<br>
 
 	<%= f.submit "Edit Tag" %>
