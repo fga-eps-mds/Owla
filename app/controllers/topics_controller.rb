@@ -62,6 +62,7 @@ class TopicsController < ApplicationController
 
     unless params[:topic][:slide].nil?
       delete_dir(@topic)
+      @topic.questions.destroy_all
     end
 
     if @topic.update_attributes(topic_params)
