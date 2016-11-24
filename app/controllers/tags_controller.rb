@@ -12,10 +12,6 @@ class TagsController < ApplicationController
     @tag = Tag.new
 	end
 
-	def show
-	  @tag = Tag.find(params[:id])
-	end
-
 	def create
     @question = Question.find(params[:question_id])
 	  @tag = Tag.new(tag_params)
@@ -25,7 +21,7 @@ class TagsController < ApplicationController
 	  if @tag.save
 	    redirect_to topic_path(@question.topic)
 	  else
-	    flash[:alert] = "Tag not created"
+	    flash[:notice] = "Tag not created"
       render 'new'
     end
 	end
@@ -41,6 +37,7 @@ class TagsController < ApplicationController
 	    flash[:success] = "Tag updated successfully"
 		  redirect_to question_tags_path(Question.find(params[:question].to_i))
 	  else
+      flash[:notice] = "Tag not updated"
 	    render 'edit'
 	  end
 	end

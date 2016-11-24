@@ -25,6 +25,21 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @member
   end
 
+  test "should get index" do
+    get question_tags_path(@question)
+    assert_response :success
+  end
+
+  test "should get new" do
+    get new_question_tag_path(@question)
+    assert_response :success
+  end
+
+  test "should get edit tag" do
+    get edit_tag_path(@tag)
+    assert_response :success
+  end
+
    test "should create tag" do
      post question_tags_path(@question), params: {
        tag: {
@@ -34,7 +49,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
      assert_redirected_to topic_path(@question.topic)
    end
 
-   test "should edit tag" do
+   test "should update tag" do
      tag_id = @tag.id
      tag_content = @tag.content
      tag_color = @tag.color
@@ -48,7 +63,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
      assert_not_equal tag_color, @tag.color
    end
 
-   test "should not edit tag when member is not logged in" do
+   test "should not update tag when member is not logged in" do
     sign_out_as @member
     tag_id = @tag.id
     tag_content = @tag.content
@@ -61,6 +76,7 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal tag_content, @tag.content
     assert_equal tag_color, @tag.color
+    assert_redirected_to root_path
   end
 
   test "should delete tag" do
@@ -87,4 +103,15 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
     assert_not @question.tags.include? @tag
     assert_redirected_to topic_path(@question.topic)
   end
+
+  test "should add tag to a question" do
+    post "/tags/#{@tag.id}/add_tag_to_question", params: {
+      question_id: @question.id
+    }
+    @question.reload
+    assert @question.tags.include? @tag
+    assert_redirected_to topic_path(@question.topic)
+  end
+
+
 end
