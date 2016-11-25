@@ -57,7 +57,12 @@ class MembersController < ApplicationController
   end
 
   def home
-    @rooms = current_member.rooms.all + current_member.my_rooms.all
+    rooms = current_member.rooms.all + current_member.my_rooms
+    if rooms.empty?
+      @rooms = Room.all
+    else
+      @rooms = current_member.rooms.all + current_member.my_rooms
+    end
   end
 
   def joined_rooms
