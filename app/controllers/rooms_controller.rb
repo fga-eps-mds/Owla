@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
 
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
-  before_action :is_owner, only: [:ban_member, :reintegrate_member]
+  before_action :is_owner, only: [:ban_member]
 
   def index
     @rooms = Room.all
@@ -93,7 +93,7 @@ class RoomsController < ApplicationController
   end
 
   def ban_member
-    member = Member.find(params[:member_id]) 
+    member = Member.find(params[:member_id])
     unless params[:topic_id].nil?
       topic = Topic.find(params[:topic_id])
       room = topic.room
@@ -135,12 +135,15 @@ class RoomsController < ApplicationController
 
   def reintegrate_member
     @room = Room.find(params[:id])
-
-    @room.black_list.delete(params[:member_id].to_i)
-    @room.save
-
-    flash[:notice] = "Member has been removed from black list and can now join the room"
-    redirect_to banned_members_url
+    if @room.owner == current_member
+      @room.black_list.delete(params[:member_id].to_i)
+      @room.save
+      flash[:notice] = "Member has been removed from black list and can now join the room"
+      redirect_to banned_members_url(@room)
+    else
+      flash[:notice] = "You do not have permission to do this action"
+      redirect_to room_path(@room)
+    end
   end
 
   private
