@@ -2,7 +2,8 @@
 <html>
   <head>
     <%= javascript_include_tag 'cable' %>
-    <title>Owla</title>
+    <title><%= @title %> | Owla</title>
+    <%= favicon_link_tag 'favicon.ico' %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= action_cable_meta_tag %>
@@ -13,6 +14,8 @@
   <% else %>
     <body class="layout-top-nav skin-black-light register-page">
   <% end %>
+
+    <%= javascript_include_tag 'application' %>
 
     <div id="wrapper">
         <!-- Main Header -->
@@ -35,6 +38,11 @@
         <% else %>
           <!-- Page content -->
           <div class="container">
+            <div class="flash-conteiner">
+              <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+              <% end %>
+            </div>
             <%= yield %>
           </div>
         <% end %>
@@ -44,7 +52,5 @@
           <%= render "/layouts/footer" %>
         </div>
     </div><!-- ./wrapper -->
-
-    <%= javascript_include_tag 'application' %>
   </body>
 </html>

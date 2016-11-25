@@ -11,10 +11,10 @@ class RoomTest < ActiveSupport::TestCase
     assert @room.save
   end
 
-  test "should save room with exactly 2 or 255 characters name" do
+  test "should save room with exactly 2 or 47 characters name" do
     @valid_1 = Room.create(name: "-"*2, description: "-"*2, owner: @member)
     assert @valid_1.save
-    @valid_2 = Room.create(name: "-"*255, description: "-"*2, owner: @member)
+    @valid_2 = Room.create(name: "-"*47, description: "-"*2, owner: @member)
     assert @valid_2.save
   end
 
@@ -50,8 +50,8 @@ class RoomTest < ActiveSupport::TestCase
     assert_not @invalid.save
   end
 
-  test "should not save a room with name bigger than 255 characters" do
-    @invalid = Room.create(name: "-"*256, description: "-"*2, owner: @member)
+  test "should not save a room with name bigger than 47 characters" do
+    @invalid = Room.create(name: "-"*48, description: "-"*2, owner: @member)
     assert_not @invalid.save
   end
 

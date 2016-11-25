@@ -17,6 +17,9 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     top2 = room3.topics.create(name: "Linguagens de baixo nível em aplicações de software", description: "Soluções para o problema de energia do futuro!")
     top3 = room4.topics.create(name: "Padrões de projeto em softwares", description: "Soluções para o problema de energia do futuro!")
     top4 = room5.topics.create(name: "Testes de controller e de model", description: "Soluções para o problema de energia do futuro!")
+    que1 = top4.questions.create!(content: "What are the types of software testing?", member: @member)
+    que2 = top3.questions.create!(content: "Is software a reality?", member: @member)
+    que3 = top3.questions.create!(content: "Is hardware a reality?", member: @member)
     sign_in_as @member
   end
 
@@ -32,6 +35,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 2, assigns(:rooms).count
     assert_equal 3, assigns(:topics).count
+    assert_equal 2, assigns(:questions).count
   end
 
   test "downcase should not make a difference in search" do
@@ -40,6 +44,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 2, assigns(:rooms).count
     assert_equal 3, assigns(:topics).count
+    assert_equal 2, assigns(:questions).count
   end
 
   test "upcase should not make a difference in search" do
@@ -48,6 +53,7 @@ class SearchesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 2, assigns(:rooms).count
     assert_equal 3, assigns(:topics).count
+    assert_equal 2, assigns(:questions).count
   end
 
 end

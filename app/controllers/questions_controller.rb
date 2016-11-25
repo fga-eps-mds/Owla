@@ -3,10 +3,7 @@ class QuestionsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
   before_action :show, :only => [:like]
-
-  def index
-    @questions = Question.all
-  end
+  before_action :check_question, only: [:report_question]
 
   def new
   end
@@ -61,13 +58,13 @@ class QuestionsController < ApplicationController
       @question.like_by(current_member)
 
       if @question.member != current_member
-        send_notification("liked_question", @question)
+        send_notification('liked_question', @question)
       end
     else
       @question.disliked_by(current_member)
     end
 
-    redirect_to :back
+    send_question @question, 'update_likes'
   end
 
   def moderate_question
@@ -87,32 +84,27 @@ class QuestionsController < ApplicationController
   end
 
   def report_question
-      member = current_member
-      @question = Question.find(params[:id])
+    @question = Question.find(params[:id])
 
-      @topic = @question.topic
-      @room = @topic.room
-      @report = Report.new(moderator: @room.owner, reported: @question.member, question: @question)
-      @report.members << current_member
+    @topic = @question.topic
+    @room = @topic.room
+    @report = Report.new(moderator: @room.owner, reported: @question.member, question: @question)
+    @report.members << current_member
 
-      if @report.save
-        flash[:alert] = "Your report was submitted"  
-        send_notification("reported_question", @question)
+    if @report.save
+      flash[:alert] = "Your report was submitted"
+      send_notification("reported_question", @question)
 
-        redirect_to topic_path(@topic)
-      else
-        flash[:alert] = "Report not created"
-        redirect_to topic_path(@topic)
-      end      
+      redirect_to topic_path(@topic)
     end
+  end
 
 	private
     
     def check_question
-      member = current_member
       @question = Question.find(params[:id])
 
-      if (@question.report.blank? == false) && @question.report.members.include?(member)
+      if !@question.report.blank? && @question.report.members.include?(current_member)
         flash[:alert] = "You have already reported this user"
         redirect_to topic_path(@question.topic.id)
       end

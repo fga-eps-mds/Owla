@@ -35,7 +35,7 @@
               style: "max-width: 56px;" %>
 
           <span class="username">
-            <a href="#"><%= question.member.alias %></a>
+            <%= link_to question.member.alias, "/members/#{question.member.id}" %>
           </span>
         <% end %>
         <span class="description">Created at <%= question.created_at.strftime("%m/%d/%Y @ %H:%M")%></span>
@@ -44,28 +44,10 @@
       <%= render partial: 'questions/question_control',
         locals: { question: question, room: room } %>
 
-      <!-- TODO: FIX -->
-      <% color_generator = 0 %>
+
       <% question.tags.each do |tag| %>
-        <% case color_generator %>
-          <% when 0 %>
-            <span class="label bg-green"><%= tag.content %></span>
-          <% when 1 %>
-            <span class="label bg-red"><%= tag.content %></span>
-          <% when 2 %>
-            <span class="label bg-yellow"><%= tag.content %></span>
-          <% when 3 %>
-            <span class="label bg-purple"><%= tag.content %></span>
-          <% when 4 %>
-            <span class="label bg-blue"><%= tag.content %></span>
-        <% end %>
-        <% if color_generator < 4 %>
-          <% color_generator += 1 %>
-        <% else %>
-          <% color_generator = 0 %>
-        <% end %>
+        <span class="label" style="background-color: <%= tag.color %>"><%= tag.content %></span>
       <% end %>
-      <br></br>
 
     </div>
 
@@ -82,7 +64,7 @@
 
         <%= render partial: 'likes/likes', locals: { url: like_question_path(question.id), object: question } %>
 
-        <span class="text-muted pull-right">
+        <span class="text-muted pull-right" id="like-counts-text">
           <span id="question-answers-counter-<%= question.id %>">
             <%= question.answers.count %>
           </span> answers
@@ -113,7 +95,7 @@
           alt: "User Image",
           style: "max-width: 56px;" %>
       <div class="img-push">
-        <%= form_for new_answer, url: { action: "create",
+        <%= form_for Answer.new, url: { action: "create",
                                         controller: "answers",
                                         id: nil,
                                         question_id: question.id},

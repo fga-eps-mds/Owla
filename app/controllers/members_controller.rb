@@ -32,37 +32,50 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
 
     if @member.update_attributes(member_params)
-      redirect_to members_path
+      redirect_to root_path
     else
-      flash[:alert] = "Member not updated"
+      flash.now[:alert] = "Member not updated"
       render 'edit'
     end
   end
 
   def edit
     @member = Member.find(params[:id])
+    if current_member != @member
+      flash[:notice] = "You do not have permission!"
+      redirect_to root_path
+    end
   end
 
   def destroy
     @member = Member.find(params[:id])
-    @member.destroy
 
-    redirect_to members_path
+    if @member == current_member
+      @member.destroy
+     redirect_to root_path
+    end
   end
 
   def home
-    @member = Member.find(params[:id])
+    rooms = current_member.rooms.all + current_member.my_rooms
+    if rooms.empty?
+      @rooms = Room.all
+    else
+      @rooms = current_member.rooms.all + current_member.my_rooms
+    end
   end
 
   def joined_rooms
-    @rooms = current_member.rooms.all
+    @rooms = current_member.rooms.all + current_member.my_rooms.all
     @subtitle = 'Joined rooms'
+    @title = 'Joined rooms'
     render 'rooms'
   end
 
   def my_rooms
     @rooms = current_member.my_rooms.all
     @subtitle = 'My own rooms'
+    @title = 'My rooms'
     render 'rooms'
   end
 

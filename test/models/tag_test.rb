@@ -7,15 +7,15 @@ class TagTest < ActiveSupport::TestCase
     @room = Room.create(name: "c1", description: "-"*2, owner: @member)
     @topic = @room.topics.create(name: "limit", description: "example description")
     @question = @topic.questions.create(content: "Is there a limit?", member: @member)
-    @tag = @question.tags.create(content: "test", member: @member)
-  end 
+    @tag = @question.tags.create(content: "test", color: "#FF0000", member: @member)
+  end
 
   test "should save valid tag" do
     assert @tag.save
-  end 
+  end
 
   test "should not save empty tag" do
-    @invalid_tag = @question.tags.create(content: "", member: @member)
+    @invalid_tag = @question.tags.create(content: "", color: "#FF0000", member: @member)
     assert_not @invalid_tag.save
   end
 
@@ -25,19 +25,20 @@ class TagTest < ActiveSupport::TestCase
   end
 
   test "should not save tags with less than two letters content" do
-    @invalid_tag = @question.tags.create(content: "a", member: @member)
+    @invalid_tag = @question.tags.create(content: "a", color: "#FF0000", member: @member)
     assert_not @invalid_tag.save
   end
 
   test "should not save tags with more than twenty five letters content" do
-    @invalid_tag = @question.tags.create(content: "a"*26, member: @member)
+    @invalid_tag = @question.tags.create(content: "a"*26, color: "#FF0000", member: @member)
     assert_not @invalid_tag.save
-  end 
+  end
 
+## TODO ##
   test "should save a tag with exactly two or twenty five letters content" do
-  	@valid_tag1 = @question.tags.create(content: "a"*2, member: @member)
+  	@valid_tag1 = @question.tags.create(content: "a"*2, color: "#FF0000", member: @member)
     assert @valid_tag1.save
-    @valid_tag2 = @question.tags.create(content: "a"*25, member: @member)
+    @valid_tag2 = @question.tags.create(content: "a"*25, color: "#FF0000", member: @member)
     assert @valid_tag2.save
   end
 
@@ -46,10 +47,17 @@ class TagTest < ActiveSupport::TestCase
   end
 
 
-  test "should change name when tag is edited" do
+  test "should change content when tag is edited" do
     before = @tag.content
     @tag.update_attribute(:content,"Cálculo 2")
     after = @tag.content
+    assert_not_equal before,after
+  end
+
+  test "should change color when tag is edited" do
+    before = @tag.color
+    @tag.update_attribute(:color,"#FFFFFF")
+    after = @tag.color
     assert_not_equal before,after
   end
 

@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
   skip_before_action :verify_authenticity_token if Rails.env.test?
   before_action :authenticate_member
   before_action :is_joined, only: [:show]
-  before_action :is_owner, only: [:destroy, :edit, :update]
+  before_action :is_owner, only: [:edit, :update]
 
   def show
     @topic = Topic.find(params[:id])
@@ -13,7 +13,7 @@ class TopicsController < ApplicationController
     @answer = Answer.new
     @room = Room.find(@topic.room_id)
     @owner = @room.owner
-    @new_question_url = {:action=>"create", :controller=>"questions", :id=>nil, topic_id: @topic.id}
+    @new_question_url = { action: 'create', controller: 'questions', id: nil, topic_id: @topic.id }
     @question_placeholder = "Type your question here"
     @question_box_title = "Create a new question"
 
@@ -60,6 +60,11 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
 
+    unless params[:topic][:slide].nil?
+      delete_dir(@topic)
+      @topic.questions.destroy_all
+    end
+
     if @topic.update_attributes(topic_params)
       redirect_to topic_path @topic
     else
@@ -71,13 +76,29 @@ class TopicsController < ApplicationController
   def destroy
     @topic = Topic.find(params[:id])
     @room = @topic.room
-    @topic.destroy
 
-    redirect_to room_path @room
+    if @room.owner == current_member
+      delete_dir(@topic)
+      @topic.destroy
+      redirect_to room_path @room
+    else
+      flash[:notice] = "You do not have permission to do this action"
+      redirect_to topic_path(@topic)
+    end
   end
 
   def update_current_slide
     send_slide params[:id], params[:slide_id], 'update_slide'
+  end
+
+  def search_by_tag
+    @topic = Topic.find(params[:id])
+    @tag = Tag.find_by(content: params[:tag])
+    if @tag.nil?
+      redirect_to topic_path(@topic)
+    else
+      @questions = @tag.questions.where(topic_id: params[:id])
+    end
   end
 
   private

@@ -6,6 +6,7 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
   def setup
     @member = Member.create(name: 'vitor', email: 'vitor@gmail.com', alias: 'vitor', password: '12345678', password_confirmation: '12345678')
     @member2 = Member.create(name: 'victor', email: 'victor@gmail.com', alias: 'victor', password: '12345678', password_confirmation: '12345678')
+    @member3 = Member.create(name: 'leticia', email: 'let@gmail.com', alias: 'lele', password: '12345678', password_confirmation: '12345678')
     sign_in_as @member
 
     @room = Room.create(name: "calculo 1", description: "teste1", owner: @member)
@@ -16,6 +17,36 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
 
     @answer = @question.answers.create(content: "CONTENT TEST", member: @member)
     @answer_member_2 = @question.answers.create(content: "CONTENT TEST", member: @member2)
+  end
+
+  test "should get notifications page" do
+    get notifications_path
+
+    assert_response :success
+  end
+
+  test "should notification be read when user enters notification page" do
+    sign_out_as @member
+    sign_in_as @member2
+
+    assert_difference('Notification.count') do
+      post "/questions/#{@question.id}/answers", params: {
+        answer: {
+          content: "Resposta da pergunta"
+        }
+      }
+    end
+
+    sign_out_as @member2
+    sign_in_as @member
+
+    notification = Notification.last
+    old_read_value = notification.read
+
+    get notifications_path
+    notification.reload
+
+    assert_not_equal old_read_value, notification.read
   end
 
   test "should create notification when user signs up" do
@@ -39,8 +70,9 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
     assert created_member.received_notifications.last.message, "Welcome to Owla!"
   end
 
-  test "should user be notified someone answer his question" do
+  test "should user be notified if someone answer his question" do
     user_notifications_counter = @question.member.received_notifications.count
+    sign_in_as @member2
 
     assert_difference('Notification.count') do
       post "/questions/#{@question.id}/answers", params: {
@@ -94,6 +126,7 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
   test "should room owner be notified when a question in a topic of his room is reported" do
     owner = @room.owner
     owner_notifications_counter = owner.received_notifications.count
+    sign_in_as @member3
 
     assert_difference('Notification.count') do
       post "/report_question/#{@question_member_2.id}"
@@ -105,6 +138,7 @@ class NotificationControllerTest < ActionDispatch::IntegrationTest
   test "should room owner be notified when a answer in a topic of his room is reported" do
     owner = @room.owner
     owner_notifications_counter = owner.received_notifications.count
+    sign_in_as @member3
 
     assert_difference('Notification.count') do
       post "/report_answer/#{@answer_member_2.id}"
