@@ -269,21 +269,36 @@ class RoomControllerTest < ActionDispatch::IntegrationTest
     assert "The member is already banned", flash[:notice]
   end
 
-  # test "should reintegrate member from blacklist" do
-  #   @another_member.rooms << @room
-  #   @another_member.save
+  test "should reintegrate member from blacklist" do
+    @another_member.rooms << @room
+    @another_member.save
 
-  #   post "/topics/#{@topic.id}/ban_member", params: { member_id: @another_member.id, topic_id: @topic.id }
+    @room.black_list << @another_member.id
+    @room.save
 
-  #   @room.reload
-  #   assert @room.black_list.include? @another_member.id
+    post "/rooms/#{@room.id}/reintegrate_member", params: { member_id: @another_member.id }
 
-  #   post "/rooms/#{@room.id}/reintegrate_member", params: {
-  #     member_id: @another_member.id
-  #   }
+    @room.reload
 
-  #   @room.reload
-  #   assert_not @room.black_list.include? @another_member.id
-  # end
+    assert_redirected_to banned_members_url(@room)
+    assert_not @room.black_list.include? @another_member.id
+    assert_equal "Member has been removed from black list and can now join the room", flash[:notice]
+  end
+
+  test "should not reintegrate member from blacklist if not owner" do
+    @another_member.rooms << @room
+    @another_member.save
+
+    @room.black_list << @another_member.id
+    @room.save
+
+    sign_out_as @member
+    sign_in_as @another_member
+
+    post "/rooms/#{@room.id}/reintegrate_member", params: { member_id: @another_member.id }
+
+    assert_redirected_to room_path(@room)
+    assert @room.black_list.include? @another_member.id
+  end
 
 end

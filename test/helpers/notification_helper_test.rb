@@ -82,7 +82,7 @@ class NotificationHelperTest < ActionView::TestCase
     log_in @another_member
 
     assert_difference('Notification.count', 1) do
-      send_notification('liked_answer', @answer
+      send_notification('liked_answer', @answer)
     end
   end
 
