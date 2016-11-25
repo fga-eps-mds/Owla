@@ -45,7 +45,7 @@ class TagsController < ApplicationController
 	def destroy
     @tag = Tag.find(params[:id])
     @tag.destroy
-    redirect_to question_tags_path(Question.find(params[:question_id]))
+    redirect_to question_tags_path(params[:question])
 	end
 
   def add_tag_to_question
