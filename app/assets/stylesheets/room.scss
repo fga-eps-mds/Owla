@@ -1,3 +1,20 @@
 // Place all the styles related to the room controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.ban-button {
+  margin-top: -6px;
+}
+
+#room-buttons {
+  margin: 7px 0 0 0;
+}
+
+.box.box-solid > .box-header .btn:hover, .box.box-solid > .box-header a:hover {
+  background: none;
+}
+
+.question.box-body.clearfix {
+  text-align: left;
+  font-weight: normal;
+}

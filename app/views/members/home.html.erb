@@ -1,12 +1,13 @@
 <!-- Content Header (Page header) -->
+<% @title = "Home" %>
 <section class="content-header">
   <h1>
     Rooms
-    <small>My rooms</small>
+    <small>Joined rooms</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">My rooms</li>
+    <li class="active">Joined rooms</li>
   </ol>
 </section>
 
@@ -14,9 +15,35 @@
 <section class="content">
   <div class="row">
     <% if current_member.rooms.count.zero? %>
-      <p> You do not have rooms </p>
+      <section class="content">
+        <!-- /.row -->
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header" id="box-header-user-home">
+                <%= button_to "New Room", new_member_room_path(current_member), class: "btn btn-default", method: :get %>
+                <div id="join-room-message">You do not have rooms. Want to join one?</div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <% @rooms.each do | room | %>
+                    <tr>
+                      <td><%= link_to("#{room.name}", room_path(room)) %></td>
+                      <td><%= room.created_at.strftime("%m/%d/%Y") %></td>
+                      <td><%= room.description %></td>
+                    </tr>
+                  <% end %>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+      </section>
     <% else %>
-      <% current_member.rooms.each_slice(6).first.each do | room | %>
+      <% @rooms.each_slice(6).first.each do | room | %>
         <div class="col-md-4">
           <!-- Widget: user widget style 1 -->
           <%= link_to room_path(room) do %>
@@ -24,10 +51,9 @@
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header bg-blue">
                 <h3 class="widget-user-username"><%= room.name %></h3>
-                <h5 class="widget-user-desc">Description</h5>
               </div>
               <div class="widget-user-image">
-                <%= image_tag (room.avatar.url(:thumb)), class:"img-circle", alt: "Room avatar" %>
+                <%= image_tag ("/images/room-icon.png"), class:"img-circle", alt: "Room avatar" %>
               </div>
               <div class="box-footer">
                 <div class="row">

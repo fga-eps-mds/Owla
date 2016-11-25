@@ -3,10 +3,10 @@ include SessionsHelper
 
 class MembersControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @member = Member.create(name: 'matheus', 
-                          email: 'matheus@gmail.com', 
-                          password: '123456', 
-                          password_confirmation: '123456', 
+    @member = Member.create(name: 'matheus',
+                          email: 'matheus@gmail.com',
+                          password: '123456',
+                          password_confirmation: '123456',
                           alias: 'mateusin')
     sign_in_as @member
   end
@@ -18,44 +18,47 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create member" do
     post '/members', params: {
-        member: {
-          name: "matheus",
-          email: "matheuss@gmail.com",
-          password: "123456",
-          password_confirmation: "123456",
-          alias: "membertest8"
-        }
+      member: {
+        name: "matheus",
+        email: "matheuss@gmail.com",
+        password: "123456",
+        password_confirmation: "123456",
+        alias: "membertest8"
       }
+    }
+
     assert_redirected_to home_path Member.last
   end
 
-# [TO DO: should not test CSS class]
-#  test "should not create member" do
-#    post '/members', params: {
-#        member: {
-#          name: "matheus",
-#          email: "matheuss@gmail.com",
-#          password: "123",
-#          alias: "membertest8"
-#        }
-#      }
-#    assert_select '.notice'
-#  end
+  test "should not create member with wrong params" do
+    post '/members', params: {
+      member: {
+        wrong_param: "matheus",
+        email: "matheuss@gmail.com",
+        password: "123456",
+        password_confirmation: "123456",
+        alias: "membertest8"
+      }
+    }
+
+    assert_equal "Member not created", flash[:alert]
+  end
 
   test "should show member" do
-    get '/members/', params: {id: @member.id}
+    get "/members/#{@member.id}"
     assert_response :success
   end
 
   test "should not show member when member does not exist"  do
 
     get '/members/show', params: {id: 12}
-    assert_response :missing
+    assert_redirected_to server_error_path
   end
 
   test "should fail to get details when is not logged" do
     sign_out_as @member
-    get '/members/', params: {id: @member.id}
+
+    get '/members/'
     assert_redirected_to root_path
   end
 
@@ -80,18 +83,20 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
     @member.reload
     assert_not_equal old_name, @member.name
 
-    assert_redirected_to members_path
+    assert_redirected_to root_path
   end
 
-# [TO DO: should not test CSS class]
-#  test "should not update member when missing param" do
-#    patch "/members/#{@member.id}", params: { member: {name: "joao",
-#                                        email: 'matheus@gmail.com',
-#                                        password: '123456',
-#                                        password_confirmation: '',
-#                                        alias: 'mateusin'} }
-#    assert_select '.alert'
-#  end
+  test "should not edit member with wrong params" do
+    patch "/members/#{@member.id}", params: {
+                                              member: {name: "joao",
+                                              wrong_param: 'matheus@gmail.com',
+                                              password: '12345678',
+                                              password_confirmation: '123456',
+                                              alias: 'mateusin'}
+                                            }
+
+    assert_equal "Member not updated", flash.now[:alert]
+  end
 
   test "should fail to update member when is not logged in" do
     sign_out_as @member
@@ -106,21 +111,55 @@ class MembersControllerTest < ActionDispatch::IntegrationTest
 
   test "should delete member" do
     delete "/members/#{@member.id}"
-    assert_redirected_to members_path
+    assert_redirected_to root_path
   end
 
-# [TO DO: should not test CSS class]
-#  test "should not delete member if does note exist" do
-#    delete "/members/#{99}"
-#
-#    assert_response :missing
-#  end
-
-  test "should not delete if logged out" do
+  test "should not delete user if no one is logged in" do
     sign_out_as @member
 
     delete "/members/#{@member.id}"
 
     assert_redirected_to root_path
   end
+
+  test "should logged member go to homepage" do
+    sign_out_as @member
+    get login_path
+    assert_response :success
+
+    sign_in_as @member
+    get login_path
+    assert_redirected_to home_path(@member)
+  end
+
+# [TO DO: should not test CSS class]
+#  test "should not delete member if does not exist" do
+#    delete "/members/#{99}"
+#
+#    assert_response :missing
+#  end
+
+# [TO DO: should not test CSS class]
+#  test "should not update member when missing param" do
+#    patch "/members/#{@member.id}", params: { member: {name: "joao",
+#                                        email: 'matheus@gmail.com',
+#                                        password: '123456',
+#                                        password_confirmation: '',
+#                                        alias: 'mateusin'} }
+#    assert_select '.alert'
+#  end
+
+# [TO DO: should not test CSS class]
+#  test "should not create member" do
+#    post '/members', params: {
+#        member: {
+#          name: "matheus",
+#          email: "matheuss@gmail.com",
+#          password: "123",
+#          alias: "membertest8"
+#        }
+#      }
+#    assert_select '.notice'
+#  end
+
 end

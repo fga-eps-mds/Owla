@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Owla</title>
+    <%= javascript_include_tag 'cable' %>
+    <title><%= @title %> | Owla</title>
+    <%= favicon_link_tag 'favicon.ico' %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= action_cable_meta_tag %>
   </head>
 
   <% if logged_in? %>
@@ -12,21 +15,34 @@
     <body class="layout-top-nav skin-black-light register-page">
   <% end %>
 
+    <%= javascript_include_tag 'application' %>
+
     <div id="wrapper">
         <!-- Main Header -->
         <div class="header">
           <%= render "/layouts/header" %>
         </div>
 
+
         <% if logged_in? %>
           <%= render '/layouts/sidebar' %>
 
           <div class="content-wrapper">
+            <div class="flash-conteiner">
+              <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+              <% end %>
+            </div>
             <%= yield %>
           </div>
         <% else %>
           <!-- Page content -->
           <div class="container">
+            <div class="flash-conteiner">
+              <% flash.each do |key, value| %>
+                <div class="alert alert-<%= key %>"><%= value %></div>
+              <% end %>
+            </div>
             <%= yield %>
           </div>
         <% end %>
@@ -36,7 +52,5 @@
           <%= render "/layouts/footer" %>
         </div>
     </div><!-- ./wrapper -->
-    <%= javascript_include_tag 'application' %>
-
   </body>
 </html>

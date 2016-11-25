@@ -12,18 +12,17 @@
         <small><i class="fa fa-circle text-success"></i> Online</small>
       </div>
     </div>
-    <!-- search form -->
-    <form action="#" method="get" class="sidebar-form">
+
+    <%= form_tag("/search", method: 'get', class: 'sidebar-form') do %>
       <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Buscar...">
-        <span class="input-group-btn">
-          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-          </button>
+        <span class="fa fa-search search-icon">
         </span>
+        <div class="search-input">
+          <%= text_field_tag :query, nil, autofocus: true, class: 'form-control fa fa-search', placeholder: "Search here" %>
+        </div>
       </div>
-    </form>
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <% end %>
+
     <ul class="sidebar-menu">
       <li class="treeview">
         <a href="#">
@@ -75,6 +74,11 @@
       <li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/" target="_blank"><i class="fa fa-circle-o text-aqua"></i> <span>Contribute</span></a></li>
         <li><a href="https://github.com/crabsolutions/2016.2-Owla/issues/new" target="_blank"><i class="fa fa-circle-o text-yellow"></i><span>  Report bug</span></a></li>
+        <li><%= link_to help_path do %>
+              <i class="fa fa-circle-o text-green"></i>
+              <span> About </span>
+            <% end %>
+        </li>
     </ul>
   </section>
   <!-- /.sidebar -->

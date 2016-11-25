@@ -1,0 +1,45 @@
+// Place all the styles related to the Notification controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.input-group {
+  background-color: white;
+}
+
+.search-icon {
+  float: left;
+  margin: 10px;
+}
+
+.search-input {
+  margin-left: 33px;
+}
+
+#query {
+  padding-left: 0;
+  font-family: arial;
+  background-color: white;
+}
+
+#notification-list {
+  list-style-type: none;
+}
+
+#dropdown-menu {
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.dropdown-menu > li > #notification-dropdown {
+  display: none;
+}
+
+.empty-notifications {
+  margin-left: 15px;
+}
+
+.see-notification {
+  width: 0;
+}

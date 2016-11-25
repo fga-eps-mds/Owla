@@ -2,6 +2,40 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.dropdown-menu {
+  left: -9em !important;
+}
+
+#room-blacklist {
+  margin: 1% 0 0 25%;
+}
+
+#reintegrate-member {
+  padding-left: 20%;
+}
+
 #Buttonflag {
   top: -13px;
+}
+
+#like_button {
+  float: right;
+}
+
+.slide-slice {
+  position: relative;
+  display: block;
+  margin: auto;
+}
+
+#carousel-slide {
+    position: relative;
+}
+
+.search.content-header {
+  display: flex;
+}
+
+.search.content-header > h1 {
+  margin: 0 1%;
 }
