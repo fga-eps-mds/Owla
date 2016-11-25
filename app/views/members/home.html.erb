@@ -25,10 +25,9 @@
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header bg-blue">
                 <h3 class="widget-user-username"><%= room.name %></h3>
-                <h5 class="widget-user-desc">Description</h5>
               </div>
               <div class="widget-user-image">
-                <%= image_tag (room.avatar.url(:thumb)), class:"img-circle", alt: "Room avatar" %>
+                <%= image_tag ("/images/room-icon.png"), class:"img-circle", alt: "Room avatar" %>
               </div>
               <div class="box-footer">
                 <div class="row">
