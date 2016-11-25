@@ -5,20 +5,12 @@ class QuestionControllerTest < ActionDispatch::IntegrationTest
   def setup
     @false_option_anonymous = 0
     @true_option_anonymous = 1
-    @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
-
-    @room = Room.new(name: "calculo 1", description: "teste1")
-    @room.owner = @member
-    @room.save
-
-    @topic = @room.topics.new(name: "limites", description: "description1")
-    @topic.save
-
     attachment = fixture_file_upload('test/fixtures/sample_files/file.png', 'image/png')
 
-    @question = @topic.questions.new(content: "How did I get here?", attachment: attachment)
-    @question.member = @member
-    @question.save
+    @member = Member.create(name: "Thalisson", alias: "thalisson", email: "thalisson@gmail.com", password: "12345678", password_confirmation: "12345678")
+    @room = Room.create(name: "calculo 1", description: "teste1", owner: @member)
+    @topic = @room.topics.create(name: "limites", description: "description1")
+    @question = @topic.questions.create(content: "How did I get here?", member: @member, attachment: attachment)
 
     sign_in_as @member
   end
