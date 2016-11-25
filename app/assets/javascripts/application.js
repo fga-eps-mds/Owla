@@ -20,6 +20,7 @@
 //= require bootstrap-wysihtml5
 //= require bootstrap-wysihtml5/locales
 //= require turbolinks
+//= require jquery.minicolors
 
 $(document).ready(function(){
   $(".main-sidebar").height($(".content-wrapper").height());
@@ -27,6 +28,8 @@ $(document).ready(function(){
   $(".content-wrapper").sizeChanged(function(){
     $(".main-sidebar").height($(".content-wrapper").height());
   });
+
+  $('#tag-colorpicker').minicolors();
 });
 
 // this is a Jquery plugin function that fires an event when the size of an element is changed

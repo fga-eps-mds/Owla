@@ -1,11 +1,17 @@
+<% @title = "Edit #{@tag.content}" %>
+
 <h1>Edit Tag</h1>
+
 <% if flash[:alert] %>
     <div class="notice"><%= flash[:alert] %></div>
 <% end %>
-<%= form_for @tag do |m| %>
-	<%= m.label :content, "Name" %>
-	<%= m.text_field :content %>
+
+<%= simple_form_for @tag do |f| %>
+	<%= f.label :content, "Name" %>
+	<%= f.text_field :content %>
+  <%= f.input :color, input_html: { id: 'tag-colorpicker' } %>
+  <%= hidden_field_tag :question, params[:question_id] %>
 	<br>
-	
-	<%= m.submit "Edit Tag" %>
+
+	<%= f.submit "Edit Tag" %>
 <% end %>

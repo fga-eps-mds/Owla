@@ -1,8 +1,10 @@
 <!-- Content Header (Page header) -->
+<% @title = "Your tags" %>
+
 <section class="content-header">
   <h1>
     Tags
-     <%= link_to 'New Tag', new_question_tag_path, class: 'btn btn-sm btn-primary'%>
+     <%= link_to 'New Tag', new_question_tag_path, method: :get, class: 'btn btn-sm btn-primary'%>
 
   </h1>
 </section>
@@ -15,20 +17,23 @@
       <!-- The time line -->
       <ul class="timeline">
         <% @tags.each do |tag| %>
-            <!-- timeline item -->
           <li>
             <i class="fa fa-th-list bg-blue"></i>
-
             <div class="timeline-item">
 
-              <h3 
-                class="timeline-header"><%= tag.content %>
+              <h3
+                class="timeline-header">
+                <span class="label" style="background-color: <%= tag.color %>"><%= tag.content %></span>
                 <% if(current_member == tag.member) %>
-                  <%= link_to 'Delete', tag(tag.questions), class: "btn btn-danger btn-xs pull-right", data: { confirm: "Hmmm! Are you sure?" }, method: :delete, style: "margin-right: 6px;" %>
-                  <%= link_to 'Edit', edit_tag_path(tag), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
-                              method: :get%>
+                  <%= link_to 'Delete', tag_path(tag, question_id: @question.id), method: :delete, class: "btn btn-danger btn-xs pull-right", data: { confirm: "Hmmm! Are you sure?" }, style: "margin-right: 6px;" %>
+                  <%= link_to 'Edit', edit_tag_path(tag, question_id: @question.id), class: "btn btn-primary btn-xs pull-right", style: "margin-right: 6px;",
+                              method: :get %>
                 <% end %>
-                <%= link_to 'Add to Question', tag, method: :delete, data: {confirm: 'Deseja excluir?' }, class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+                <% if @question.tags.include?(tag) %>
+                  <%= link_to 'Remove from Question', remove_tag_from_question_path(tag, question_id: @question.id), method: :post, class:"btn btn-danger btn-xs pull-right", style: "margin-right: 6px;" %>
+                <% else %>
+                  <%= link_to 'Add to Question', add_tag_to_question_path(tag, question_id: @question.id), method: :post, class:"btn btn-success btn-xs pull-right", style: "margin-right: 6px;" %>
+                <% end %>
               </h3>
             </div>
           <li>

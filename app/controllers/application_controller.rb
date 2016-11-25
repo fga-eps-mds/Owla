@@ -12,5 +12,4 @@ class ApplicationController < ActionController::Base
   def server_exception
     redirect_to server_error_path
   end
-
 end

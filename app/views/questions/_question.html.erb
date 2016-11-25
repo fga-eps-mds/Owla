@@ -44,28 +44,10 @@
       <%= render partial: 'questions/question_control',
         locals: { question: question, room: room } %>
 
-      <!-- TODO: FIX -->
-      <% color_generator = 0 %>
+
       <% question.tags.each do |tag| %>
-        <% case color_generator %>
-          <% when 0 %>
-            <span class="label bg-green"><%= tag.content %></span>
-          <% when 1 %>
-            <span class="label bg-red"><%= tag.content %></span>
-          <% when 2 %>
-            <span class="label bg-yellow"><%= tag.content %></span>
-          <% when 3 %>
-            <span class="label bg-purple"><%= tag.content %></span>
-          <% when 4 %>
-            <span class="label bg-blue"><%= tag.content %></span>
-        <% end %>
-        <% if color_generator < 4 %>
-          <% color_generator += 1 %>
-        <% else %>
-          <% color_generator = 0 %>
-        <% end %>
+        <span class="label" style="background-color: <%= tag.color %>"><%= tag.content %></span>
       <% end %>
-      <br></br>
 
     </div>
 

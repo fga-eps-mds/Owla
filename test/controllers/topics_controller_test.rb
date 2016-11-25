@@ -158,9 +158,9 @@ class TopicsControllerTest < ActionDispatch::IntegrationTest
   test "should get questions marked by tag" do
     @question = @topic.questions.create!(content: "How did I get here?", member_id: @member.id)
     @questiontwo = @topic.questions.create!(content: "How did I get here? Plus Two", member_id: @member.id)
-    @tag = Tag.create(content: "Tag One", member_id: @member.id)
+    @tag = Tag.create(content: "Tag One", color:"#FF0000", member_id: @member.id)
     @question.tags << @tag
-    @tagtwo = Tag.create(content: "Tag Two", member_id: @member.id)
+    @tagtwo = Tag.create(content: "Tag Two", color:"#FFFFFF", member_id: @member.id)
     @questiontwo.tags << @tagtwo
     get search_by_tag_url(@topic.id), params: {tag: "Tag One"}
 

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   post 'report_answer/:id', to: 'answers#report_answer', as: 'report_answer'
 
   post '/answers/:answer_id/tag', to: 'tags#create', as: 'create_tag'
+  post '/tags/:id/add_tag_to_question', to: 'tags#add_tag_to_question', as: 'add_tag_to_question'
+  post '/tags/:id/remove_tag_from_question', to: 'tags#remove_tag_from_question', as: 'remove_tag_from_question'
 
   match '/members/:id/home' => 'members#home', via: :get, as: 'home'
   match '/members/:id/joined' => 'members#joined_rooms', via: :get, as: 'joined_rooms'
