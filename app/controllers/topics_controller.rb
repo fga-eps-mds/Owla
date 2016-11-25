@@ -83,7 +83,7 @@ class TopicsController < ApplicationController
       redirect_to room_path @room
     else
       flash[:notice] = "You do not have permission to do this action"
-      redirect_to room_path(@room)
+      redirect_to topic_path(@topic)
     end
   end
 
